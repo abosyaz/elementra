@@ -108,36 +108,51 @@
 
         /* Ortak panel stili */
         .panel {
-            padding: 10mm 8mm;
+            padding: 8mm 12mm;
             display: flex;
             flex-direction: column;
             overflow: hidden;
             position: relative;
         }
 
+        /* F5 — Premium üst aksent çizgi (panel-onkapak ve panel-qr hariç) */
+        .panel:not(.panel-onkapak):not(.panel-qr)::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1mm;
+            background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary));
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
         .panel h2 {
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 16pt;
-            margin-bottom: 4mm;
+            font-size: 18pt;
+            letter-spacing: -0.015em;
+            margin-bottom: 5mm;
             line-height: 1.1;
             display: flex;
             align-items: center;
-            gap: 3mm;
+            gap: 2.5mm;
         }
 
         .panel h3 {
             font-family: var(--font-display);
             font-weight: 700;
             font-size: 11pt;
+            letter-spacing: -0.01em;
             color: var(--text-primary);
             margin-bottom: 2mm;
         }
 
         .panel p {
             font-family: var(--font-body);
-            font-size: 9pt;
-            line-height: 1.45;
+            font-size: 9.5pt;
+            line-height: 1.5;
             color: var(--text-secondary);
             margin-bottom: 3mm;
         }
@@ -156,52 +171,52 @@
             justify-content: space-between;
             align-items: center;
             text-align: center;
-            padding: 14mm 8mm;
+            padding: 10mm 12mm;
         }
 
         .panel-onkapak .br-logo {
             width: 56mm;
             height: 56mm;
-            margin-top: 8mm;
+            margin-top: 4mm;
         }
 
         .panel-onkapak .br-baslik {
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 32pt;
-            letter-spacing: -0.02em;
+            font-size: 40pt;
+            letter-spacing: -0.025em;
             line-height: 1;
             color: #FFFFFF;
-            margin-bottom: 3mm;
+            margin-bottom: 4mm;
         }
 
         .panel-onkapak .br-slogan {
             font-family: var(--font-display);
             font-weight: 700;
-            font-size: 16pt;
+            font-size: 17pt;
             color: #FFFFFF;
-            margin-bottom: 6mm;
+            margin-bottom: 8mm;
         }
 
         .panel-onkapak .br-tag {
             font-family: var(--font-body);
             font-weight: 600;
             font-size: 8pt;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.85);
-            padding: 3mm 5mm;
+            padding: 3mm 6mm;
             background: rgba(255, 255, 255, 0.15);
-            border-radius: 3mm;
+            border-radius: 4mm;
         }
 
         .panel-onkapak .br-alt {
             font-family: var(--font-body);
-            font-size: 9pt;
+            font-size: 8pt;
             color: rgba(255, 255, 255, 0.92);
-            line-height: 1.5;
+            line-height: 1.45;
             margin-top: auto;
-            padding-top: 8mm;
+            padding-top: 6mm;
         }
 
         .panel-onkapak .br-alt strong {
@@ -216,7 +231,7 @@
         }
 
         .panel-iki .pr-bolum {
-            margin-bottom: 6mm;
+            margin-bottom: 4mm;
             padding-left: 4mm;
             border-left: 1.5mm solid;
         }
@@ -243,7 +258,7 @@
             font-size: 9pt;
             font-weight: 500;
             color: var(--text-primary);
-            padding: 2mm 0;
+            padding: 1.2mm 0;
             display: flex;
             align-items: center;
             gap: 2mm;
@@ -347,7 +362,9 @@
         .stat-kart .stat-deger {
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 20pt;
+            font-size: 22pt;
+            font-feature-settings: 'tnum';
+            letter-spacing: -0.02em;
             color: var(--color-warning);
             line-height: 1;
             display: block;
@@ -446,6 +463,82 @@
         }
 
         /* ═════════════════════════════════════════════════
+           EK BLOKLAR — Panel 2/3/4/5 içerik genişletme
+           ═════════════════════════════════════════════════ */
+        .panel-iki .pr-bolum.hedef    { border-left-color: var(--brand-primary); }
+        .panel-iki .pr-bolum.yontem   { border-left-color: var(--color-info); }
+        .panel-iki .pr-bolum.hedef h2  { color: var(--brand-primary); }
+        .panel-iki .pr-bolum.yontem h2 { color: var(--color-info); }
+
+        .panel-modul .zorluk-blok {
+            background: var(--surface-1);
+            border-radius: 4mm;
+            padding: 5mm 6mm;
+            margin-top: 3mm;
+            border-left: 2mm solid var(--brand-secondary);
+        }
+        .panel-modul .zorluk-blok h3 {
+            font-size: 10pt;
+            color: var(--brand-secondary);
+            margin-bottom: 2mm;
+        }
+        .panel-modul .zorluk-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5mm;
+            margin-bottom: 2.5mm;
+        }
+        .panel-modul .zorluk-grid span {
+            background: linear-gradient(135deg, #FCE7F3, #FBCFE8);
+            color: #831843;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 8pt;
+            padding: 1.5mm;
+            border-radius: 2mm;
+            text-align: center;
+        }
+        .panel-modul .zorluk-blok p {
+            font-size: 8pt;
+            margin-bottom: 0;
+        }
+
+        .panel-kazanim .basarim-blok {
+            background: linear-gradient(135deg, #EDE9FE, #DDD6FE);
+            border-radius: 3mm;
+            padding: 4mm 5mm;
+            margin-top: 4mm;
+        }
+        .panel-kazanim .basarim-blok h3 {
+            font-size: 10pt;
+            color: var(--brand-primary);
+            margin-bottom: 1.5mm;
+        }
+        .panel-kazanim .basarim-blok p {
+            font-size: 8pt;
+            margin-bottom: 0;
+            line-height: 1.45;
+        }
+
+        .panel-kaynak .teknoloji-blok {
+            background: var(--surface-1);
+            border-radius: 3mm;
+            padding: 4mm 5mm;
+            margin-bottom: 4mm;
+            border-left: 2mm solid var(--color-success);
+        }
+        .panel-kaynak .teknoloji-blok h3 {
+            font-size: 10pt;
+            color: var(--color-success);
+            margin-bottom: 1.5mm;
+        }
+        .panel-kaynak .teknoloji-blok p {
+            font-size: 8pt;
+            margin-bottom: 0;
+            line-height: 1.45;
+        }
+
+        /* ═════════════════════════════════════════════════
            PANEL 6 — Arka Kapak / QR
            ═════════════════════════════════════════════════ */
         .panel-qr {
@@ -467,12 +560,12 @@
         }
 
         .panel-qr .qr-placeholder {
-            width: 60mm;
-            height: 60mm;
+            width: 55mm;
+            height: 55mm;
             background: #FFFFFF;
             border-radius: 4mm;
             padding: 2mm;
-            margin: 5mm 0;
+            margin: 4mm 0;
             overflow: hidden;
         }
 
@@ -486,8 +579,8 @@
         .panel-qr .qr-aciklama {
             font-size: 9pt;
             color: rgba(255, 255, 255, 0.92);
-            line-height: 1.5;
-            margin-bottom: 4mm;
+            line-height: 1.4;
+            margin-bottom: 3mm;
         }
 
         .panel-qr .qr-url {
@@ -499,13 +592,13 @@
             background: rgba(255, 255, 255, 0.18);
             border-radius: 3mm;
             letter-spacing: 0.03em;
-            margin-bottom: 8mm;
+            margin-bottom: 5mm;
         }
 
         .panel-qr .qr-alt {
             font-size: 8pt;
             color: rgba(255, 255, 255, 0.85);
-            line-height: 1.5;
+            line-height: 1.4;
             margin-top: auto;
         }
 
@@ -541,31 +634,12 @@
 <body>
 
     <!-- ═══════════════════════════════════════════════════
-         SAYFA 1 — Ön Taraf (katlandığında dışta)
-         Panel sırası: 6 ARKA | 1 ÖN | 2 İLK
+         SAYFA 1 — Dış Yüz (katlandığında görünür)
+         C-fold sırası: 1 ÖN KAPAK | 6 ARKA KAPAK | 2 İÇ FLY
          ═══════════════════════════════════════════════════ -->
     <div class="sayfa">
 
-        <!-- PANEL 6 — Arka Kapak / QR -->
-        <div class="panel panel-qr">
-            <h1 class="qr-baslik">Telefonunda<br>Oyna</h1>
-            <div class="qr-placeholder">
-                <img src="qr.png" alt="QR kodu — Elementra'yı telefonda oyna">
-            </div>
-            <p class="qr-aciklama">
-                Sergi sonrası evde devam et.<br>
-                Tüm modern tarayıcılarda çalışır.
-            </p>
-            <div class="qr-url">abosyaz.github.io/elementra</div>
-            <p class="qr-alt">
-                <strong>TÜBİTAK 4006</strong><br>
-                Bilim Fuarı 2025–2026<br>
-                <br>
-                Ekip: Mert Ege KAHRAMAN<br>· Hüseyin Efe BALCI
-            </p>
-        </div>
-
-        <!-- PANEL 1 — Ön Kapak -->
+        <!-- PANEL 1 — Ön Kapak (sol, dışta görünür) -->
         <div class="panel panel-onkapak">
             <svg class="br-logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="32" cy="32" r="5" fill="#FFFFFF"/>
@@ -585,6 +659,25 @@
             </p>
         </div>
 
+        <!-- PANEL 6 — Arka Kapak / QR (orta, ters çevrilince görünür) -->
+        <div class="panel panel-qr">
+            <h1 class="qr-baslik">Telefonunda<br>Oyna</h1>
+            <div class="qr-placeholder">
+                <img src="qr.png" alt="QR kodu — Elementra'yı telefonda oyna">
+            </div>
+            <p class="qr-aciklama">
+                Sergi sonrası evde devam et.<br>
+                Tüm modern tarayıcılarda çalışır.
+            </p>
+            <div class="qr-url">abosyaz.github.io/elementra</div>
+            <p class="qr-alt">
+                <strong>TÜBİTAK 4006</strong><br>
+                Bilim Fuarı 2025–2026<br>
+                <br>
+                Ekip: Mert Ege KAHRAMAN<br>· Hüseyin Efe BALCI
+            </p>
+        </div>
+
         <!-- PANEL 2 — Problem & Çözüm -->
         <div class="panel panel-iki">
             <div class="pr-bolum problem">
@@ -601,6 +694,24 @@
                 <p>
                     <strong>ELEMENTRA</strong> — vanilla HTML/CSS/JS ile sıfırdan
                     yazılmış, 3 modüllü dijital öğretici oyun.
+                </p>
+            </div>
+
+            <div class="pr-bolum hedef">
+                <h2>🎯 Hedef Kitle</h2>
+                <p>
+                    <strong>Lise 9. sınıf</strong> kimya öğrencileri (15–16 yaş).
+                    MEB müfredatı ünite 9.2 (Periyodik Tablo) ve 9.3 (Bileşikler)
+                    kazanımları kapsamında.
+                </p>
+            </div>
+
+            <div class="pr-bolum yontem">
+                <h2>🧪 Yöntem</h2>
+                <p>
+                    <strong>Kanıt-temelli oyunlaştırma.</strong> Aralıklı tekrar,
+                    anında geri bildirim ve yetkinlik-tabanlı ilerleme ile
+                    uzun süreli hatırlama hedefli.
                 </p>
             </div>
 
@@ -648,6 +759,20 @@
                     Eksik/fazla atom analizi ile pedagojik geri bildirim.
                 </p>
             </div>
+
+            <div class="zorluk-blok">
+                <h3>⭐ 4 Zorluk Seviyesi</h3>
+                <div class="zorluk-grid">
+                    <span>Kolay</span>
+                    <span>Orta</span>
+                    <span>Zor</span>
+                    <span>Uzman</span>
+                </div>
+                <p>
+                    Her modül × 4 zorluk = <strong>12 farklı oyun deneyimi</strong>.
+                    Yıldız matrisi profil ile ilerleme takibi.
+                </p>
+            </div>
         </div>
 
         <!-- PANEL 4 — Kazanımlar + Neden Oyun? -->
@@ -675,6 +800,15 @@
                     </div>
                 </div>
             </div>
+
+            <div class="basarim-blok">
+                <h3>🏆 20 Başarım + Yansıtma Anı</h3>
+                <p>
+                    Her modülün rozet seti. Oyun sonu
+                    <strong>en sık karıştırılan elementler</strong> + kişiselleştirilmiş
+                    öneriler ile öğrenci öz değerlendirme yapıyor.
+                </p>
+            </div>
         </div>
 
         <!-- PANEL 5 — Akademik Kaynak + İletişim -->
@@ -696,6 +830,15 @@
                     <li>Yıldız matrisi profil</li>
                     <li>Yönetici paneli</li>
                 </ul>
+            </div>
+
+            <div class="teknoloji-blok">
+                <h3>🌐 Teknoloji</h3>
+                <p>
+                    Vanilla <strong>HTML5 + CSS3 + JavaScript ES2022</strong>.
+                    Framework yok, build yok. USB'den veya çevrimiçi —
+                    tüm modern tarayıcılarda anında.
+                </p>
             </div>
 
             <div class="iletisim-kart">
