@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oxanium:wght@500;700;800&display=swap" rel="stylesheet">
 
     <!-- ELEMENTRA Tasarım Sistemi -->
-    <link rel="stylesheet" href="style.css?v=20">
+    <link rel="stylesheet" href="style.css?v=21">
 
     <!-- Favicon (atom logosu — inline SVG) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='4' fill='%237C3AED'/%3E%3Cellipse cx='32' cy='32' rx='24' ry='9' fill='none' stroke='%237C3AED' stroke-width='3'/%3E%3Cellipse cx='32' cy='32' rx='24' ry='9' fill='none' stroke='%237C3AED' stroke-width='3' transform='rotate(60 32 32)'/%3E%3Cellipse cx='32' cy='32' rx='24' ry='9' fill='none' stroke='%237C3AED' stroke-width='3' transform='rotate(-60 32 32)'/%3E%3C/svg%3E">
@@ -730,22 +730,41 @@
         </div>
     </div>
 
+    <!-- ════════════════════════════════════════ -->
+    <!--  YAN ÇEVİRME UYARI OVERLAY (Mobile portrait'te oyun modülü için)  -->
+    <!-- ════════════════════════════════════════ -->
+    <div id="yatay-cevir-overlay" aria-hidden="true">
+        <div class="yc-icerik">
+            <svg class="yc-ikon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="22" y="6" width="20" height="36" rx="3"/>
+                <line x1="22" y1="36" x2="42" y2="36"/>
+                <path d="M48 20 a 18 18 0 0 1 8 20" stroke-dasharray="3 3"/>
+                <polyline points="56 36 56 44 48 44"/>
+            </svg>
+            <h2>Telefonu yan çevir</h2>
+            <p>Periyodik tablo yatay görünümde daha rahat oynanır.</p>
+            <button class="btn btn-ghost btn-sm" id="yc-kapat" type="button">
+                Yine de portrait kullan
+            </button>
+        </div>
+    </div>
+
     <!--
       Script yükleme sırası (önemli):
       1. Veri dosyaları (sabitler)
       2. Ortak altyapı (StorageManager, AudioManager, vb.)
       3. Sayfa scripti (mute butonu, kart tıklamaları)
     -->
-    <script src="data/elements.js?v=20"></script>
-    <script src="data/bilesikler.js?v=20"></script>
-    <script src="game/ortak.js?v=20"></script>
-    <script src="game/sembolEslestirme.js?v=20"></script>
-    <script src="game/elementAvi.js?v=20"></script>
-    <script src="game/formulYapboz.js?v=20"></script>
-    <script src="game/ansiklopedi.js?v=20"></script>
-    <script src="game/yansitma.js?v=20"></script>
-    <script src="game/basarimlar.js?v=20"></script>
-    <script src="game/yonetici.js?v=20"></script>
+    <script src="data/elements.js?v=21"></script>
+    <script src="data/bilesikler.js?v=21"></script>
+    <script src="game/ortak.js?v=21"></script>
+    <script src="game/sembolEslestirme.js?v=21"></script>
+    <script src="game/elementAvi.js?v=21"></script>
+    <script src="game/formulYapboz.js?v=21"></script>
+    <script src="game/ansiklopedi.js?v=21"></script>
+    <script src="game/yansitma.js?v=21"></script>
+    <script src="game/basarimlar.js?v=21"></script>
+    <script src="game/yonetici.js?v=21"></script>
 
     <script>
         // ═════════════════════════════════════════════════
@@ -1258,6 +1277,16 @@
                     const btn = modalGrid.querySelector(`[data-zorluk="${map[e.key]}"]`);
                     if (btn) btn.click();
                 }
+            });
+
+            // ───── Yan Çevirme Overlay — "Yine de portrait" butonu ─────
+            document.getElementById('yc-kapat')?.addEventListener('click', () => {
+                AudioManager.sesCal('butonTik');
+                document.getElementById('yatay-cevir-overlay')?.classList.add('kullanici-kapatti');
+                // Landscape'e dönünce flag temizle (yeni portrait deneyimde tekrar göster)
+                window.addEventListener('orientationchange', () => {
+                    document.getElementById('yatay-cevir-overlay')?.classList.remove('kullanici-kapatti');
+                }, { once: true });
             });
 
             // ───── F7.6 Yardım Modal kapatma ─────

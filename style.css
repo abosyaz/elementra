@@ -1726,6 +1726,94 @@ button,
     min-height: 64px;
 }
 
+/* Mobile landscape — HUD scroll'la birlikte yukarı kaysın, viewport'ta daha çok yer açılsın */
+@media (orientation: landscape) and (max-width: 900px) {
+    .oyun-hud {
+        position: static;
+    }
+}
+
+/* ============================================================
+   YAN ÇEVİRME UYARI OVERLAY (Mobile portrait + oyun ekranı)
+   ============================================================ */
+#yatay-cevir-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.96), rgba(236, 72, 153, 0.96));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+}
+
+.yc-icerik {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    max-width: 320px;
+    color: #FFFFFF;
+}
+
+.yc-ikon {
+    width: 96px;
+    height: 96px;
+    color: #FFFFFF;
+    animation: yc-rotate 2.4s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes yc-rotate {
+    0%, 25%   { transform: rotate(0deg); }
+    50%, 70%  { transform: rotate(-90deg); }
+    100%      { transform: rotate(0deg); }
+}
+
+.yc-icerik h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 26px;
+    color: #FFFFFF;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.yc-icerik p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.94);
+    line-height: 1.5;
+    margin: 0;
+}
+
+#yc-kapat {
+    background: rgba(255, 255, 255, 0.18);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.30);
+    margin-top: 8px;
+}
+
+#yc-kapat:hover {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+/* Sadece oyun ekranı açıkken + portrait + mobile'da göster */
+@media (orientation: portrait) and (max-width: 640px) {
+    body:has(#oyun-ekran:not(.hidden)) #yatay-cevir-overlay:not(.kullanici-kapatti) {
+        display: flex;
+    }
+}
+
+/* Landscape'e dönünce otomatik gizle, kullanıcı kapatma flag'ini de sıfırla */
+@media (orientation: landscape), (min-width: 641px) {
+    #yatay-cevir-overlay {
+        display: none !important;
+    }
+}
+
 .hud-baslik-grubu {
     display: flex;
     align-items: center;
