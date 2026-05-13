@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>ELEMENTRA — QR Kod Üretici (F8.7)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oxanium:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --brand-primary:   #7C3AED;
+            --brand-secondary: #EC4899;
+            --color-success:   #10B981;
+            --text-primary:    #1E1B4B;
+            --text-secondary:  #4B5563;
+            --text-muted:      #6B7280;
+            --surface-0:       #FAF5FF;
+            --surface-1:       #FFFFFF;
+            --surface-2:       #F3F4F6;
+            --grad-brand:      linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+            --font-display:    'Oxanium', sans-serif;
+            --font-body:       'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--surface-0);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 16px;
+        }
+
+        .konteyner {
+            max-width: 640px;
+            width: 100%;
+            background: var(--surface-1);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 24px rgba(30, 27, 75, 0.08);
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 28px;
+            background: var(--grad-brand);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h1 .emoji {
+            font-size: 32px;
+        }
+
+        .alt-baslik {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .form-grup {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--surface-2);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 150ms ease, background 150ms ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--brand-primary);
+            background: var(--surface-1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 150ms ease, box-shadow 150ms ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--grad-brand);
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(124, 58, 237, 0.25);
+        }
+
+        .btn-secondary {
+            background: var(--surface-2);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--brand-primary);
+            color: #FFFFFF;
+        }
+
+        .qr-onizleme {
+            margin: 24px 0;
+            padding: 24px;
+            background: var(--surface-2);
+            border-radius: 12px;
+            text-align: center;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .qr-bos {
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 14px;
+        }
+
+        #qr-canvas {
+            background: #FFFFFF;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .indirme-grup {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .indirme-grup.gizli {
+            display: none;
+        }
+
+        .url-onizleme {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--brand-primary);
+            margin-top: 8px;
+            word-break: break-all;
+        }
+
+        .talimat {
+            margin-top: 32px;
+            padding: 20px;
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border-radius: 12px;
+            border-left: 4px solid #F59E0B;
+        }
+
+        .talimat h2 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 16px;
+            color: #92400E;
+            margin-bottom: 12px;
+        }
+
+        .talimat ol {
+            padding-left: 20px;
+            color: var(--text-primary);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .talimat code {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--brand-primary);
+        }
+
+        .hata-mesaj {
+            color: #DC2626;
+            background: rgba(239, 68, 68, 0.08);
+            border-left: 3px solid #DC2626;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .hata-mesaj.gorunur {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="konteyner">
+        <h1>
+            <span class="emoji">🎯</span>
+            ELEMENTRA QR Kod Üretici
+        </h1>
+        <p class="alt-baslik">
+            GitHub Pages URL'iniz için sergi materyallerine yerleştireceğiniz QR kodu oluşturun.
+        </p>
+
+        <div class="form-grup">
+            <label for="url-input">Deploy URL'i:</label>
+            <input
+                type="text"
+                id="url-input"
+                placeholder="https://kullanici-adi.github.io/elementra/"
+                value=""
+                autocomplete="off"
+            >
+            <p class="hata-mesaj" id="hata">Geçerli bir URL girin (http:// veya https:// ile başlamalı).</p>
+        </div>
+
+        <button class="btn btn-primary" id="olustur-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12l5 5L20 7"/>
+            </svg>
+            QR Kod Oluştur
+        </button>
+
+        <div class="qr-onizleme" id="qr-alan">
+            <p class="qr-bos">QR kod buraya gelecek — yukarıdaki butona basın.</p>
+        </div>
+
+        <div class="indirme-grup gizli" id="indirme">
+            <button class="btn btn-secondary" id="png-indir">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                PNG İndir
+            </button>
+            <button class="btn btn-secondary" id="svg-indir">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                SVG İndir
+            </button>
+        </div>
+
+        <div class="talimat">
+            <h2>📋 Sonraki Adımlar</h2>
+            <ol>
+                <li>Yukarıda <code>F8.6 deploy</code> sonrası elde ettiğiniz URL'i girin (örnek: <code>https://aoselmis.github.io/elementra/</code>).</li>
+                <li><strong>QR Kod Oluştur</strong> butonuna basın.</li>
+                <li><strong>PNG İndir</strong> ile dosyayı kaydedin → <code>sergi/qr.png</code> olarak rename edin.</li>
+                <li><code>poster.html</code> ve <code>brosur.html</code> dosyalarındaki <strong>QR kod placeholder</strong> div'lerini şununla değiştirin:
+                    <br><code>&lt;img src="qr.png" alt="ELEMENTRA QR" style="width:100%;height:100%;object-fit:contain;"&gt;</code>
+                </li>
+                <li>Tarayıcıda <code>poster.html</code> + <code>brosur.html</code> açıp PDF olarak kaydedin (F8.2 + F8.4 talimatlarına göre).</li>
+                <li>İsterseniz <code>juri_karti.html</code>'a da küçük bir QR ekleyebilirsiniz (isteğe bağlı).</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- qrcode.js (davidshimjs/qrcodejs, MIT) — LOKAL dosya, offline çalışır -->
+    <script src="qrcode.min.js"></script>
+
+    <script>
+        'use strict';
+
+        const urlInput   = document.getElementById('url-input');
+        const olusturBtn = document.getElementById('olustur-btn');
+        const qrAlan     = document.getElementById('qr-alan');
+        const indirme    = document.getElementById('indirme');
+        const hataMesaj  = document.getElementById('hata');
+        const pngIndir   = document.getElementById('png-indir');
+        const svgIndir   = document.getElementById('svg-indir');
+
+        let mevcutUrl = null;
+
+        function urlGecerli(url) {
+            try {
+                const u = new URL(url);
+                return u.protocol === 'http:' || u.protocol === 'https:';
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function qrOlustur() {
+            const url = urlInput.value.trim();
+            hataMesaj.classList.remove('gorunur');
+
+            if (!url || !urlGecerli(url)) {
+                hataMesaj.classList.add('gorunur');
+                return;
+            }
+
+            mevcutUrl = url;
+            qrAlan.innerHTML = '';
+
+            // qrcodejs (davidshimjs) API — element + options, otomatik canvas + img üretir
+            const tutucu = document.createElement('div');
+            tutucu.id = 'qr-canvas';
+            tutucu.style.cssText = 'background:#FFFFFF;padding:12px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.08);display:inline-block;';
+            qrAlan.appendChild(tutucu);
+
+            try {
+                new QRCode(tutucu, {
+                    text: url,
+                    width: 256,
+                    height: 256,
+                    colorDark:  '#1E1B4B',
+                    colorLight: '#FFFFFF',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+
+                const urlOnz = document.createElement('div');
+                urlOnz.className = 'url-onizleme';
+                urlOnz.textContent = url;
+                qrAlan.appendChild(urlOnz);
+                indirme.classList.remove('gizli');
+            } catch (err) {
+                qrAlan.innerHTML = '<p style="color:#DC2626;">QR oluşturulamadı: ' + err.message + '</p>';
+            }
+        }
+
+        olusturBtn.addEventListener('click', qrOlustur);
+        urlInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') qrOlustur();
+        });
+
+        // PNG indir — kütüphane hem canvas hem img üretir; canvas'tan toDataURL alalım
+        pngIndir.addEventListener('click', () => {
+            const canvas = document.querySelector('#qr-canvas canvas');
+            const img    = document.querySelector('#qr-canvas img');
+            const link   = document.createElement('a');
+            link.download = 'qr.png';
+            if (canvas) {
+                link.href = canvas.toDataURL('image/png');
+            } else if (img) {
+                link.href = img.src;
+            } else {
+                alert('QR önce oluşturulmalı.');
+                return;
+            }
+            link.click();
+        });
+
+        // SVG indir — qrcodejs SVG üretmez; PNG'yi <svg><image>'a sarıp dışa al
+        svgIndir.addEventListener('click', () => {
+            if (!mevcutUrl) {
+                alert('QR önce oluşturulmalı.');
+                return;
+            }
+            const canvas = document.querySelector('#qr-canvas canvas');
+            const img    = document.querySelector('#qr-canvas img');
+            const src    = canvas ? canvas.toDataURL('image/png') : (img ? img.src : null);
+            if (!src) {
+                alert('QR önce oluşturulmalı.');
+                return;
+            }
+            const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+    <image href="${src}" width="256" height="256"/>
+</svg>`;
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            const link = document.createElement('a');
+            link.download = 'qr.svg';
+            link.href = URL.createObjectURL(blob);
+            link.click();
+        });
+
+        // qrcode.js yüklendi mi kontrol
+        window.addEventListener('load', () => {
+            if (typeof QRCode === 'undefined') {
+                qrAlan.innerHTML = '<p style="color:#DC2626;">⚠️ qrcode.min.js kütüphanesi bulunamadı. sergi/qrcode.min.js dosyasını kontrol edin.</p>';
+                olusturBtn.disabled = true;
+            }
+        });
+    </script>
+
+</body>
+</html>

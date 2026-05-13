@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>ELEMENTRA — A1 Poster (TÜBİTAK 4006)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oxanium:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ═════════════════════════════════════════════════
+           A1 PRINT CSS — 594 × 841 mm
+           ═════════════════════════════════════════════════ */
+        @page {
+            size: A1 portrait;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --brand-primary:   #7C3AED;
+            --brand-secondary: #EC4899;
+            --color-success:   #10B981;
+            --color-error:     #EF4444;
+            --color-warning:   #F59E0B;
+            --color-info:      #06B6D4;
+            --text-primary:    #1E1B4B;
+            --text-secondary:  #4B5563;
+            --text-muted:      #6B7280;
+            --surface-0:       #FAF5FF;
+            --surface-1:       #FFFFFF;
+            --surface-2:       #F3F4F6;
+            --grad-brand:      linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+
+            --font-display: 'Oxanium', sans-serif;
+            --font-body:    'Inter', system-ui, sans-serif;
+        }
+
+        html, body {
+            width: 594mm;
+            height: 841mm;
+            background: var(--surface-0);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            padding: 24mm;
+            display: grid;
+            grid-template-rows: auto auto 1fr auto auto auto;
+            gap: 12mm;
+        }
+
+        /* ═════════════════════════════════════════════════
+           HEADER — Logo + Başlık + Slogan
+           ═════════════════════════════════════════════════ */
+        .pst-header {
+            display: flex;
+            align-items: center;
+            gap: 14mm;
+        }
+
+        .pst-logo {
+            width: 70mm;
+            height: 70mm;
+            flex-shrink: 0;
+        }
+
+        .pst-baslik-grup {
+            flex: 1;
+        }
+
+        .pst-baslik {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 80pt;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            background: var(--grad-brand);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 4mm;
+        }
+
+        .pst-slogan {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 32pt;
+            color: var(--text-primary);
+            margin-bottom: 3mm;
+        }
+
+        .pst-aciklama {
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 14pt;
+            color: var(--text-secondary);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* ═════════════════════════════════════════════════
+           KARTLAR — Ortak stil
+           ═════════════════════════════════════════════════ */
+        .pst-kart {
+            background: var(--surface-1);
+            border-radius: 8mm;
+            padding: 10mm 12mm;
+            box-shadow: 0 4mm 14mm rgba(30, 27, 75, 0.08);
+            border-top: 4mm solid var(--brand-primary);
+        }
+
+        .pst-kart-baslik {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 24pt;
+            color: var(--brand-primary);
+            margin-bottom: 6mm;
+            display: flex;
+            align-items: center;
+            gap: 4mm;
+            line-height: 1.1;
+        }
+
+        .pst-kart-emoji {
+            font-size: 28pt;
+        }
+
+        .pst-kart p,
+        .pst-kart li {
+            font-family: var(--font-body);
+            font-size: 13pt;
+            color: var(--text-primary);
+            line-height: 1.55;
+        }
+
+        .pst-kart strong {
+            color: var(--brand-primary);
+            font-weight: 700;
+        }
+
+        /* Sıra 2: PROBLEM + ÇÖZÜM */
+        .pst-sira-iki {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10mm;
+        }
+
+        .pst-kart-problem  { border-top-color: var(--color-error); }
+        .pst-kart-cozum    { border-top-color: var(--color-success); }
+        .pst-kart-problem .pst-kart-baslik { color: var(--color-error); }
+        .pst-kart-cozum .pst-kart-baslik   { color: var(--color-success); }
+
+        /* Sıra 3: 3 MODÜL */
+        .pst-modul-blok {
+            border-top-color: var(--brand-secondary);
+        }
+        .pst-modul-blok .pst-kart-baslik { color: var(--brand-secondary); }
+
+        .pst-modul-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8mm;
+            margin-top: 4mm;
+        }
+
+        .pst-modul-kart {
+            background: var(--surface-2);
+            border-radius: 5mm;
+            padding: 7mm;
+            border-left: 3mm solid var(--brand-primary);
+        }
+
+        .pst-modul-kart h3 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 16pt;
+            color: var(--text-primary);
+            margin-bottom: 3mm;
+        }
+
+        .pst-modul-kart p {
+            font-size: 11pt;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .pst-modul-1 { border-left-color: #93C5FD; }   /* Element Avı — mavi */
+        .pst-modul-2 { border-left-color: #C4B5FD; }   /* Memory — mor */
+        .pst-modul-3 { border-left-color: var(--color-success); } /* Yapboz — yeşil */
+
+        /* Sıra 4: KAZANIMLAR + NEDEN OYUN */
+        .pst-sira-dort {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10mm;
+        }
+
+        .pst-kart-kazanim { border-top-color: var(--color-info); }
+        .pst-kart-neden   { border-top-color: var(--color-warning); }
+        .pst-kart-kazanim .pst-kart-baslik { color: var(--color-info); }
+        .pst-kart-neden .pst-kart-baslik   { color: var(--color-warning); }
+
+        .pst-kazanim-liste {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pst-kazanim-liste li {
+            padding: 3mm 0;
+            border-bottom: 0.5pt solid var(--surface-2);
+            display: flex;
+            gap: 4mm;
+        }
+
+        .pst-kazanim-liste li:last-child {
+            border-bottom: none;
+        }
+
+        .pst-kazanim-kod {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--brand-primary);
+            flex-shrink: 0;
+            min-width: 22mm;
+        }
+
+        .pst-istatistik {
+            display: flex;
+            gap: 8mm;
+            margin-top: 6mm;
+            flex-wrap: wrap;
+        }
+
+        .pst-stat-rozet {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border-radius: 4mm;
+            padding: 4mm 6mm;
+            flex: 1;
+            min-width: 70mm;
+        }
+
+        .pst-stat-rozet .pst-stat-deger {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 28pt;
+            color: var(--color-warning);
+            line-height: 1;
+            display: block;
+            margin-bottom: 2mm;
+        }
+
+        .pst-stat-rozet .pst-stat-aciklama {
+            font-size: 10pt;
+            color: var(--text-secondary);
+        }
+
+        /* Sıra 5: QR alanı */
+        .pst-qr-blok {
+            background: var(--grad-brand);
+            color: #FFFFFF;
+            border-radius: 8mm;
+            padding: 10mm 14mm;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 12mm;
+            border-top: none;
+            box-shadow: 0 6mm 18mm rgba(124, 58, 237, 0.25);
+        }
+
+        .pst-qr-placeholder {
+            width: 50mm;
+            height: 50mm;
+            background: #FFFFFF;
+            border-radius: 4mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-body);
+            font-size: 9pt;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 4mm;
+        }
+
+        .pst-qr-icerik h2 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 28pt;
+            color: #FFFFFF;
+            line-height: 1.1;
+            margin-bottom: 4mm;
+        }
+
+        .pst-qr-icerik p {
+            font-size: 13pt;
+            color: rgba(255, 255, 255, 0.92);
+            line-height: 1.5;
+        }
+
+        .pst-qr-url {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 12pt;
+            color: #FFFFFF;
+            margin-top: 4mm;
+            padding: 3mm 5mm;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 3mm;
+            display: inline-block;
+            letter-spacing: 0.04em;
+        }
+
+        /* ═════════════════════════════════════════════════
+           FOOTER — Ekip + Okul + TÜBİTAK
+           ═════════════════════════════════════════════════ */
+        .pst-footer {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8mm;
+            padding-top: 6mm;
+            border-top: 1pt solid var(--surface-2);
+            align-items: end;
+        }
+
+        .pst-ekip {
+            font-family: var(--font-body);
+            font-size: 12pt;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .pst-ekip strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .pst-tubitak {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 14pt;
+            color: var(--brand-primary);
+            text-align: right;
+        }
+
+        .pst-tubitak-alt {
+            font-family: var(--font-body);
+            font-size: 10pt;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 2mm;
+        }
+
+        /* ═════════════════════════════════════════════════
+           Print yardımcı butonu (no-print)
+           ═════════════════════════════════════════════════ */
+        .no-print {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            background: var(--grad-brand);
+            color: #FFFFFF;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  HEADER  -->
+    <!-- ════════════════════════════════════════ -->
+    <header class="pst-header">
+        <svg class="pst-logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#7C3AED"/>
+                    <stop offset="100%" stop-color="#EC4899"/>
+                </linearGradient>
+            </defs>
+            <circle cx="32" cy="32" r="5" fill="url(#logoGrad)"/>
+            <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="url(#logoGrad)" stroke-width="2.5"/>
+            <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" transform="rotate(60 32 32)"/>
+            <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" transform="rotate(-60 32 32)"/>
+        </svg>
+        <div class="pst-baslik-grup">
+            <h1 class="pst-baslik">ELEMENTRA</h1>
+            <div class="pst-slogan">Kimyayı Keşfet</div>
+            <div class="pst-aciklama">Periyodik Tablo · Bileşikler · Atom Sembolleri</div>
+        </div>
+    </header>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SIRA 2: PROBLEM + ÇÖZÜM  -->
+    <!-- ════════════════════════════════════════ -->
+    <section class="pst-sira-iki">
+        <article class="pst-kart pst-kart-problem">
+            <h2 class="pst-kart-baslik">
+                <span class="pst-kart-emoji">❓</span>
+                Problem
+            </h2>
+            <p>
+                Lise kimyası, öğrencilerin önemli bir kısmı için soyut kalıyor.
+                Periyodik tablo, atom sembolleri, kimyasal formüller — bu temel
+                konular yalnız ezberle değil, <strong>oyun temelli öğrenmeyle</strong>
+                pekiştiğinde kalıcı oluyor.
+            </p>
+            <p style="margin-top: 4mm;">
+                Türk öğrencilere TR dilinde, MEB müfredatına uyumlu, sergi-dostu
+                bir dijital oyun bulunmuyor.
+            </p>
+        </article>
+
+        <article class="pst-kart pst-kart-cozum">
+            <h2 class="pst-kart-baslik">
+                <span class="pst-kart-emoji">💡</span>
+                Çözüm
+            </h2>
+            <p>
+                <strong>ELEMENTRA</strong> — vanilla HTML/CSS/JavaScript ile sıfırdan
+                yazılmış, 3 modüllü dijital öğretici oyun.
+            </p>
+            <ul style="margin-top: 4mm; padding-left: 6mm;">
+                <li>Hiç indirme gerektirmez — tarayıcıda anında çalışır</li>
+                <li>Premium tasarım — Nebula paleti + Oxanium tipografi</li>
+                <li>Klavye + dokunmatik desteği — her cihazda</li>
+                <li>20 başarım sistemi — uzun süreli motivasyon</li>
+                <li>Mini ansiklopedi — 36 element + 24 bileşik</li>
+            </ul>
+        </article>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SIRA 3: 3 MODÜL  -->
+    <!-- ════════════════════════════════════════ -->
+    <section class="pst-kart pst-modul-blok">
+        <h2 class="pst-kart-baslik">
+            <span class="pst-kart-emoji">🎮</span>
+            3 Modül — Üç Farklı Pedagojik Yaklaşım
+        </h2>
+        <div class="pst-modul-grid">
+            <div class="pst-modul-kart pst-modul-1">
+                <h3>1. Element Avı</h3>
+                <p>
+                    Periyodik tabloda <strong>36 elementi</strong> tıkla-bul. 4 zorluk
+                    seviyesi (Kolay–Uzman), 4 soru tipi (ad / atom no / yaygın ad /
+                    kategori).
+                </p>
+            </div>
+            <div class="pst-modul-kart pst-modul-2">
+                <h3>2. Sembol Eşleştirme</h3>
+                <p>
+                    Klasik memory mekaniği. Element <strong>ad ↔ sembol</strong> eşle.
+                    Latince köken bonusu (Na = Natrium, K = Kalium, Fe = Ferrum...).
+                </p>
+            </div>
+            <div class="pst-modul-kart pst-modul-3">
+                <h3>3. Formül Yapboz</h3>
+                <p>
+                    Atomları birleştirip <strong>24 bileşiği</strong> kur. Eksik/fazla
+                    atom analizi ile <strong>pedagojik geri bildirim</strong> verir.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SIRA 4: KAZANIMLAR + NEDEN OYUN  -->
+    <!-- ════════════════════════════════════════ -->
+    <section class="pst-sira-dort">
+        <article class="pst-kart pst-kart-kazanim">
+            <h2 class="pst-kart-baslik">
+                <span class="pst-kart-emoji">📚</span>
+                MEB Kazanımları
+            </h2>
+            <ul class="pst-kazanim-liste">
+                <li><span class="pst-kazanim-kod">9.2.3.3</span><span>Periyodik tablonun yapısını açıklar</span></li>
+                <li><span class="pst-kazanim-kod">9.2.3.4</span><span>Element kategorilerini sınıflandırır</span></li>
+                <li><span class="pst-kazanim-kod">9.3.2.1</span><span>Bileşik adlandırma kurallarını uygular</span></li>
+                <li><span class="pst-kazanim-kod">9.3.2.2</span><span>Kimyasal formül yazımını uygular</span></li>
+            </ul>
+            <p style="margin-top: 4mm; font-size: 10pt; color: var(--text-muted);">
+                MEB Kimya 9. Sınıf 2018 müfredat reformu
+            </p>
+        </article>
+
+        <article class="pst-kart pst-kart-neden">
+            <h2 class="pst-kart-baslik">
+                <span class="pst-kart-emoji">🔬</span>
+                Neden Oyun Temelli?
+            </h2>
+            <p>
+                Kanıt-temelli tasarım: gamification kimyada motivasyonu artırıyor
+                ve klasik ezberden daha kalıcı öğrenme sağlıyor.
+            </p>
+            <div class="pst-istatistik">
+                <div class="pst-stat-rozet">
+                    <span class="pst-stat-deger">+38%</span>
+                    <span class="pst-stat-aciklama">Motivasyon artışı (Hu, 2022)</span>
+                </div>
+                <div class="pst-stat-rozet">
+                    <span class="pst-stat-deger">2.4×</span>
+                    <span class="pst-stat-aciklama">Kalıcılık (Snakeleev, 2019)</span>
+                </div>
+            </div>
+            <p style="margin-top: 4mm; font-size: 9pt; color: var(--text-muted);">
+                <strong>Kaynaklar:</strong> Hu, J. (2022) Educational Research Review 35 ·
+                Snakeleev Project (2019) · WCAG 2.1 AA standardı.
+            </p>
+        </article>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SIRA 5: QR  -->
+    <!-- ════════════════════════════════════════ -->
+    <section class="pst-qr-blok">
+        <div class="pst-qr-placeholder">
+            QR kod buraya gelecek<br>(F8.7'de oluşturulacak)
+        </div>
+        <div class="pst-qr-icerik">
+            <h2>Telefonunda Oyna</h2>
+            <p>Sergi sonrası evde de devam et. ELEMENTRA tüm modern tarayıcılarda çalışır — indirme gerekmez.</p>
+            <div class="pst-qr-url">[GITHUB_USERNAME].github.io/elementra</div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  FOOTER  -->
+    <!-- ════════════════════════════════════════ -->
+    <footer class="pst-footer">
+        <div class="pst-ekip">
+            <div><strong>Öğrenciler:</strong> Mert Ege KAHRAMAN · Hüseyin Efe BALCI</div>
+            <div><strong>Danışman:</strong> Abdullah ÖSELMİŞ</div>
+            <div><strong>Okul:</strong> [OKUL] · <strong>Şehir:</strong> [ŞEHİR]</div>
+        </div>
+        <div>
+            <div class="pst-tubitak">TÜBİTAK 4006</div>
+            <div class="pst-tubitak-alt">Bilim Fuarı Destekleme Programı · 2025–2026</div>
+        </div>
+    </footer>
+
+    <!-- Print yardımcı butonu -->
+    <button class="no-print" onclick="window.print()">📄 PDF olarak kaydet</button>
+
+</body>
+</html>

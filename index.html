@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="ELEMENTRA — Kimyayı oynayarak öğren. TÜBİTAK 4006 Bilim Fuarı Projesi.">
+    <meta name="theme-color" content="#7C3AED">
+    <meta name="author" content="Mert Ege KAHRAMAN, Hüseyin Efe BALCI">
+
+    <title>ELEMENTRA — Kimyayı Keşfet</title>
+
+    <!-- Google Fonts: Inter (gövde) + Oxanium (başlık) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oxanium:wght@500;700;800&display=swap" rel="stylesheet">
+
+    <!-- ELEMENTRA Tasarım Sistemi -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Favicon (atom logosu — inline SVG) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='4' fill='%237C3AED'/%3E%3Cellipse cx='32' cy='32' rx='24' ry='9' fill='none' stroke='%237C3AED' stroke-width='3'/%3E%3Cellipse cx='32' cy='32' rx='24' ry='9' fill='none' stroke='%237C3AED' stroke-width='3' transform='rotate(60 32 32)'/%3E%3Cellipse cx='32' cy='32' rx='24' ry='9' fill='none' stroke='%237C3AED' stroke-width='3' transform='rotate(-60 32 32)'/%3E%3C/svg%3E">
+</head>
+<body>
+
+    <!--
+      SVG İkon Sprite (Inline)
+      F1.5 — file:// CORS sorununu önlemek için doğrudan body'ye gömüldü
+      Toplam: 37 ikon (31 Tabler MIT + 6 custom kimya)
+    -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+      <defs>
+        <!-- GENEL UI -->
+        <symbol id="i-tik" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></symbol>
+        <symbol id="i-carpi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+        <symbol id="i-kapat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+        <symbol id="i-geri" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+        <symbol id="i-ileri" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+        <symbol id="i-yukari" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></symbol>
+        <symbol id="i-asagi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+        <symbol id="i-ayarlar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+        <symbol id="i-profil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+        <symbol id="i-anasayfa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+        <symbol id="i-yenile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></symbol>
+        <symbol id="i-cikis" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></symbol>
+        <symbol id="i-bilgi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+        <symbol id="i-uyari" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+        <symbol id="i-arama" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></symbol>
+        <symbol id="i-filtre" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></symbol>
+        <symbol id="i-yardim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+        <symbol id="i-klavye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h0M10 10h0M14 10h0M18 10h0M6 14h0M18 14h0"/><path d="M10 14h4"/></symbol>
+
+        <!-- SES / MÜZİK -->
+        <symbol id="i-ses-acik" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+        <symbol id="i-ses-kapali" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></symbol>
+        <symbol id="i-muzik" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+
+        <!-- OYUN -->
+        <symbol id="i-zaman" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+        <symbol id="i-kupa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
+        <symbol id="i-yildiz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+        <symbol id="i-yildiz-dolu" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+        <symbol id="i-rozet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></symbol>
+        <symbol id="i-alev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+        <symbol id="i-kalp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
+        <symbol id="i-ampul" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6"/><path d="M12 17v4"/><path d="M12 3a7 7 0 0 1 4 12.71V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-1.29A7 7 0 0 1 12 3z"/></symbol>
+        <symbol id="i-kilit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+        <symbol id="i-kilit-acik" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></symbol>
+
+        <!-- KİMYA ÖZEL (Custom 6) -->
+        <symbol id="i-atom" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="32" cy="32" r="4" fill="currentColor"/>
+          <ellipse cx="32" cy="32" rx="24" ry="9"/>
+          <ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(60 32 32)"/>
+          <ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(-60 32 32)"/>
+        </symbol>
+        <symbol id="i-beher" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/>
+          <path d="M7 14h10" stroke-dasharray="2 1"/>
+          <circle cx="9" cy="17" r="0.5" fill="currentColor"/>
+          <circle cx="14" cy="18" r="0.5" fill="currentColor"/>
+        </symbol>
+        <symbol id="i-test-tup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 2h6"/>
+          <path d="M9 2v17a3 3 0 0 0 6 0V2"/>
+          <path d="M9 13h6" stroke-dasharray="2 1"/>
+        </symbol>
+        <symbol id="i-molekul" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="3" fill="currentColor" fill-opacity="0.2"/>
+          <circle cx="18" cy="6" r="3" fill="currentColor" fill-opacity="0.2"/>
+          <circle cx="12" cy="18" r="3" fill="currentColor" fill-opacity="0.2"/>
+          <line x1="8.5" y1="7.5" x2="10.5" y2="15.5"/>
+          <line x1="15.5" y1="7.5" x2="13.5" y2="15.5"/>
+        </symbol>
+        <symbol id="i-periyodik" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="18" rx="2"/>
+          <rect x="4" y="5" width="3" height="3" fill="currentColor" fill-opacity="0.3"/>
+          <rect x="17" y="5" width="3" height="3" fill="currentColor" fill-opacity="0.3"/>
+          <rect x="4" y="9" width="3" height="3" fill="currentColor" fill-opacity="0.2"/>
+          <rect x="8" y="9" width="3" height="3" fill="currentColor" fill-opacity="0.2"/>
+          <rect x="12" y="9" width="3" height="3" fill="currentColor" fill-opacity="0.2"/>
+          <rect x="17" y="9" width="3" height="3" fill="currentColor" fill-opacity="0.2"/>
+          <rect x="4" y="13" width="3" height="3" fill="currentColor" fill-opacity="0.4"/>
+          <rect x="8" y="13" width="3" height="3" fill="currentColor" fill-opacity="0.4"/>
+          <rect x="12" y="13" width="3" height="3" fill="currentColor" fill-opacity="0.4"/>
+          <rect x="17" y="13" width="3" height="3" fill="currentColor" fill-opacity="0.4"/>
+        </symbol>
+        <symbol id="i-element-hucre" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <text x="12" y="14" font-family="Inter, sans-serif" font-weight="800" font-size="9" text-anchor="middle" fill="currentColor" stroke="none">E</text>
+          <text x="6" y="8" font-family="Inter, sans-serif" font-size="4" fill="currentColor" stroke="none">1</text>
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  ANA UYGULAMA — Ana Menü (Splash + 3 Modül Kartı)  -->
+    <!-- ════════════════════════════════════════ -->
+    <main id="anaekran" class="container-app ekran animate-fade-in">
+
+        <!-- Logo + Slogan -->
+        <header class="hero">
+            <svg class="ikon ikon-3xl ikon-marka animate-fade-in" aria-hidden="true">
+                <use href="#i-atom"/>
+            </svg>
+            <h1 class="logo-yazi">ELEMENTRA</h1>
+            <p class="slogan">Kimyayı Keşfet</p>
+        </header>
+
+        <!-- 3 Modül Kartı -->
+        <section class="modul-grid" aria-label="Oyun modülleri">
+
+            <!-- Modül 1: Element Avı -->
+            <article class="kart kart-hover" data-modul="elementAvi" role="button" tabindex="0">
+                <div class="modul-kart-no">1</div>
+                <div class="kart-header">
+                    <div class="kart-ikon">
+                        <svg class="ikon ikon-lg" aria-hidden="true"><use href="#i-periyodik"/></svg>
+                    </div>
+                    <h2 class="kart-baslik">Element Avı</h2>
+                </div>
+                <p class="kart-icerik">Periyodik tabloda elementi bul.<br>36 element × 4 zorluk.</p>
+
+                <div class="modul-kart-progress">
+                    <div class="progress-label">
+                        <span class="modul-kart-ilerleme">0 / 36 element</span>
+                        <span class="modul-kart-yuzde tabular">%0</span>
+                    </div>
+                    <div class="progress progress-thin">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="modul-kart-meta">
+                    <span class="modul-kart-skor tabular">—</span>
+                </div>
+            </article>
+
+            <!-- Modül 2: Sembol Eşleştirme -->
+            <article class="kart kart-hover" data-modul="sembolEslestirme" role="button" tabindex="0">
+                <div class="modul-kart-no">2</div>
+                <div class="kart-header">
+                    <div class="kart-ikon">
+                        <svg class="ikon ikon-lg" aria-hidden="true"><use href="#i-element-hucre"/></svg>
+                    </div>
+                    <h2 class="kart-baslik">Sembol Eşleştirme</h2>
+                </div>
+                <p class="kart-icerik">Memory oyunuyla sembolleri eşle.<br>Latince köken bonusu.</p>
+
+                <div class="modul-kart-progress">
+                    <div class="progress-label">
+                        <span class="modul-kart-ilerleme">0 / 36 element</span>
+                        <span class="modul-kart-yuzde tabular">%0</span>
+                    </div>
+                    <div class="progress progress-thin">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="modul-kart-meta">
+                    <span class="modul-kart-skor tabular">—</span>
+                </div>
+            </article>
+
+            <!-- Modül 3: Formül Yapboz -->
+            <article class="kart kart-hover" data-modul="formulYapboz" role="button" tabindex="0">
+                <div class="modul-kart-no">3</div>
+                <div class="kart-header">
+                    <div class="kart-ikon">
+                        <svg class="ikon ikon-lg" aria-hidden="true"><use href="#i-molekul"/></svg>
+                    </div>
+                    <h2 class="kart-baslik">Formül Yapboz</h2>
+                </div>
+                <p class="kart-icerik">Atomları birleştirip bileşik kur.<br>24 bileşik × 4 zorluk.</p>
+
+                <div class="modul-kart-progress">
+                    <div class="progress-label">
+                        <span class="modul-kart-ilerleme">0 / 24 bileşik</span>
+                        <span class="modul-kart-yuzde tabular">%0</span>
+                    </div>
+                    <div class="progress progress-thin">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="modul-kart-meta">
+                    <span class="modul-kart-skor tabular">—</span>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- Alt Bar — Profil / Ayarlar / Mute -->
+        <footer class="alt-bar">
+            <button class="btn btn-ghost btn-sm" type="button" aria-label="Profilim">
+                <svg class="ikon" aria-hidden="true"><use href="#i-profil"/></svg>
+                Profil
+            </button>
+            <button class="btn btn-ghost btn-sm" type="button" id="ansk-btn" aria-label="Ansiklopedi">
+                <svg class="ikon" aria-hidden="true"><use href="#i-element-hucre"/></svg>
+                Ansiklopedi
+            </button>
+            <button class="btn btn-ghost btn-sm" type="button" aria-label="Ayarlar">
+                <svg class="ikon" aria-hidden="true"><use href="#i-ayarlar"/></svg>
+                Ayarlar
+            </button>
+            <button class="btn btn-ghost btn-icon" type="button" id="mute-btn" aria-label="Sesi aç/kapa" title="M tuşu ile de değiştirebilirsin">
+                <svg class="ikon" aria-hidden="true"><use href="#i-ses-acik"/></svg>
+            </button>
+        </footer>
+
+    </main>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  OYUN EKRANI — HUD üstte sabit + modül içeriği altta (F2.3 + F2.4)  -->
+    <!-- ════════════════════════════════════════ -->
+    <main id="oyun-ekran" class="ekran hidden">
+        <!-- HUD: Üst bar (F2.4) -->
+        <header id="oyun-hud" class="oyun-hud">
+            <button id="hud-geri" class="btn btn-ghost btn-sm" type="button" aria-label="Ana menüye dön">
+                <svg class="ikon" aria-hidden="true"><use href="#i-geri"/></svg>
+                Geri
+            </button>
+
+            <div class="hud-baslik-grubu">
+                <span id="hud-modul-adi" class="hud-modul-adi">—</span>
+                <span id="hud-zorluk" class="badge badge-pill badge-brand">—</span>
+            </div>
+
+            <div class="hud-grup">
+                <div class="hud-skor" id="hud-skor-kapsayici" aria-label="Skor">
+                    <svg class="ikon ikon-sm" aria-hidden="true"><use href="#i-kupa"/></svg>
+                    <span class="hud-deger tabular" id="hud-skor-deger">0</span>
+                </div>
+                <div class="hud-sure" aria-label="Süre">
+                    <svg class="ikon ikon-sm" aria-hidden="true"><use href="#i-zaman"/></svg>
+                    <span class="hud-deger tabular" id="hud-sure-deger">00:00</span>
+                </div>
+                <div class="hud-combo hidden" id="hud-combo-kapsayici" aria-label="Combo">
+                    <svg class="ikon ikon-sm" aria-hidden="true"><use href="#i-alev"/></svg>
+                    <span class="hud-deger tabular" id="hud-combo-deger">x1</span>
+                </div>
+                <button id="hud-mute" class="btn btn-ghost btn-icon btn-sm" type="button" aria-label="Sesi aç/kapa" title="M tuşu">
+                    <svg class="ikon" aria-hidden="true"><use href="#i-ses-acik"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Modül-spesifik içerik buraya yüklenir -->
+        <div id="oyun-icerik" class="container-app">
+            <!-- FAZ 3-5'te modül-spesifik içerik çizilecek -->
+        </div>
+    </main>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SONUÇ EKRANI (F2.3 — oyun bitince doldurulacak)  -->
+    <!-- ════════════════════════════════════════ -->
+    <main id="sonuc-ekran" class="container-app ekran hidden">
+        <!-- FAZ 3-5'te sonuç içeriği (skor + öğrenilen liste + tekrar oyna) -->
+    </main>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  ANSİKLOPEDİ EKRANI (F6.2 — 36 element + 24 bileşik liste)  -->
+    <!-- ════════════════════════════════════════ -->
+    <main id="ansiklopedi-ekran" class="container-app ekran hidden">
+        <!-- İçerik Ansiklopedi.ac() içinde JS tarafından doldurulur -->
+    </main>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  YANSITMA EKRANI (F6.3 — pedagojik geri bildirim)  -->
+    <!-- ════════════════════════════════════════ -->
+    <main id="yansitma-ekran" class="container-app ekran hidden">
+        <!-- İçerik Yansitma.ac() içinde JS tarafından doldurulur -->
+    </main>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  BAŞARIMLAR EKRANI (F6.4 — 20 rozet liste)  -->
+    <!-- ════════════════════════════════════════ -->
+    <main id="basarim-ekran" class="container-app ekran hidden">
+        <!-- İçerik Basarimlar.ac() içinde JS tarafından doldurulur -->
+    </main>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  PROFİL EKRANI (F2.7 — placeholder; FAZ 6'da detaylanacak)  -->
+    <!-- ════════════════════════════════════════ -->
+    <main id="profil-ekran" class="container-app ekran hidden">
+        <header class="profil-header">
+            <button class="btn btn-ghost btn-sm" type="button" data-aksiyon="anaMenu">
+                <svg class="ikon"><use href="#i-geri"/></svg>
+                Geri
+            </button>
+            <h1 class="profil-baslik">Profilim</h1>
+        </header>
+
+        <section class="profil-kimlik kart">
+            <div class="profil-avatar">
+                <svg class="ikon ikon-2xl ikon-marka"><use href="#i-atom"/></svg>
+            </div>
+            <div>
+                <h2 id="profil-unvan" class="profil-unvan">Kimyacı Adayı</h2>
+                <p id="profil-ozet" class="text-secondary"></p>
+            </div>
+        </section>
+
+        <section class="profil-bolum">
+            <h3 class="profil-bolum-baslik">
+                <svg class="ikon ikon-sm ikon-marka"><use href="#i-rozet"/></svg>
+                Genel İstatistik
+            </h3>
+            <div class="profil-stat-grid">
+                <div class="profil-stat-hucre">
+                    <span class="profil-stat-etiket">Doğru</span>
+                    <span class="profil-stat-deger tabular" id="profil-stat-dogru">0</span>
+                </div>
+                <div class="profil-stat-hucre">
+                    <span class="profil-stat-etiket">Yanlış</span>
+                    <span class="profil-stat-deger tabular" id="profil-stat-yanlis">0</span>
+                </div>
+                <div class="profil-stat-hucre">
+                    <span class="profil-stat-etiket">Başarı</span>
+                    <span class="profil-stat-deger tabular" id="profil-stat-basari">%0</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="profil-bolum">
+            <h3 class="profil-bolum-baslik">
+                <svg class="ikon ikon-sm ikon-marka"><use href="#i-element-hucre"/></svg>
+                Öğrenme İlerlemesi
+            </h3>
+            <div class="profil-ilerleme-blok" id="profil-ilerleme-elementler"></div>
+            <div class="profil-ilerleme-blok" id="profil-ilerleme-bilesikler"></div>
+        </section>
+
+        <section class="profil-bolum">
+            <h3 class="profil-bolum-baslik">
+                <svg class="ikon ikon-sm ikon-marka"><use href="#i-kupa"/></svg>
+                En İyi Skorlar — Yıldız Matrisi
+            </h3>
+            <div id="profil-skor-blok"></div>
+        </section>
+
+        <!-- F6.1 — Başarımlar + Yansıtma yan kartları -->
+        <section class="profil-yan-grid">
+            <button class="profil-yan-kart" type="button" data-profil-aksiyon="basarimlar">
+                <div class="profil-yan-kart-ikon">
+                    <svg class="ikon"><use href="#i-rozet"/></svg>
+                </div>
+                <div class="profil-yan-kart-icerik">
+                    <div class="profil-yan-kart-baslik">Başarımlarım</div>
+                    <div class="profil-yan-kart-deger tabular" id="profil-basarim-sayi">— / 20</div>
+                </div>
+                <div class="profil-yan-kart-aksiyon" aria-hidden="true">
+                    <svg class="ikon ikon-sm"><use href="#i-ileri"/></svg>
+                </div>
+            </button>
+            <button class="profil-yan-kart" type="button" data-profil-aksiyon="yansitma">
+                <div class="profil-yan-kart-ikon profil-yan-kart-ikon-warning">
+                    <svg class="ikon"><use href="#i-ampul"/></svg>
+                </div>
+                <div class="profil-yan-kart-icerik">
+                    <div class="profil-yan-kart-baslik">Yansıtma Anı</div>
+                    <div class="profil-yan-kart-aciklama">Zayıf alanlarını gör</div>
+                </div>
+                <div class="profil-yan-kart-aksiyon" aria-hidden="true">
+                    <svg class="ikon ikon-sm"><use href="#i-ileri"/></svg>
+                </div>
+            </button>
+        </section>
+    </main>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  ZORLUK SEÇİM MODALI (F2.2)              -->
+    <!--  Modüle giriş öncesi seviye seçimi       -->
+    <!-- ════════════════════════════════════════ -->
+    <div id="zorluk-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="zorluk-modal-baslik">
+        <div class="modal modal-genis">
+            <header class="modal-baslik">
+                <h2 id="zorluk-modal-baslik">
+                    <span id="zorluk-modal-modul-adi">Modül</span>
+                    <span class="text-muted" style="font-weight:var(--fw-medium);"> — Zorluk Seç</span>
+                </h2>
+                <button class="modal-kapat" type="button" data-aksiyon="kapat" aria-label="Kapat">
+                    <svg class="ikon"><use href="#i-kapat"/></svg>
+                </button>
+            </header>
+
+            <div class="modal-icerik">
+                <p class="text-secondary" style="margin-bottom: var(--space-5);">
+                    Hangi zorluk seviyesini denemek istiyorsun?
+                    <span class="text-muted" style="font-size: var(--fs-small);">(1-4 tuşlarıyla da seçebilirsin)</span>
+                </p>
+
+                <div class="zorluk-grid" id="zorluk-grid">
+                    <!-- 4 zorluk kartı dinamik üretilir -->
+                </div>
+            </div>
+
+            <footer class="modal-aksiyon">
+                <button class="btn btn-ghost" type="button" data-aksiyon="kapat">
+                    <svg class="ikon"><use href="#i-geri"/></svg>
+                    Geri
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  AYARLAR MODALI (F2.6)                   -->
+    <!-- ════════════════════════════════════════ -->
+    <div id="ayarlar-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="ayarlar-modal-baslik">
+        <div class="modal modal-genis">
+            <header class="modal-baslik">
+                <h2 id="ayarlar-modal-baslik">
+                    <svg class="ikon" style="vertical-align: middle; margin-right: 8px;"><use href="#i-ayarlar"/></svg>
+                    Ayarlar
+                </h2>
+                <button class="modal-kapat" type="button" data-ayarlar-kapat aria-label="Kapat">
+                    <svg class="ikon"><use href="#i-kapat"/></svg>
+                </button>
+            </header>
+
+            <div class="modal-icerik">
+                <!-- Ses Bölümü -->
+                <section class="ayar-bolum">
+                    <h3 class="ayar-bolum-baslik">
+                        <svg class="ikon ikon-sm ikon-marka"><use href="#i-ses-acik"/></svg>
+                        Ses
+                    </h3>
+
+                    <div class="ayar-slider-satir">
+                        <label for="ses-master">Genel ses</label>
+                        <input type="range" id="ses-master" min="0" max="100" value="70" class="ayar-slider">
+                        <span class="ayar-slider-deger tabular" id="ses-master-deger">70%</span>
+                    </div>
+
+                    <div class="ayar-slider-satir">
+                        <label for="ses-music">Müzik</label>
+                        <input type="range" id="ses-music" min="0" max="100" value="30" class="ayar-slider">
+                        <span class="ayar-slider-deger tabular" id="ses-music-deger">30%</span>
+                    </div>
+
+                    <div class="ayar-slider-satir">
+                        <label for="ses-sfx">Efektler</label>
+                        <input type="range" id="ses-sfx" min="0" max="100" value="80" class="ayar-slider">
+                        <span class="ayar-slider-deger tabular" id="ses-sfx-deger">80%</span>
+                    </div>
+
+                    <label class="ayar-toggle-satir">
+                        <input type="checkbox" id="ses-mute-toggle">
+                        <span>Tümünü sustur</span>
+                        <span class="ayar-toggle-not">(M tuşuyla da değiştirebilirsin)</span>
+                    </label>
+
+                    <button class="btn btn-outline btn-sm" type="button" id="ses-test-btn">
+                        <svg class="ikon ikon-sm"><use href="#i-ses-acik"/></svg>
+                        Sesi Test Et
+                    </button>
+                </section>
+
+                <hr class="ayar-ayrac">
+
+                <!-- Klavye Kısayolları -->
+                <section class="ayar-bolum">
+                    <h3 class="ayar-bolum-baslik">
+                        <svg class="ikon ikon-sm ikon-marka"><use href="#i-klavye"/></svg>
+                        Klavye Kısayolları
+                    </h3>
+                    <table class="ayar-kisayol-tablo">
+                        <tr><td><kbd>M</kbd></td><td>Sesi aç / kapa</td></tr>
+                        <tr><td><kbd>Esc</kbd></td><td>Geri dön / Modal kapat</td></tr>
+                        <tr><td><kbd>1</kbd>–<kbd>4</kbd></td><td>Zorluk hızlı seçim</td></tr>
+                        <tr><td><kbd>F1</kbd> veya <kbd>?</kbd></td><td>Yardım</td></tr>
+                        <tr><td><kbd>Ctrl+Shift+A</kbd></td><td>Yönetici paneli</td></tr>
+                    </table>
+                </section>
+
+                <hr class="ayar-ayrac">
+
+                <!-- Hakkında -->
+                <section class="ayar-bolum">
+                    <h3 class="ayar-bolum-baslik">
+                        <svg class="ikon ikon-sm ikon-marka"><use href="#i-bilgi"/></svg>
+                        Hakkında
+                    </h3>
+                    <p class="text-secondary" style="line-height: var(--line-height-loose);">
+                        <strong>ELEMENTRA v2</strong> — Kimyayı oynayarak öğren.<br>
+                        TÜBİTAK 4006 Bilim Fuarı Destekleme Programı (2025-2026)
+                    </p>
+                </section>
+            </div>
+
+            <footer class="modal-aksiyon">
+                <button class="btn btn-primary" type="button" data-ayarlar-kapat>
+                    Kapat
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  ROZET BİLDİRİM MODALI (F3.8 — yeni başarım)  -->
+    <!-- ════════════════════════════════════════ -->
+    <div id="rozet-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="rozet-modal-ad">
+        <div class="modal rozet-modal-kutu">
+            <div class="rozet-modal-icerik" id="rozet-modal-icerik">
+                <!-- Dinamik içerik — JS dolduracak -->
+            </div>
+            <footer class="modal-aksiyon" style="justify-content:center;">
+                <button class="btn btn-primary btn-lg" type="button" id="rozet-modal-devam">
+                    Devam
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  YARDIM MODALI (F7.6 — F1 veya ? tuşu)  -->
+    <!-- ════════════════════════════════════════ -->
+    <div id="yardim-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="yardim-modal-baslik">
+        <div class="modal modal-genis">
+            <header class="modal-baslik">
+                <h2 id="yardim-modal-baslik">
+                    <svg class="ikon" style="vertical-align:middle;margin-right:8px;"><use href="#i-klavye"/></svg>
+                    Klavye Kısayolları
+                </h2>
+                <button class="modal-kapat" type="button" data-yardim-kapat aria-label="Kapat">
+                    <svg class="ikon"><use href="#i-kapat"/></svg>
+                </button>
+            </header>
+            <div class="modal-icerik">
+                <section class="ayar-bolum">
+                    <h3 class="ayar-bolum-baslik">
+                        <svg class="ikon ikon-sm ikon-marka"><use href="#i-bilgi"/></svg>
+                        Genel
+                    </h3>
+                    <table class="ayar-kisayol-tablo">
+                        <tr><td><kbd>M</kbd></td><td>Sesi aç / kapa</td></tr>
+                        <tr><td><kbd>Esc</kbd></td><td>Geri dön / Modal kapat</td></tr>
+                        <tr><td><kbd>F1</kbd> veya <kbd>?</kbd></td><td>Bu yardımı aç</td></tr>
+                        <tr><td><kbd>Ctrl+Shift+A</kbd></td><td>Yönetici paneli</td></tr>
+                    </table>
+                </section>
+
+                <hr class="ayar-ayrac">
+
+                <section class="ayar-bolum">
+                    <h3 class="ayar-bolum-baslik">
+                        <svg class="ikon ikon-sm ikon-marka"><use href="#i-klavye"/></svg>
+                        Modüller
+                    </h3>
+                    <table class="ayar-kisayol-tablo">
+                        <tr><td><kbd>1</kbd>–<kbd>4</kbd></td><td>Zorluk hızlı seçim</td></tr>
+                        <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Seçili öğeyi onayla</td></tr>
+                        <tr><td><kbd>Tab</kbd></td><td>İleri navigasyon</td></tr>
+                        <tr><td><kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>Geri navigasyon</td></tr>
+                    </table>
+                </section>
+
+                <p class="text-secondary" style="margin-top:var(--space-4); line-height:var(--line-height-loose); font-size:var(--fs-small);">
+                    Premium klavye deneyimi için tüm modüller <strong>Tab + Enter</strong> ile oynanabilir.
+                </p>
+            </div>
+            <footer class="modal-aksiyon" style="justify-content:center;">
+                <button class="btn btn-primary btn-lg" type="button" data-yardim-kapat>
+                    <svg class="ikon"><use href="#i-tik"/></svg>
+                    Anladım
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  YÖNETİCİ ŞİFRE MODALI (F6.5)  -->
+    <!-- ════════════════════════════════════════ -->
+    <div id="yonetici-sifre-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="yonetici-sifre-baslik">
+        <div class="modal modal-kucuk">
+            <header class="modal-baslik">
+                <h2 id="yonetici-sifre-baslik">
+                    <svg class="ikon" style="vertical-align:middle;margin-right:8px;"><use href="#i-kilit"/></svg>
+                    Yönetici Şifresi
+                </h2>
+                <button class="modal-kapat" type="button" data-yonetici-kapat="sifre" aria-label="Kapat">
+                    <svg class="ikon"><use href="#i-kapat"/></svg>
+                </button>
+            </header>
+            <div class="modal-icerik">
+                <p class="text-secondary" style="margin-bottom:var(--space-3);">Lütfen yönetici şifresini girin:</p>
+                <input type="password" id="yonetici-sifre-input" class="yonetici-input" maxlength="20" placeholder="Şifre" autocomplete="off">
+                <p id="yonetici-sifre-hata" class="yonetici-hata-mesaj hidden">Yanlış şifre. Tekrar dene.</p>
+            </div>
+            <footer class="modal-aksiyon">
+                <button class="btn btn-ghost" type="button" data-yonetici-kapat="sifre">Vazgeç</button>
+                <button class="btn btn-primary" type="button" id="yonetici-sifre-dogrula">
+                    <svg class="ikon"><use href="#i-tik"/></svg>
+                    Giriş
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  YÖNETİCİ PANELİ MODALI (F6.5)  -->
+    <!-- ════════════════════════════════════════ -->
+    <div id="yonetici-panel-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="yonetici-panel-baslik">
+        <div class="modal modal-genis">
+            <header class="modal-baslik">
+                <h2 id="yonetici-panel-baslik">
+                    <svg class="ikon" style="vertical-align:middle;margin-right:8px;"><use href="#i-ayarlar"/></svg>
+                    Yönetici Paneli
+                </h2>
+                <button class="modal-kapat" type="button" data-yonetici-kapat="panel" aria-label="Kapat">
+                    <svg class="ikon"><use href="#i-kapat"/></svg>
+                </button>
+            </header>
+            <div class="modal-icerik">
+                <section class="yonetici-bolum">
+                    <h3 class="yonetici-bolum-baslik">
+                        <svg class="ikon ikon-sm"><use href="#i-uyari"/></svg>
+                        Veri Yönetimi
+                    </h3>
+                    <div class="yonetici-buton-grid">
+                        <button class="btn btn-outline yonetici-aksiyon-btn" type="button" data-yonetici-aksiyon="tumunu">
+                            <svg class="ikon"><use href="#i-cikis"/></svg>
+                            Tüm verileri sıfırla
+                        </button>
+                        <button class="btn btn-outline yonetici-aksiyon-btn" type="button" data-yonetici-aksiyon="skor">
+                            <svg class="ikon"><use href="#i-kupa"/></svg>
+                            Skorları sıfırla
+                        </button>
+                        <button class="btn btn-outline yonetici-aksiyon-btn" type="button" data-yonetici-aksiyon="stat">
+                            <svg class="ikon"><use href="#i-bilgi"/></svg>
+                            İstatistikleri sıfırla
+                        </button>
+                        <button class="btn btn-outline yonetici-aksiyon-btn" type="button" data-yonetici-aksiyon="rozet">
+                            <svg class="ikon"><use href="#i-rozet"/></svg>
+                            Başarımları sıfırla
+                        </button>
+                    </div>
+                </section>
+                <section class="yonetici-bolum">
+                    <h3 class="yonetici-bolum-baslik">
+                        <svg class="ikon ikon-sm"><use href="#i-kilit"/></svg>
+                        Güvenlik
+                    </h3>
+                    <button class="btn btn-outline yonetici-aksiyon-btn" type="button" id="yonetici-sifre-degistir-btn">
+                        <svg class="ikon"><use href="#i-kilit-acik"/></svg>
+                        Şifreyi değiştir
+                    </button>
+                </section>
+            </div>
+            <footer class="modal-aksiyon">
+                <button class="btn btn-primary" type="button" data-yonetici-kapat="panel">Kapat</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  YÖNETİCİ ŞİFRE DEĞİŞTİR MODALI (F6.5)  -->
+    <!-- ════════════════════════════════════════ -->
+    <div id="yonetici-sifre-degistir-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="yonetici-sifre-degistir-baslik">
+        <div class="modal modal-kucuk">
+            <header class="modal-baslik">
+                <h2 id="yonetici-sifre-degistir-baslik">
+                    <svg class="ikon" style="vertical-align:middle;margin-right:8px;"><use href="#i-kilit-acik"/></svg>
+                    Şifre Değiştir
+                </h2>
+                <button class="modal-kapat" type="button" data-yonetici-kapat="sifredegistir" aria-label="Kapat">
+                    <svg class="ikon"><use href="#i-kapat"/></svg>
+                </button>
+            </header>
+            <div class="modal-icerik">
+                <div class="yonetici-form-satir">
+                    <label for="yonetici-sifre-mevcut">Mevcut şifre</label>
+                    <input type="password" id="yonetici-sifre-mevcut" class="yonetici-input" autocomplete="off">
+                </div>
+                <div class="yonetici-form-satir">
+                    <label for="yonetici-sifre-yeni">Yeni şifre (en az 4 karakter)</label>
+                    <input type="password" id="yonetici-sifre-yeni" class="yonetici-input" autocomplete="off">
+                </div>
+                <div class="yonetici-form-satir">
+                    <label for="yonetici-sifre-yeni2">Yeni şifre (tekrar)</label>
+                    <input type="password" id="yonetici-sifre-yeni2" class="yonetici-input" autocomplete="off">
+                </div>
+                <p id="yonetici-sifre-degistir-hata" class="yonetici-hata-mesaj hidden"></p>
+            </div>
+            <footer class="modal-aksiyon">
+                <button class="btn btn-ghost" type="button" data-yonetici-kapat="sifredegistir">Vazgeç</button>
+                <button class="btn btn-primary" type="button" id="yonetici-sifre-kaydet">
+                    <svg class="ikon"><use href="#i-tik"/></svg>
+                    Kaydet
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  BAĞLAM KARTI MODALI (F3.5 — element/bileşik bilgisi)  -->
+    <!-- ════════════════════════════════════════ -->
+    <div id="baglam-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="baglam-modal-baslik">
+        <div class="modal baglam-modal-kutu">
+            <div class="baglam-modal-icerik" id="baglam-modal-icerik">
+                <!-- Dinamik içerik — JS dolduracak -->
+            </div>
+            <footer class="modal-aksiyon" style="justify-content:center;">
+                <button class="btn btn-primary btn-lg" type="button" id="baglam-modal-devam">
+                    <svg class="ikon"><use href="#i-tik"/></svg>
+                    Anladım, devam et
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <!--
+      Script yükleme sırası (önemli):
+      1. Veri dosyaları (sabitler)
+      2. Ortak altyapı (StorageManager, AudioManager, vb.)
+      3. Sayfa scripti (mute butonu, kart tıklamaları)
+    -->
+    <script src="data/elements.js?v=15"></script>
+    <script src="data/bilesikler.js?v=15"></script>
+    <script src="game/ortak.js?v=15"></script>
+    <script src="game/sembolEslestirme.js?v=15"></script>
+    <script src="game/elementAvi.js?v=15"></script>
+    <script src="game/formulYapboz.js?v=15"></script>
+    <script src="game/ansiklopedi.js?v=15"></script>
+    <script src="game/yansitma.js?v=15"></script>
+    <script src="game/basarimlar.js?v=15"></script>
+    <script src="game/yonetici.js?v=15"></script>
+
+    <script>
+        // ═════════════════════════════════════════════════
+        //  ANA MENÜ — Yerel etkileşimler
+        // ═════════════════════════════════════════════════
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ───── Mute butonları (ana menü + HUD birlikte senkron) ─────
+            const muteBtn = document.getElementById('mute-btn');
+            const hudMuteBtn = document.getElementById('hud-mute');
+
+            const refreshMute = () => {
+                const muted = AudioManager.isMuted();
+                const yeniIkon = muted ? '#i-ses-kapali' : '#i-ses-acik';
+                [muteBtn, hudMuteBtn].forEach(btn => {
+                    if (!btn) return;
+                    const useEl = btn.querySelector('use');
+                    if (useEl) useEl.setAttribute('href', yeniIkon);
+                    btn.setAttribute('aria-pressed', muted ? 'true' : 'false');
+                });
+            };
+            refreshMute();
+
+            const muteToggleHandler = () => {
+                AudioManager.muteToggle();
+                AudioManager.sesCal('butonTik');
+                refreshMute();
+            };
+            muteBtn?.addEventListener('click', muteToggleHandler);
+            hudMuteBtn?.addEventListener('click', muteToggleHandler);
+
+            // ───── HUD Geri butonu (F2.4 + F2.5) ─────
+            document.getElementById('hud-geri')?.addEventListener('click', () => {
+                AudioManager.sesCal('butonTik');
+                SahneManager.anaMenuyeDon();
+            });
+
+            // ───── F2.6 Ayarlar Modalı ─────
+            const ayarlarModal = document.getElementById('ayarlar-modal');
+            const ayarlarBtnler = document.querySelectorAll('[aria-label="Ayarlar"]');
+
+            const sesMasterSlider = document.getElementById('ses-master');
+            const sesMusicSlider  = document.getElementById('ses-music');
+            const sesSfxSlider    = document.getElementById('ses-sfx');
+            const muteToggle      = document.getElementById('ses-mute-toggle');
+            const testBtn         = document.getElementById('ses-test-btn');
+
+            function ayarlarAc() {
+                // Mevcut ayarları slider'lara yansıt
+                const a = AudioManager.getAyarlar();
+                sesMasterSlider.value = a.master;
+                sesMusicSlider.value  = a.music;
+                sesSfxSlider.value    = a.sfx;
+                muteToggle.checked    = a.muted;
+                document.getElementById('ses-master-deger').textContent = a.master + '%';
+                document.getElementById('ses-music-deger').textContent  = a.music + '%';
+                document.getElementById('ses-sfx-deger').textContent    = a.sfx + '%';
+
+                ayarlarModal.classList.remove('hidden');
+                AudioManager.sesCal('butonTik');
+            }
+
+            function ayarlarKapat() {
+                ayarlarModal.classList.add('hidden');
+            }
+
+            ayarlarBtnler.forEach(b => b.addEventListener('click', ayarlarAc));
+            ayarlarModal.querySelectorAll('[data-ayarlar-kapat]').forEach(b =>
+                b.addEventListener('click', ayarlarKapat)
+            );
+            ayarlarModal.addEventListener('click', (e) => {
+                if (e.target === ayarlarModal) ayarlarKapat();
+            });
+
+            // Slider değişiklikleri → AudioManager
+            const sliderHandler = (tip, slider, degerEl) => {
+                slider.addEventListener('input', () => {
+                    const v = parseInt(slider.value, 10);
+                    AudioManager.seviyeAyarla(tip, v);
+                    degerEl.textContent = v + '%';
+                });
+            };
+            sliderHandler('master', sesMasterSlider, document.getElementById('ses-master-deger'));
+            sliderHandler('music',  sesMusicSlider,  document.getElementById('ses-music-deger'));
+            sliderHandler('sfx',    sesSfxSlider,    document.getElementById('ses-sfx-deger'));
+
+            // Mute toggle
+            muteToggle.addEventListener('change', () => {
+                if (muteToggle.checked !== AudioManager.isMuted()) {
+                    AudioManager.muteToggle();
+                    refreshMute();
+                }
+            });
+
+            // Sesi test et butonu
+            testBtn.addEventListener('click', () => {
+                AudioManager.sesCal('dogru');
+            });
+
+            // ───── F2.7 Profil Ekranı ─────
+            const profilBtn = document.querySelector('[aria-label="Profilim"]');
+
+            function unvanTuret(oyunSayisi) {
+                if (oyunSayisi >= 50) return 'Periyodik Sultan';
+                if (oyunSayisi >= 20) return 'Element Ustası';
+                if (oyunSayisi >= 5)  return 'Kimyager Adayı';
+                return 'Kimyacı Adayı';
+            }
+
+            function ilerlemeBlokHtml(baslik, kesf, top, yuzde, etiket) {
+                return `
+                    <div class="profil-ilerleme-icerik">
+                        <div class="progress-label">
+                            <span><strong>${baslik}</strong></span>
+                            <span class="tabular">${kesf} / ${top} ${etiket}  ·  %${yuzde}</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-fill" style="width: ${yuzde}%"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function profilEkraniDoldur() {
+                const stats = StatManager.get();
+                const ilerleme = KesifManager.getIlerleme();
+                const skorMatrix = ScoreManager.getMatrix();
+
+                // Unvan + özet
+                document.getElementById('profil-unvan').textContent = unvanTuret(stats.toplamOyun);
+                document.getElementById('profil-ozet').textContent =
+                    `Toplam ${stats.toplamOyun} oyun · ${sureFormatla(stats.toplamSure)} oynama süresi`;
+
+                // İstatistik
+                document.getElementById('profil-stat-dogru').textContent  = stats.toplamDogru;
+                document.getElementById('profil-stat-yanlis').textContent = stats.toplamYanlis;
+                document.getElementById('profil-stat-basari').textContent = '%' + StatManager.genelBasari();
+
+                // İlerleme bar'ları
+                document.getElementById('profil-ilerleme-elementler').innerHTML =
+                    ilerlemeBlokHtml('Elementler', ilerleme.elementler.kesfedilen, ilerleme.elementler.toplam, ilerleme.elementler.yuzde, 'element');
+                document.getElementById('profil-ilerleme-bilesikler').innerHTML =
+                    ilerlemeBlokHtml('Bileşikler', ilerleme.bilesikler.kesfedilen, ilerleme.bilesikler.toplam, ilerleme.bilesikler.yuzde, 'bileşik');
+
+                // F6.1: Yıldız matrisi (en iyi skorlar)
+                const skorBlok = document.getElementById('profil-skor-blok');
+                const moduller = [
+                    { id: MODUL_IDS.ELEMENT_AVI,        ad: 'Element Avı' },
+                    { id: MODUL_IDS.SEMBOL_ESLESTIRME,  ad: 'Sembol Eşleştirme' },
+                    { id: MODUL_IDS.FORMUL_YAPBOZ,      ad: 'Formül Yapboz' }
+                ];
+                const zorluklar = ['kolay', 'orta', 'zor', 'uzman'];
+
+                const yildizFn = (modulId, zorluk) => {
+                    const best = ScoreManager.getBest(modulId, zorluk);
+                    if (!best) return 0;
+                    const t = Math.min(1, best.skor / 1500);
+                    return Math.max(1, Math.round(t * 5));
+                };
+
+                const yildizSatir = (n) => [1,2,3,4,5].map(i =>
+                    `<svg class="ikon ikon-sm profil-yildiz-${i <= n ? 'dolu' : 'bos'}"><use href="#${i <= n ? 'i-yildiz-dolu' : 'i-yildiz'}"/></svg>`
+                ).join('');
+
+                const toplamSkor = moduller.reduce((acc, m) => {
+                    zorluklar.forEach(z => { if (yildizFn(m.id, z) > 0) acc++; });
+                    return acc;
+                }, 0);
+
+                if (toplamSkor === 0) {
+                    skorBlok.innerHTML = `
+                        <div class="empty-state" style="padding: var(--space-6);">
+                            <svg class="empty-state-icon ikon-2xl"><use href="#i-kupa"/></svg>
+                            <p class="empty-state-baslik">Henüz skor yok</p>
+                            <p class="empty-state-aciklama">İlk oyununu oyna, yıldız matrisi burada görünecek!</p>
+                        </div>
+                    `;
+                } else {
+                    skorBlok.innerHTML = `
+                        <table class="profil-yildiz-tablo">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    ${zorluklar.map(z => `<th>${ZORLUK_ADLAR_TR[z] || z}</th>`).join('')}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${moduller.map(m => `
+                                    <tr>
+                                        <th class="profil-yildiz-modul">${m.ad}</th>
+                                        ${zorluklar.map(z => {
+                                            const y = yildizFn(m.id, z);
+                                            if (y === 0) return '<td class="profil-yildiz-yok">—</td>';
+                                            return `<td class="profil-yildiz-hucre">${yildizSatir(y)}</td>`;
+                                        }).join('')}
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                }
+
+                // F6.1: Başarım sayacı
+                const basarimSayiEl = document.getElementById('profil-basarim-sayi');
+                if (basarimSayiEl) {
+                    const kazanildi = (typeof AchievementManager !== 'undefined') ? AchievementManager.getCount() : 0;
+                    const toplam = (typeof ROZETLER !== 'undefined') ? Object.keys(ROZETLER).length : 20;
+                    basarimSayiEl.textContent = `${kazanildi} / ${toplam}`;
+                }
+            }
+
+            // F6.1: Yansıtma + Başarımlar yan kart tıklamaları (placeholder — F6.3/F6.4)
+            document.querySelectorAll('#profil-ekran [data-profil-aksiyon]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    AudioManager.sesCal('butonTik');
+                    const aksiyon = btn.dataset.profilAksiyon;
+                    if (aksiyon === 'basarimlar') {
+                        if (typeof Basarimlar !== 'undefined') {
+                            Basarimlar.ac();
+                            SahneManager.go('basarim-ekran');
+                        }
+                    } else if (aksiyon === 'yansitma') {
+                        if (typeof Yansitma !== 'undefined') {
+                            Yansitma.ac();
+                            SahneManager.go('yansitma-ekran');
+                        }
+                    }
+                });
+            });
+
+            profilBtn?.addEventListener('click', () => {
+                AudioManager.sesCal('butonTik');
+                profilEkraniDoldur();
+                SahneManager.go('profil-ekran');
+            });
+
+            // ───── F6.2 Ansiklopedi butonu ─────
+            document.getElementById('ansk-btn')?.addEventListener('click', () => {
+                AudioManager.sesCal('butonTik');
+                if (typeof Ansiklopedi !== 'undefined') {
+                    Ansiklopedi.ac();
+                    SahneManager.go('ansiklopedi-ekran');
+                }
+            });
+
+            // Profil ekranı içindeki "Geri" butonu
+            document.querySelectorAll('#profil-ekran [data-aksiyon="anaMenu"]').forEach(b => {
+                b.addEventListener('click', () => {
+                    AudioManager.sesCal('butonTik');
+                    SahneManager.anaMenuyeDon();
+                });
+            });
+
+            // ───── Bağlam Kartı Modal kapatma (F3.5 + F4.6) ─────
+            const baglamModal = document.getElementById('baglam-modal');
+            const baglamDevamBtn = document.getElementById('baglam-modal-devam');
+
+            const baglamKapatHandler = () => {
+                AudioManager.sesCal('butonTik');
+                BaglamKarti.kapat();
+            };
+
+            baglamDevamBtn?.addEventListener('click', baglamKapatHandler);
+            baglamModal?.addEventListener('click', (e) => {
+                if (e.target === baglamModal) baglamKapatHandler();
+            });
+
+            // ───── F3.8 Rozet bildirim modal kapatma ─────
+            document.getElementById('rozet-modal-devam')?.addEventListener('click', () => {
+                RozetBildirim.devam();
+            });
+
+            // ───── Modül kartı: gerçek veri yükle (F2.1) ─────
+            // window.modulKartGuncelle olarak da expose et — SahneManager.anaMenuyeDon kullanır
+            window.modulKartGuncelle = modulKartGuncelle;
+            function modulKartGuncelle(kart) {
+                const modulId = kart.dataset.modul;
+
+                let sayi, toplam, etiket;
+                if (modulId === 'formulYapboz') {
+                    const i = KesifManager.getIlerleme();
+                    sayi = i.bilesikler.kesfedilen;
+                    toplam = i.bilesikler.toplam;
+                    etiket = 'bileşik';
+                } else {
+                    // Modül 1 ve 2 — element keşfi
+                    const i = KesifManager.getIlerleme();
+                    sayi = i.elementler.kesfedilen;
+                    toplam = i.elementler.toplam;
+                    etiket = 'element';
+                }
+                const yuzde = toplam > 0 ? Math.round((sayi / toplam) * 100) : 0;
+
+                const ilerlemeEl = kart.querySelector('.modul-kart-ilerleme');
+                const yuzdeEl    = kart.querySelector('.modul-kart-yuzde');
+                const fillEl     = kart.querySelector('.progress-fill');
+                const skorEl     = kart.querySelector('.modul-kart-skor');
+
+                if (ilerlemeEl) ilerlemeEl.textContent = `${sayi} / ${toplam} ${etiket}`;
+                if (yuzdeEl)    yuzdeEl.textContent = `%${yuzde}`;
+                if (fillEl)     fillEl.style.width = `${yuzde}%`;
+
+                // En iyi skor (varsayılan: en yüksek zorluk-bağımsız skor)
+                const matrix = ScoreManager.getMatrix();
+                const skorlar = Object.values(matrix[modulId] || {}).filter(s => s !== null);
+                const enIyi = skorlar.length > 0 ? Math.max(...skorlar) : null;
+
+                if (skorEl) {
+                    skorEl.textContent = enIyi
+                        ? `En iyi: ${skorFormatla(enIyi)}`
+                        : '—';
+                }
+            }
+
+            // ───── F2.2 — Zorluk seçim modalı ─────
+            const ZORLUK_PARAMETRELERI = {
+                elementAvi: {
+                    ad: 'Element Avı',
+                    kolay:  { etiket: 'İlk 20 element',          detay: '10 soru, sınırsız süre' },
+                    orta:   { etiket: '36 element',              detay: '12 soru, sınırsız süre' },
+                    zor:    { etiket: '36 + grup özellikleri',   detay: '15 soru, sınırsız süre' },
+                    uzman:  { etiket: '36 + süre baskısı',       detay: '20 soru, 60 saniye' }
+                },
+                sembolEslestirme: {
+                    ad: 'Sembol Eşleştirme',
+                    kolay:  { etiket: '6 çift',  detay: '12 kart, sınırsız süre' },
+                    orta:   { etiket: '8 çift',  detay: '16 kart, sınırsız süre' },
+                    zor:    { etiket: '10 çift', detay: '20 kart, Latince kökenler' },
+                    uzman:  { etiket: '12 çift', detay: '24 kart, 90 saniye + tuzaklar' }
+                },
+                formulYapboz: {
+                    ad: 'Formül Yapboz',
+                    kolay:  { etiket: '5 bileşik',  detay: 'Sadece gereken atomlar, sınırsız ipucu' },
+                    orta:   { etiket: '8 bileşik',  detay: '+2 yanıltıcı atom, 3 ipucu' },
+                    zor:    { etiket: '10 bileşik', detay: '+4 yanıltıcı atom, 1 ipucu' },
+                    uzman:  { etiket: '12 bileşik', detay: 'Tüm atomlar, ipucu yok' }
+                }
+            };
+
+            const ZORLUK_RENKLER = {
+                kolay: '#10B981',  // yeşil
+                orta:  '#F59E0B',  // sarı/turuncu
+                zor:   '#EF4444',  // kırmızı
+                uzman: '#7C3AED'   // mor (premium)
+            };
+
+            const ZORLUK_ADLAR = {
+                kolay: 'Kolay',
+                orta:  'Orta',
+                zor:   'Zor',
+                uzman: 'Uzman'
+            };
+
+            const modalEl = document.getElementById('zorluk-modal');
+            const modalGrid = document.getElementById('zorluk-grid');
+            const modalAdEl = document.getElementById('zorluk-modal-modul-adi');
+            let modalAcikModulId = null;
+
+            /**
+             * Bir zorluk için yıldız sayısı tahmini.
+             * Şimdilik en yüksek skora göre yaklaşık (FAZ 6'da gerçek hesap).
+             */
+            function yildizSayisi(modulId, zorluk) {
+                const best = ScoreManager.getBest(modulId, zorluk);
+                if (!best) return 0;
+                // Geçici: skor 0-1500 arası → 1-5 yıldız
+                const t = Math.min(1, best.skor / 1500);
+                return Math.max(1, Math.round(t * 5));
+            }
+
+            function zorlukKartiHtml(modulId, zorluk, indeks) {
+                const p = ZORLUK_PARAMETRELERI[modulId][zorluk];
+                const renk = ZORLUK_RENKLER[zorluk];
+                const ad = ZORLUK_ADLAR[zorluk];
+                const yildiz = yildizSayisi(modulId, zorluk);
+                const yildizHtml = [1,2,3,4,5].map(i =>
+                    `<svg class="ikon ${i <= yildiz ? 'dolu' : 'bos'}"><use href="#${i <= yildiz ? 'i-yildiz-dolu' : 'i-yildiz'}"/></svg>`
+                ).join('');
+
+                return `
+                    <button class="zorluk-kart" data-zorluk="${zorluk}" style="--zorluk-renk: ${renk};" type="button">
+                        <div class="zorluk-kart-rozet">
+                            <span class="zorluk-kart-ikon-dot"></span>
+                            <span class="zorluk-kart-baslik">${ad}</span>
+                            <span class="zorluk-kart-tus" aria-hidden="true">${indeks + 1}</span>
+                        </div>
+                        <div class="zorluk-kart-etiket">${p.etiket}</div>
+                        <div class="zorluk-kart-detay">${p.detay}</div>
+                        <div class="zorluk-kart-yildizlar">
+                            ${yildizHtml}
+                            <span style="margin-left:auto;">${yildiz === 0 ? 'Hiç oynanmamış' : yildiz + ' yıldız'}</span>
+                        </div>
+                    </button>
+                `;
+            }
+
+            function zorlukSecimAc(modulId) {
+                modalAcikModulId = modulId;
+                const params = ZORLUK_PARAMETRELERI[modulId];
+                if (!params) {
+                    console.warn('Bilinmeyen modül:', modulId);
+                    return;
+                }
+
+                modalAdEl.textContent = params.ad;
+                modalGrid.innerHTML = ['kolay', 'orta', 'zor', 'uzman']
+                    .map((z, i) => zorlukKartiHtml(modulId, z, i))
+                    .join('');
+
+                modalEl.classList.remove('hidden');
+
+                // Modal içindeki zorluk kartlarına tıklama bağla
+                modalGrid.querySelectorAll('.zorluk-kart').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        AudioManager.sesCal('butonTik');
+                        const zorluk = btn.dataset.zorluk;
+                        zorlukSecimKapat();
+                        // F2.3 — SahneManager üzerinden modül başlat
+                        SahneManager.modulBaslat(modulId, zorluk);
+                    });
+                });
+            }
+
+            function zorlukSecimKapat() {
+                modalEl.classList.add('hidden');
+                modalAcikModulId = null;
+            }
+
+            // Modal kapatma butonları
+            modalEl.querySelectorAll('[data-aksiyon="kapat"]').forEach(b => {
+                b.addEventListener('click', zorlukSecimKapat);
+            });
+            // Overlay'e tıklamak da kapatır
+            modalEl.addEventListener('click', (e) => {
+                if (e.target === modalEl) zorlukSecimKapat();
+            });
+
+            // ───── Modül kartı tıklamaları → zorluk modalı aç ─────
+            document.querySelectorAll('[data-modul]').forEach(kart => {
+                // İlk yükleme: veriyi göster
+                modulKartGuncelle(kart);
+
+                const baslat = () => {
+                    AudioManager.sesCal('butonTik');
+                    const modulId = kart.dataset.modul;
+                    AnimationHelper.pulse(kart);
+                    setTimeout(() => zorlukSecimAc(modulId), 200);
+                };
+                kart.addEventListener('click', baslat);
+                kart.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        baslat();
+                    }
+                });
+            });
+
+            // ───── Global kısayollar (D.5) ─────
+            EventDispatcher.registerGlobalShortcuts({
+                muteToggle() {
+                    AudioManager.muteToggle();
+                    refreshMute();
+                },
+                adminPanel() {
+                    if (typeof Yonetici !== 'undefined') Yonetici.acSifreModal();
+                },
+                help() {
+                    const modal = document.getElementById('yardim-modal');
+                    if (modal) {
+                        AudioManager.sesCal('butonTik');
+                        modal.classList.remove('hidden');
+                    }
+                },
+                escape() {
+                    // 0. Yardım modalı açıksa kapat (F7.6 — en üst öncelik)
+                    const yardimModal = document.getElementById('yardim-modal');
+                    if (yardimModal && !yardimModal.classList.contains('hidden')) {
+                        yardimModal.classList.add('hidden');
+                        AudioManager.sesCal('butonTik');
+                        return;
+                    }
+                    // 1. Bağlam kartı modalı açıksa kapat
+                    if (!baglamModal.classList.contains('hidden')) {
+                        baglamKapatHandler();
+                        return;
+                    }
+                    // 2. Ayarlar modalı açıksa onu kapat
+                    if (!ayarlarModal.classList.contains('hidden')) {
+                        ayarlarKapat();
+                        return;
+                    }
+                    // 3. Zorluk modalı açıksa onu kapat
+                    if (!modalEl.classList.contains('hidden')) {
+                        zorlukSecimKapat();
+                        return;
+                    }
+                    // 4. Ana menü dışındaki tüm ekranlardan ana menüye dön
+                    const aktifEkran = SahneManager.getAktif().ekran;
+                    if (aktifEkran !== 'anaekran') {
+                        SahneManager.anaMenuyeDon();
+                    }
+                }
+            });
+
+            // ───── Zorluk modal: 1/2/3/4 tuş kısayolu ─────
+            EventDispatcher.setModuleKeyHandler((e) => {
+                if (modalEl.classList.contains('hidden')) return;
+                const map = { '1': 'kolay', '2': 'orta', '3': 'zor', '4': 'uzman' };
+                if (map[e.key]) {
+                    const btn = modalGrid.querySelector(`[data-zorluk="${map[e.key]}"]`);
+                    if (btn) btn.click();
+                }
+            });
+
+            // ───── F7.6 Yardım Modal kapatma ─────
+            const yardimModalEl = document.getElementById('yardim-modal');
+            yardimModalEl?.querySelectorAll('[data-yardim-kapat]').forEach(b => {
+                b.addEventListener('click', () => {
+                    AudioManager.sesCal('butonTik');
+                    yardimModalEl.classList.add('hidden');
+                });
+            });
+            yardimModalEl?.addEventListener('click', (e) => {
+                if (e.target === yardimModalEl) yardimModalEl.classList.add('hidden');
+            });
+
+            // ───── F6.5 Yönetici Event'leri ─────
+            document.getElementById('yonetici-sifre-dogrula')?.addEventListener('click', () => Yonetici.sifreDogrula());
+            document.getElementById('yonetici-sifre-input')?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') Yonetici.sifreDogrula();
+            });
+
+            document.querySelectorAll('[data-yonetici-kapat]').forEach(b => {
+                b.addEventListener('click', () => {
+                    AudioManager.sesCal('butonTik');
+                    const tip = b.dataset.yoneticiKapat;
+                    if (tip === 'sifre')              Yonetici.kapatSifreModal();
+                    else if (tip === 'panel')         Yonetici.kapatPanel();
+                    else if (tip === 'sifredegistir') Yonetici.kapatSifreDegistirModal();
+                });
+            });
+            // Overlay tıklamasıyla kapat
+            ['yonetici-sifre-modal', 'yonetici-panel-modal', 'yonetici-sifre-degistir-modal'].forEach(id => {
+                const m = document.getElementById(id);
+                m?.addEventListener('click', (e) => {
+                    if (e.target === m) m.classList.add('hidden');
+                });
+            });
+
+            document.querySelectorAll('[data-yonetici-aksiyon]').forEach(b => {
+                b.addEventListener('click', () => {
+                    AudioManager.sesCal('butonTik');
+                    const a = b.dataset.yoneticiAksiyon;
+                    if (a === 'tumunu')      Yonetici.tumunuSifirla();
+                    else if (a === 'skor')   Yonetici.skorSifirla();
+                    else if (a === 'stat')   Yonetici.statSifirla();
+                    else if (a === 'rozet')  Yonetici.rozetSifirla();
+                });
+            });
+
+            document.getElementById('yonetici-sifre-degistir-btn')?.addEventListener('click', () => {
+                AudioManager.sesCal('butonTik');
+                Yonetici.acSifreDegistirModal();
+            });
+            document.getElementById('yonetici-sifre-kaydet')?.addEventListener('click', () => Yonetici.sifreDegistir());
+
+            // ───── Doğrulama log'ları ─────
+            console.log(`✅ ${ELEMENTS.length} element + ${BILESIKLER.length} bileşik yüklü`);
+            console.log('Klavye kısayolları: M = Mute, Ctrl+Shift+A = Yönetici');
+        });
+    </script>
+
+</body>
+</html>
