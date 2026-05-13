@@ -172,7 +172,7 @@ const SembolEslestirme = {
                     <span>Hamle: <strong id="memory-hamle-sayi">0</strong></span>
                 </span>
             </div>
-            <div class="memory-tahta" id="memory-tahta" style="--col-sayisi: ${colSayisi};">
+            <div class="memory-tahta" id="memory-tahta" style="--col-sayisi: ${colSayisi}; --satir-sayisi: ${Math.ceil(this._kartlar.length / colSayisi)};">
                 ${this._kartlar.map(k => this._kartHtml(k)).join('')}
             </div>
         `;
