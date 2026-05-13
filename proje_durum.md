@@ -7,10 +7,11 @@
 
 ## 📊 Mevcut Durum
 
-**Son oturum tarihi:** 2026-05-12 (Oturum 2 — Mega final)
-**Tamamlanma:** **77/84 adım = %92** (asistan tarafında)
-**Aktif faz:** **FAZ 9 — Final Test ve Yayın** (asistan ucu kapalı, kullanıcı manuel testler bekliyor)
-**Bir sonraki adım:** Kullanıcı `sergi/sergi_hazirlik_kontrol.md`'yi takip eder; bug çıkarsa asistana gelir.
+**Son oturum tarihi:** 2026-05-13 (Oturum 3 — Sergi deploy + mobile cila)
+**Tamamlanma:** **77/84 adım = %92** (asistan tarafında — FAZ 9 manuel testler kullanıcıya kaldı)
+**Aktif faz:** **FAZ 9 — Final Test ve Yayın** + ek sergi cilaları yapıldı
+**🌐 CANLI URL:** **`https://abosyaz.github.io/elementra/`** (GitHub Pages)
+**Bir sonraki adım:** Kullanıcı sergi öncesi `sergi/sergi_hazirlik_kontrol.md`'yi takip eder; cila/bug çıkarsa asistan `git push` ile otomatik yansıtır.
 
 ---
 
@@ -252,7 +253,34 @@ Yeni özellik isteği geldiğinde 84-adım listesi dışı kapsam değerlendiril
 - 7 dosya: data + game + assets + index + style
 - 4 md dosyası proje altyapı
 
-### 2026-05-12 — Oturum 2 (Bu — Mega Final)
+### 2026-05-13 — Oturum 3 (Sergi Deploy + Mobile Cila)
+
+- **GitHub Pages canlı deploy** — `https://abosyaz.github.io/elementra/`
+- **Git altyapısı kuruldu** — lokal repo init + Personal Access Token (Keychain'de saklı, expire 2026-08-11) + remote URL token'sız (otomatik auth)
+- **Tek komutla deploy** — `git add -A && git commit -m "..." && git push` (Keychain auth, prompt yok)
+- **Mobil cila paketi** (her biri ayrı commit):
+  - F9.6-1: Ana ekran viewport fit (`#anaekran` height: 100dvh + overflow: hidden + clamp padding/gap)
+  - F9.6-2: Modül kartları cesur renk üçlüsü — Indigo `#6366F1` (Element Avı) · Amber-dark `#D97706` (Sembol Eşleştirme) · Emerald `#10B981` (Formül Yapboz). Sol kenar şerit + yuvarlak beyaz sayı rozeti (1/2/3) + beyaz metinler. Modül-kart-meta'dan "Modül N" badge kaldırıldı.
+  - F9.6-3: Mobile modül kart layout (`@media max-width: 640px`) — overflow: visible + tek sütun + sayı rozeti sağ üst absolute, kart-header'a padding-right
+  - F9.6-4: Mobile zorluk modali — 2x2 grid (1 sütun yerine) + kompakt boyutlar + yıldız satırı `display: none !important` (4 zorluk scroll'suz sığar)
+  - F9.6-5: Yan çevirme overlay — sadece `body[data-aktif-modul="elementAvi"]` portrait + mobile'da. Mor→pembe gradient + rotate telefon SVG + "Yine de portrait kullan" buton. `SahneManager.modulBaslat` + `anaMenuyeDon` body attribute set/clear.
+  - F9.6-6: Mobile landscape HUD `position: static` — kullanıcı kaydırınca üstte kalmaz, periyodik tabloya yer açar
+  - F9.6-7: Sembol Eşleştirme mobile 4 sütun grid (`!important` ile inline `--col-sayisi` override)
+  - F9.6-8: Sembol Eşleştirme desktop tüm zorluklar scroll'suz — kart `aspect-ratio: 1/1` (kare) + tahta dinamik `max-width: min(920px, calc(--hesap-h * --col-sayisi / --satir-sayisi))`. JS'e `--satir-sayisi` inline eklendi (`sembolEslestirme.js` line 175)
+- **Cache bust sürümü:** `?v=12 → ?v=25` (HTML script + CSS link tag'lerinde, her cila +1)
+- **CSS bölümleri eklendi/güncellendi:**
+  - 17.1 Ana ekran viewport fit
+  - 17.2 Modül kartları cesur renk varyantları
+  - 17.3 Ana ekran mobil override
+  - 18.x Zorluk modali mobile 2x2 + yıldız gizle
+  - Yan çevirme overlay (#yatay-cevir-overlay) — yeni bölüm
+- **HTML eklemeler (index.html):**
+  - `<link rel="stylesheet" href="style.css?v=25">` — CSS link'inde cache bust
+  - `#yatay-cevir-overlay` div — overlay HTML
+  - `#yc-kapat` butonu — "Yine de portrait kullan" + sessionless flag
+  - Yardım modal Esc hiyerarşisi (önceki oturumdan)
+
+### 2026-05-12 — Oturum 2 (Mega Final)
 - **38 adım tamamlandı** (39 → 77, %46 → %92)
 - Tamamlanan fazlar: F4.11 erteleme + FAZ 5 TAM (13/13) + FAZ 6 TAM (5/5) + FAZ 7 TAM (10/10) + FAZ 8 TAM (7/7) + FAZ 9 (2/9)
 - **Yeni dosyalar (15):**
