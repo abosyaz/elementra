@@ -283,14 +283,15 @@
             height: 50mm;
             background: #FFFFFF;
             border-radius: 4mm;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-body);
-            font-size: 9pt;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 4mm;
+            padding: 2mm;
+            overflow: hidden;
+        }
+
+        .pst-qr-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
         }
 
         .pst-qr-icerik h2 {
@@ -535,12 +536,12 @@
     <!-- ════════════════════════════════════════ -->
     <section class="pst-qr-blok">
         <div class="pst-qr-placeholder">
-            QR kod buraya gelecek<br>(F8.7'de oluşturulacak)
+            <img src="qr.png" alt="QR kodu — Elementra'yı telefonda oyna">
         </div>
         <div class="pst-qr-icerik">
             <h2>Telefonunda Oyna</h2>
             <p>Sergi sonrası evde de devam et. ELEMENTRA tüm modern tarayıcılarda çalışır — indirme gerekmez.</p>
-            <div class="pst-qr-url">[GITHUB_USERNAME].github.io/elementra</div>
+            <div class="pst-qr-url">abosyaz.github.io/elementra</div>
         </div>
     </section>
 
@@ -551,7 +552,7 @@
         <div class="pst-ekip">
             <div><strong>Öğrenciler:</strong> Mert Ege KAHRAMAN · Hüseyin Efe BALCI</div>
             <div><strong>Danışman:</strong> Abdullah ÖSELMİŞ</div>
-            <div><strong>Okul:</strong> [OKUL] · <strong>Şehir:</strong> [ŞEHİR]</div>
+            <div><strong>Okul:</strong> ŞEHİT ZİYA İLHAN DAĞDAŞ MESLEKİ VE TEKNİK ANADOLU LİSESİ · <strong>Şehir:</strong> MUĞLA</div>
         </div>
         <div>
             <div class="pst-tubitak">TÜBİTAK 4006</div>

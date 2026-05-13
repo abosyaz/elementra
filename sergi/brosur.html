@@ -471,15 +471,16 @@
             height: 60mm;
             background: #FFFFFF;
             border-radius: 4mm;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-body);
-            font-size: 8pt;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 3mm;
+            padding: 2mm;
             margin: 5mm 0;
+            overflow: hidden;
+        }
+
+        .panel-qr .qr-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
         }
 
         .panel-qr .qr-aciklama {
@@ -549,13 +550,13 @@
         <div class="panel panel-qr">
             <h1 class="qr-baslik">Telefonunda<br>Oyna</h1>
             <div class="qr-placeholder">
-                QR kod buraya<br>(F8.7'de oluşturulacak)
+                <img src="qr.png" alt="QR kodu — Elementra'yı telefonda oyna">
             </div>
             <p class="qr-aciklama">
                 Sergi sonrası evde devam et.<br>
                 Tüm modern tarayıcılarda çalışır.
             </p>
-            <div class="qr-url">[GITHUB_USERNAME].github.io/elementra</div>
+            <div class="qr-url">abosyaz.github.io/elementra</div>
             <p class="qr-alt">
                 <strong>TÜBİTAK 4006</strong><br>
                 Bilim Fuarı 2025–2026<br>
@@ -579,8 +580,8 @@
             </div>
             <p class="br-alt">
                 <strong>TÜBİTAK 4006</strong> Bilim Fuarı<br>
-                [OKUL] · [ŞEHİR]<br>
-                [TARİH]
+                ŞEHİT ZİYA İLHAN DAĞDAŞ MESLEKİ VE TEKNİK ANADOLU LİSESİ · MUĞLA<br>
+                21.05.2026
             </p>
         </div>
 
@@ -700,10 +701,7 @@
             <div class="iletisim-kart">
                 <h3>📧 İletişim</h3>
                 <p><strong>Danışman:</strong><br>Abdullah ÖSELMİŞ</p>
-                <p><strong>Okul:</strong> [OKUL]</p>
-                <p style="color: var(--text-muted); font-style: italic; margin-top: 2mm;">
-                    [E-POSTA — opsiyonel]
-                </p>
+                <p><strong>Okul:</strong> ŞEHİT ZİYA İLHAN DAĞDAŞ MESLEKİ VE TEKNİK ANADOLU LİSESİ</p>
             </div>
         </div>
     </div>
