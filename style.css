@@ -1800,9 +1800,10 @@ button,
     background: rgba(255, 255, 255, 0.28);
 }
 
-/* Sadece oyun ekranı açıkken + portrait + mobile'da göster */
+/* Sadece Element Avı modülünde + portrait + mobile'da göster
+   (Sembol Eşleştirme + Formül Yapboz dikey akışta konforlu — overlay yok) */
 @media (orientation: portrait) and (max-width: 640px) {
-    body:has(#oyun-ekran:not(.hidden)) #yatay-cevir-overlay:not(.kullanici-kapatti) {
+    body[data-aktif-modul="elementAvi"] #yatay-cevir-overlay:not(.kullanici-kapatti) {
         display: flex;
     }
 }

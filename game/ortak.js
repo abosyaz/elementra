@@ -1421,6 +1421,9 @@ const SahneManager = {
         this._aktifModul  = modulId;
         this._aktifZorluk = zorluk;
 
+        // Body'ye aktif modül attribute'u — CSS koşullu stiller için (yan çevirme uyarısı vb.)
+        document.body.dataset.aktifModul = modulId;
+
         // HUD'u sıfırla + modül adını set et
         if (typeof HUD !== 'undefined') {
             HUD.reset();
@@ -1462,6 +1465,7 @@ const SahneManager = {
 
         this._aktifModul  = null;
         this._aktifZorluk = null;
+        delete document.body.dataset.aktifModul;
         this.go('anaekran');
 
         // Modül kartlarını güncelle (varsa modulKartGuncelle global fonksiyonu)
