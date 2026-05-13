@@ -1534,16 +1534,10 @@ button,
         font-size: var(--fs-caption);
     }
 
+    /* Mobile'da yıldız satırını tamamen gizle — sergi öncesi başlık+etiket yeterli */
+    /* !important — desktop kuralı (satır 1646) source-order ile override etmesin */
     .zorluk-kart-yildizlar {
-        margin-top: var(--space-2);
-        padding-top: var(--space-2);
-        font-size: 10px;
-        gap: 2px;
-    }
-
-    .zorluk-kart-yildizlar .ikon {
-        width: 11px;
-        height: 11px;
+        display: none !important;
     }
 
     /* Modal başlık + içerik + footer kompakt mobile için */
