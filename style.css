@@ -4183,97 +4183,105 @@ kbd {
 }
 
 /* ============================================================
-   17.4 EKİP BİLGİ KARTI — "Bilişim Teknolojileri Alanı" referans
-   Desktop: hero ile modül-grid arası (natural DOM order)
-   Mobile: order:100 ile en altta + scroll
+   17.4 EKİP BİLGİ ŞERİDİ — Tek satır pill (premium)
+   Desktop: hero ile modül-grid arası, kompakt yatay şerit
+   Mobile: 2 satıra düşer, alt-bar'dan sonra (order:100)
    ============================================================ */
 
 #anaekran .ekip-bilgi-karti {
     flex-shrink: 0;
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(236, 72, 153, 0.05));
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+    background:
+        linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(236, 72, 153, 0.04)),
+        rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(124, 58, 237, 0.18);
-    border-radius: 16px;
-    padding: 18px 24px 14px;
+    border-radius: 999px;
+    padding: 8px 22px;
     margin: 0 auto;
-    max-width: 760px;
-    width: calc(100% - 16px);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.08);
+    width: max-content;
+    max-width: calc(100% - 32px);
+    box-shadow:
+        0 8px 24px rgba(124, 58, 237, 0.10),
+        0 2px 6px rgba(124, 58, 237, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
     position: relative;
-    overflow: hidden;
 }
 
+/* Altın aksent nokta — sol başta */
 #anaekran .ekip-bilgi-karti::before {
     content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #7C3AED, #EC4899, #D4A574);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D4A574, #EC4899);
+    box-shadow: 0 0 8px rgba(212, 165, 116, 0.55);
+    flex-shrink: 0;
 }
 
 #anaekran .ekip-alan {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: #7C3AED;
-    text-align: center;
-    padding-top: 2px;
-}
-
-#anaekran .ekip-icerik {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 36px;
-    flex-wrap: wrap;
-    padding-top: 6px;
+    padding: 4px 14px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.10), rgba(236, 72, 153, 0.08));
+    border: 0.5px solid rgba(124, 58, 237, 0.22);
+    border-radius: 999px;
+    white-space: nowrap;
 }
 
 #anaekran .ekip-grup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 7px;
     position: relative;
+    white-space: nowrap;
 }
 
-#anaekran .ekip-grup:first-child::after {
+#anaekran .ekip-grup + .ekip-grup::before {
     content: '';
     position: absolute;
-    right: -18px;
-    top: 20%;
-    bottom: 20%;
+    left: -10px;
+    top: 10%;
+    bottom: 10%;
     width: 1px;
-    background: rgba(124, 58, 237, 0.22);
+    background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.25), transparent);
 }
 
 #anaekran .ekip-rol {
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: 9.5px;
+    font-size: 9px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--text-muted, #6B7280);
-    margin-bottom: 3px;
+}
+
+#anaekran .ekip-rol::after {
+    content: ':';
+    margin-left: 1px;
+    opacity: 0.6;
 }
 
 #anaekran .ekip-isim {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 13.5px;
+    font-size: 12.5px;
     color: var(--text-primary, #1E1B4B);
     letter-spacing: -0.005em;
-    line-height: 1.35;
+    line-height: 1;
 }
 
-/* Mobile: en altta + scroll açık */
-@media (max-width: 640px) {
+/* Mobile: 2 satıra düş + alt'a taşı */
+@media (max-width: 760px) {
     #anaekran {
         overflow-y: auto;
         height: auto;
@@ -4282,32 +4290,44 @@ kbd {
 
     #anaekran .ekip-bilgi-karti {
         order: 100;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px 18px 14px;
         margin-top: 8px;
-        padding: 14px 18px 12px;
+        border-radius: 18px;
+        width: calc(100% - 16px);
+        max-width: 420px;
     }
 
     #anaekran .ekip-bilgi-karti::before {
-        height: 2px;
+        position: absolute;
+        top: -3px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
-    #anaekran .ekip-icerik {
-        gap: 20px;
-    }
-
-    #anaekran .ekip-grup:first-child::after {
-        right: -10px;
+    #anaekran .ekip-grup + .ekip-grup::before {
+        display: none;
     }
 
     #anaekran .ekip-alan {
         font-size: 10px;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.18em;
+        padding: 3px 12px;
+    }
+
+    #anaekran .ekip-grup {
+        white-space: normal;
+        text-align: center;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     #anaekran .ekip-isim {
-        font-size: 12px;
+        font-size: 11.5px;
     }
 
     #anaekran .ekip-rol {
-        font-size: 9px;
+        font-size: 8.5px;
     }
 }
