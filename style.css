@@ -1270,15 +1270,15 @@ button,
     height: 100vh;
     height: 100dvh;
     min-height: 0;                                /* container-app min-height override */
-    padding-top: clamp(12px, 2vh, 24px);
-    padding-bottom: clamp(12px, 2vh, 24px);
-    gap: clamp(12px, 2vh, 32px);
+    padding-top: clamp(8px, 1.5vh, 20px);
+    padding-bottom: clamp(8px, 1.5vh, 20px);
+    gap: clamp(8px, 1.5vh, 20px);
     overflow: hidden;
 }
 
 #anaekran .hero {
     flex-shrink: 0;
-    padding: clamp(12px, 3vh, 48px) 0 clamp(8px, 1.5vh, 24px);
+    padding: clamp(4px, 1.5vh, 18px) 0 clamp(4px, 1vh, 12px);
 }
 
 #anaekran .modul-grid {
@@ -4188,10 +4188,10 @@ kbd {
 
 #anaekran .okul-logo {
     display: block;
-    width: clamp(80px, 9vh, 110px);
-    height: clamp(80px, 9vh, 110px);
+    width: clamp(56px, 7vh, 84px);
+    height: clamp(56px, 7vh, 84px);
     object-fit: contain;
-    margin: 0 auto;
+    margin: 0 auto 6px;
     filter: drop-shadow(0 4px 12px rgba(124, 58, 237, 0.18));
 }
 
