@@ -648,6 +648,45 @@
             color: #FFFFFF;
         }
 
+        /* Ekip Tablosu — QR şeridi altında, premium glass */
+        .panel-qr .qr-ekip-tablo {
+            margin-top: 4mm;
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3mm;
+            overflow: hidden;
+            border: 0.4mm solid rgba(255, 255, 255, 0.22);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .panel-qr .qr-ekip-tablo td {
+            padding: 2mm 3.5mm;
+            color: #FFFFFF;
+            font-size: 8pt;
+            line-height: 1.3;
+            border-bottom: 0.25mm solid rgba(255, 255, 255, 0.15);
+            text-shadow: 0 1px 2px rgba(30, 27, 75, 0.25);
+        }
+        .panel-qr .qr-ekip-tablo tr:last-child td {
+            border-bottom: none;
+        }
+        .panel-qr .qr-ekip-tablo td:first-child {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 7pt;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0.85;
+            white-space: nowrap;
+            width: 30%;
+            border-right: 0.25mm solid rgba(255, 255, 255, 0.18);
+        }
+        .panel-qr .qr-ekip-tablo td:last-child {
+            font-weight: 600;
+            letter-spacing: -0.005em;
+        }
+
         /* ═════════════════════════════════════════════════
            Print yardımcı butonu
            ═════════════════════════════════════════════════ */
@@ -714,10 +753,22 @@
             <div class="qr-url">abosyaz.github.io/elementra</div>
             <p class="qr-alt">
                 <strong>TÜBİTAK 4006</strong><br>
-                Bilim Fuarı 2025–2026<br>
-                <br>
-                Ekip: Mert Ege KAHRAMAN<br>· Hüseyin Efe BALCI
+                Bilim Fuarı 2025–2026
             </p>
+            <table class="qr-ekip-tablo">
+                <tr>
+                    <td>Öğrenci</td>
+                    <td>Mert Ege KAHRAMAN</td>
+                </tr>
+                <tr>
+                    <td>Öğrenci</td>
+                    <td>Hüseyin Efe BALCI</td>
+                </tr>
+                <tr>
+                    <td>Danışman</td>
+                    <td>Abdullah ÖSELMİŞ</td>
+                </tr>
+            </table>
         </div>
 
         <!-- PANEL 2 — Problem & Çözüm -->
