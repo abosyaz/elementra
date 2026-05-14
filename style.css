@@ -4183,6 +4183,19 @@ kbd {
 }
 
 /* ============================================================
+   17.3.1 OKUL LOGOSU — Ana ekran hero'da atom ikonu yerine
+   ============================================================ */
+
+#anaekran .okul-logo {
+    display: block;
+    width: clamp(80px, 9vh, 110px);
+    height: clamp(80px, 9vh, 110px);
+    object-fit: contain;
+    margin: 0 auto;
+    filter: drop-shadow(0 4px 12px rgba(124, 58, 237, 0.18));
+}
+
+/* ============================================================
    17.4 EKİP BİLGİ ŞERİDİ — Tek satır pill (premium)
    Desktop: hero ile modül-grid arası, kompakt yatay şerit
    Mobile: 2 satıra düşer, alt-bar'dan sonra (order:100)
