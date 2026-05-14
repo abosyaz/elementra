@@ -198,6 +198,111 @@
         .pst-modul-2 { border-left-color: #C4B5FD; }   /* Memory — mor */
         .pst-modul-3 { border-left-color: var(--color-success); } /* Yapboz — yeşil */
 
+        /* ═════ Sıra 3.5a: AKIŞ DİAGRAMI — Nasıl Çalışır? ═════ */
+        .pst-akis-blok { margin-bottom: 8mm; }
+        .pst-akis-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+            gap: 6mm;
+            align-items: stretch;
+            padding: 4mm 0 2mm;
+        }
+        .pst-akis-adim {
+            background: linear-gradient(135deg, #FAF5FF, #FFFFFF);
+            border-radius: 6mm;
+            padding: 7mm 5mm 6mm;
+            text-align: center;
+            border: 1px solid rgba(124, 58, 237, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+        .pst-akis-adim::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1.5mm;
+            background: linear-gradient(90deg, #7C3AED, #EC4899);
+        }
+        .pst-akis-no {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 36pt;
+            color: #7C3AED;
+            line-height: 1;
+            margin-bottom: 3mm;
+        }
+        .pst-akis-adim h3 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 14pt;
+            color: var(--text-primary);
+            margin-bottom: 2mm;
+        }
+        .pst-akis-adim p {
+            font-size: 10pt;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin: 0;
+        }
+        .pst-akis-ok {
+            font-family: var(--font-display);
+            font-size: 32pt;
+            font-weight: 800;
+            color: var(--brand-primary);
+            opacity: 0.5;
+            text-align: center;
+            align-self: center;
+        }
+
+        /* ═════ Sıra 3.5b + 3.5c: 2'li Kart Sıraları ═════ */
+        .pst-sira-uc-bes,
+        .pst-sira-uc-alti {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8mm;
+            margin-bottom: 8mm;
+        }
+
+        .pst-kart-pedagojik   { border-top-color: #7C3AED; }
+        .pst-kart-basarim     { border-top-color: var(--color-warning); }
+        .pst-kart-sergi-not   { border-top-color: var(--color-success); }
+        .pst-kart-hedef       { border-top-color: var(--color-info); }
+
+        .pst-kart-pedagojik .pst-kart-baslik { color: #6D28D9; }
+        .pst-kart-basarim   .pst-kart-baslik { color: #B45309; }
+        .pst-kart-sergi-not .pst-kart-baslik { color: #047857; }
+        .pst-kart-hedef     .pst-kart-baslik { color: #0F766E; }
+
+        .pst-pedagoji-liste {
+            list-style: none;
+            padding: 0;
+            margin: 3mm 0 0;
+        }
+        .pst-pedagoji-liste li {
+            font-size: 11pt;
+            color: var(--text-secondary);
+            padding: 1.5mm 0;
+        }
+
+        .pst-basarim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3mm;
+            margin-top: 4mm;
+        }
+        .pst-basarim-mini {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            padding: 3mm 4mm;
+            border-radius: 3mm;
+            font-size: 11pt;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            border-top: 0.8mm solid #D4A574;
+        }
+
         /* Sıra 4: KAZANIMLAR + NEDEN OYUN */
         .pst-sira-dort {
             display: grid;
@@ -483,6 +588,111 @@
                 </p>
             </div>
         </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SIRA 3.5a: NASIL ÇALIŞIR? — Akış Diagramı  -->
+    <!-- ════════════════════════════════════════ -->
+    <section class="pst-kart pst-akis-blok">
+        <h2 class="pst-kart-baslik">
+            <span class="pst-kart-emoji">🔄</span>
+            Nasıl Çalışır?
+        </h2>
+        <div class="pst-akis-grid">
+            <div class="pst-akis-adim">
+                <div class="pst-akis-no">1</div>
+                <h3>Modül Seç</h3>
+                <p>3 farklı oyun yaklaşımından birini tıkla</p>
+            </div>
+            <div class="pst-akis-ok">→</div>
+            <div class="pst-akis-adim">
+                <div class="pst-akis-no">2</div>
+                <h3>Zorluk Belirle</h3>
+                <p>Kolay · Orta · Zor · Uzman</p>
+            </div>
+            <div class="pst-akis-ok">→</div>
+            <div class="pst-akis-adim">
+                <div class="pst-akis-no">3</div>
+                <h3>Oyna &amp; Öğren</h3>
+                <p>Anında geri bildirim + bağlam kartları</p>
+            </div>
+            <div class="pst-akis-ok">→</div>
+            <div class="pst-akis-adim">
+                <div class="pst-akis-no">4</div>
+                <h3>Yansıt</h3>
+                <p>Zayıf alan tespiti + yıldız matrisi</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SIRA 3.5b: PEDAGOJİK + BAŞARIM  -->
+    <!-- ════════════════════════════════════════ -->
+    <section class="pst-sira-uc-bes">
+        <article class="pst-kart pst-kart-pedagojik">
+            <h2 class="pst-kart-baslik">
+                <span class="pst-kart-emoji">🧠</span>
+                Pedagojik Yaklaşım
+            </h2>
+            <p>
+                <strong>Aralıklı tekrar</strong> (spaced repetition), <strong>anında geri bildirim</strong>
+                ve <strong>yetkinlik-tabanlı ilerleme</strong> ilkeleri üzerine kurulu. Yanlış cevapta
+                sebep açıklaması, doğru cevapta bağlam kartı.
+            </p>
+            <ul class="pst-pedagoji-liste">
+                <li>✓ Skor + combo + süre dinamiği</li>
+                <li>✓ 4 zorluk × 3 modül = 12 farklı oyun deneyimi</li>
+                <li>✓ Yıldız matrisi profili (3 × 4 = 12 puanlama)</li>
+                <li>✓ Mini ansiklopedi: 36 element + 24 bileşik</li>
+            </ul>
+        </article>
+
+        <article class="pst-kart pst-kart-basarim">
+            <h2 class="pst-kart-baslik">
+                <span class="pst-kart-emoji">🏆</span>
+                20 Başarım + Yansıtma
+            </h2>
+            <p>
+                Her modül için <strong>özelleştirilmiş rozet seti</strong>. Oyun sonu
+                "<strong>en sık karıştırılan elementler</strong>" yansıtma kartı ile öğrenci
+                kendi zayıf alanını tespit eder.
+            </p>
+            <div class="pst-basarim-grid">
+                <div class="pst-basarim-mini">🎯 İlk Adım</div>
+                <div class="pst-basarim-mini">⚡ Hızlı Kimyacı</div>
+                <div class="pst-basarim-mini">🧪 Asit-Baz</div>
+                <div class="pst-basarim-mini">🌿 Doğa Dostu</div>
+            </div>
+        </article>
+    </section>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SIRA 3.5c: SERGİ + ÖĞRENCİ HEDEFLERİ  -->
+    <!-- ════════════════════════════════════════ -->
+    <section class="pst-sira-uc-alti">
+        <article class="pst-kart pst-kart-sergi-not">
+            <h2 class="pst-kart-baslik">
+                <span class="pst-kart-emoji">📍</span>
+                Sergi Notu
+            </h2>
+            <p>
+                <strong>Ziyaretçi başına ~3-5 dakika</strong> oynama süresi. Klavye + dokunmatik
+                erişim. Tarayıcıda anında çalışır — indirme gerekmez. Sergi PC'sinde veya QR
+                ile telefonda her ortamda.
+            </p>
+        </article>
+
+        <article class="pst-kart pst-kart-hedef">
+            <h2 class="pst-kart-baslik">
+                <span class="pst-kart-emoji">🎓</span>
+                Öğrenci Hedefleri
+            </h2>
+            <p>
+                <strong>9. sınıf kimya</strong> öğrencileri (15–16 yaş). MEB programı 9.2
+                (Periyodik Tablo) + 9.3 (Bileşikler) kazanımları üzerine kurulu. Akademik
+                ölçüm: <strong>+38% motivasyon</strong> · <strong>2.4× kalıcılık</strong>.
+            </p>
+        </article>
     </section>
 
     <!-- ════════════════════════════════════════ -->
