@@ -232,6 +232,7 @@
         .bolum-F .bolum-baslik { color: #BE185D; border-left-color: #BE185D; }
         .bolum-G .bolum-baslik { color: #4338CA; border-left-color: #4338CA; }
         .bolum-H .bolum-baslik { color: #C2410C; border-left-color: #C2410C; }
+        .bolum-Z .bolum-baslik { color: #9333EA; border-left-color: #9333EA; }
 
         /* Soru-Cevap kartları */
         .sss {
@@ -251,6 +252,23 @@
         .bolum-F .sss { border-left-color: #BE185D; }
         .bolum-G .sss { border-left-color: #4338CA; }
         .bolum-H .sss { border-left-color: #C2410C; }
+        .bolum-Z .sss { border-left-color: #9333EA; }
+
+        .bolum-Z .bolum-aciklama {
+            font-size: 9.5pt;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 5mm;
+            font-style: italic;
+            padding-left: 4mm;
+            border-left: 0.5mm solid rgba(147, 51, 234, 0.3);
+        }
+
+        .bolum-Z .sss-vurgu {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border-left-color: #D4A574 !important;
+            border-top: 0.6mm solid #D4A574;
+        }
 
         .sss-soru {
             font-family: var(--font-display);
@@ -372,12 +390,141 @@
     </div>
 
     <!-- ════════════════════════════════════════ -->
-    <!--  SAYFA 2 — Bölüm A + B                    -->
+    <!--  SAYFA 2 — ZİYARETÇİ KONUŞMA SENARYOSU (Z) -->
     <!-- ════════════════════════════════════════ -->
     <div class="sayfa sayfa-icerik">
         <div class="icerik-header">
             <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
-            <span class="sayfa-no">Sayfa 2 / 6</span>
+            <span class="sayfa-no">Sayfa 2 / 8</span>
+        </div>
+
+        <section class="bolum bolum-Z">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">🎤</span>
+                Z. Ziyaretçi Konuşma Senaryosu
+            </h2>
+            <p class="bolum-aciklama">
+                Sergi standımıza gelen ziyaretçilerimize projeyi anlatırken kullanabileceğiniz, lise öğrencisi diline uygun, doğal ve güvenli cümleler. Karşılamadan kapanışa kadar 10 adımlık sahne kılavuzu.
+            </p>
+
+            <div class="sss">
+                <div class="sss-soru">🤝 1. KARŞILAMA — Selamlama + Kim Olduğumuz</div>
+                <div class="sss-cevap">
+                    "<strong>Merhaba, hoş geldiniz!</strong> Biz Şehit Ziya İlhan Dağdaş Mesleki ve Teknik Anadolu Lisesi <strong>Bilişim Teknolojileri Alanı</strong> öğrencileriyiz. Ben Mert Ege / Hüseyin Efe. Size kısaca projemizi anlatmamı ister misiniz?"
+                </div>
+                <div class="sss-ipucu">Gülümseyerek, göz teması kurarak söyleyin. Acele etmeyin.</div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">💡 2. PROJE TANITIM — Tek Cümle Özet</div>
+                <div class="sss-cevap">
+                    "<strong>ELEMENTRA</strong>, lise 9. sınıf kimya dersi için sıfırdan hazırladığımız <strong>dijital öğretici bir oyun</strong>. Periyodik tablo, atom sembolleri ve kimyasal formülleri ezberlemek yerine oyunla öğrenmeyi sağlıyor."
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">🎯 3. NEDEN BU PROJE? — Problem &amp; Çözüm</div>
+                <div class="sss-cevap">
+                    "Kimya dersinde periyodik tablonun ezberlenmesi çok zor geliyor ve <strong>kısa sürede unutuluyor.</strong> Biz bunu <strong>oyunlaştırarak hem motivasyonu hem de kalıcılığı artırmak istedik.</strong> Araştırmalara göre oyun temelli öğrenme geleneksel ezbere göre motivasyonu yaklaşık <strong>%38 artırıyor.</strong>"
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">🎮 4. MODÜLLERİ ANLATMA — Üç Yaklaşım</div>
+                <div class="sss-cevap">
+                    "<strong>Üç farklı modülümüz</strong> var: <strong>(1) Element Avı</strong> — periyodik tablodan istenen elementi bulma; <strong>(2) Sembol Eşleştirme</strong> — hafıza oyunuyla element adı ↔ sembol eşleştirme; <strong>(3) Formül Yapboz</strong> — atomları birleştirerek bileşik kurma. Her modülün <strong>4 zorluk seviyesi</strong> var: Kolay'dan Uzman'a."
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">📱 5. DEMOYA DAVET — Hemen Dene</div>
+                <div class="sss-cevap">
+                    "<strong>İsterseniz hemen deneyebilirsiniz</strong> — ekranımız önünüzde. QR kodumuzu telefonunuza okutarak da <strong>telefonunuzdan oynayabilirsiniz.</strong> İndirme yok, kurulum yok — tarayıcıda anında çalışır. Bir oturum sadece <strong>3-5 dakika.</strong>"
+                </div>
+                <div class="sss-ipucu">Demo sırasında konuşmayı azaltın, ziyaretçi keşfetsin.</div>
+            </div>
+        </section>
+
+        <div class="icerik-footer">
+            <span><strong>ELEMENTRA</strong> · Sergi SSS Kılavuzu</span>
+            <span>TÜBİTAK 4006 · Bilim Fuarı 2025–2026</span>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SAYFA 3 — Z DEVAMI + 30 SANİYE PITCH    -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="sayfa sayfa-icerik">
+        <div class="icerik-header">
+            <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
+            <span class="sayfa-no">Sayfa 3 / 8</span>
+        </div>
+
+        <section class="bolum bolum-Z">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">🎤</span>
+                Z. Konuşma Senaryosu (devamı)
+            </h2>
+
+            <div class="sss">
+                <div class="sss-soru">⚙️ 6. TEKNİK ANLATIM — Nasıl Yaptık?</div>
+                <div class="sss-cevap">
+                    "<strong>Sıfırdan</strong> hazırladık — herhangi bir hazır şablon ya da kütüphane kullanmadık. Saf <strong>HTML, CSS ve JavaScript</strong> ile yazdık. Yaklaşık <strong>3 hafta sürdü.</strong> Telefonda, tablette ve bilgisayarda — her tarayıcıda aynı anda çalışıyor."
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">🧠 7. PEDAGOJİ — Bilimsel Dayanak (Basit Dil)</div>
+                <div class="sss-cevap">
+                    "Sadece soru-cevap değil — <strong>her oyun sonunda hangi elementi karıştırdığınızı görüyorsunuz.</strong> Yani kendi zayıf yönünüzü fark edebiliyorsunuz. Buna 'yansıtma anı' diyoruz. <strong>Aralıklı tekrar, anında geri bildirim ve kademeli ilerleme</strong> ilkeleri üzerine kurulu."
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">🏫 8. MEB UYGUNLUĞU — Müfredata Bağlı</div>
+                <div class="sss-cevap">
+                    "Projemiz MEB <strong>9. sınıf kimya programının periyodik tablo ve bileşikler ünitelerine</strong> tam uyumlu. Veritabanımızda <strong>36 element ve 24 bileşik</strong> var — tamamı müfredatta yer alan ve günlük hayatta karşılaştığımız maddeler."
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">❓ 9. SORU ANI — Bilmiyorsanız Ne Yapın?</div>
+                <div class="sss-cevap">
+                    "<strong>İyi soru</strong>, onun için biraz düşünmem gerek — danışman öğretmenimize sorup size dönerim." <br><br>
+                    <strong>SAKIN UYDURMAYIN!</strong> Bir soruyu bilmemek normaldir, uydurmak güvenirliği zedeler.
+                </div>
+                <div class="sss-ipucu">Dürüstlük güven kazandırır, sahteden hoşlanılmaz.</div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">👋 10. KAPANIŞ — Veda + QR Çağrısı</div>
+                <div class="sss-cevap">
+                    "<strong>Beğendiyseniz QR kodumuzu telefonunuza okutabilirsiniz</strong>, evde de oynamaya devam edebilirsiniz. Projemiz GitHub'da <strong>açık kaynak olarak</strong> paylaşılıyor — başka okullar da kullanabilir. Geldiğiniz için <strong>teşekkür ederiz, iyi sergiler!</strong>"
+                </div>
+            </div>
+
+            <div class="sss sss-vurgu">
+                <div class="sss-soru">💎 30 SANİYE PITCH — Ezberlenecek Özet</div>
+                <div class="sss-cevap">
+                    "<strong>ELEMENTRA</strong>, lise 9. sınıf kimya için <strong>3 modüllü dijital öğretici bir oyun.</strong> Periyodik tabloyu, element sembollerini ve kimyasal formülleri <strong>ezberlemek yerine oyunla öğretiyor.</strong> Akademik araştırmalara göre oyun temelli öğrenme <strong>%38 daha motive edici, 2.4 kat daha kalıcı.</strong> Tarayıcıda anında çalışır, indirme yok — <strong>QR'ı tarayın, hemen telefonunuzdan oynayın.</strong>"
+                </div>
+                <div class="sss-ipucu">Bu cümleyi tamamen ezberleyin. Jüri sorduğunda akıcı söyleyin.</div>
+            </div>
+        </section>
+
+        <div class="icerik-footer">
+            <span><strong>ELEMENTRA</strong> · Sergi SSS Kılavuzu</span>
+            <span>TÜBİTAK 4006 · Bilim Fuarı 2025–2026</span>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SAYFA 4 — Bölüm A + B                    -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="sayfa sayfa-icerik">
+        <div class="icerik-header">
+            <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
+            <span class="sayfa-no">Sayfa 4 / 8</span>
         </div>
 
         <!-- BÖLÜM A: GENEL & TANITIM -->
@@ -498,7 +645,7 @@
     <div class="sayfa sayfa-icerik">
         <div class="icerik-header">
             <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
-            <span class="sayfa-no">Sayfa 3 / 6</span>
+            <span class="sayfa-no">Sayfa 5 / 8</span>
         </div>
 
         <!-- BÖLÜM C: PEDAGOJİK & AKADEMİK -->
@@ -638,7 +785,7 @@
     <div class="sayfa sayfa-icerik">
         <div class="icerik-header">
             <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
-            <span class="sayfa-no">Sayfa 4 / 6</span>
+            <span class="sayfa-no">Sayfa 6 / 8</span>
         </div>
 
         <!-- BÖLÜM E: SERGİ & KULLANIM -->
@@ -783,7 +930,7 @@
     <div class="sayfa sayfa-icerik">
         <div class="icerik-header">
             <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
-            <span class="sayfa-no">Sayfa 5 / 6</span>
+            <span class="sayfa-no">Sayfa 7 / 8</span>
         </div>
 
         <!-- BÖLÜM G: GELECEK & GELİŞTİRME -->
@@ -924,7 +1071,7 @@
     <div class="sayfa sayfa-icerik">
         <div class="icerik-header">
             <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
-            <span class="sayfa-no">Sayfa 6 / 6</span>
+            <span class="sayfa-no">Sayfa 8 / 8</span>
         </div>
 
         <section class="bolum bolum-A">
