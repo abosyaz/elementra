@@ -573,12 +573,80 @@
             filter: drop-shadow(0 8px 24px rgba(212, 165, 116, 0.3));
         }
 
-        /* ═══ Atom SVG ═══ */
+        /* ═══ Atom SVG (artık kullanılmıyor — okul logosu) ═══ */
         .atom-svg {
             width: 12vw;
             height: 12vw;
             margin-bottom: 3vh;
             filter: drop-shadow(0 8px 32px rgba(124, 58, 237, 0.4));
+        }
+
+        /* ═══ Slayt 1 Kapak — Okul Logosu ═══ */
+        .kapak-okul-logo {
+            width: 14vw;
+            height: 14vw;
+            object-fit: contain;
+            margin-bottom: 3vh;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            padding: 0.8vw;
+            filter: drop-shadow(0 12px 40px rgba(212, 165, 116, 0.35));
+        }
+
+        /* ═══ Okul Marka — Tüm Slaytlarda Alt Sol Köşe ═══ */
+        .okul-marka {
+            position: fixed;
+            bottom: 28px;
+            left: 32px;
+            z-index: 95;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 999px;
+            padding: 7px 18px 7px 7px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            transition: opacity 0.4s ease;
+        }
+
+        .okul-marka img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            padding: 3px;
+            object-fit: contain;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .okul-marka span {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.02em;
+            color: #FFFFFF;
+            line-height: 1.15;
+            max-width: 230px;
+        }
+
+        /* Açık slayt aktifken metin rengi koyu */
+        body:has(.aktif.slayt-acik) .okul-marka {
+            background: rgba(255, 255, 255, 0.75);
+            border-color: rgba(124, 58, 237, 0.20);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.12);
+        }
+
+        body:has(.aktif.slayt-acik) .okul-marka span {
+            color: rgba(30, 27, 75, 0.92);
+        }
+
+        /* Kapak slaytında okul markası gizli (logo zaten büyük) */
+        body:has(.aktif[data-slayt="1"]) .okul-marka {
+            opacity: 0;
+            pointer-events: none;
         }
 
         /* ═══ Pill Chip ═══ */
@@ -748,18 +816,13 @@
         <!--  SLAYT 1 — KAPAK                        -->
         <!-- ════════════════════════════════════════ -->
         <section class="slayt slayt-koyu aktif" data-slayt="1">
-            <svg class="atom-svg" viewBox="0 0 64 64">
-                <circle cx="32" cy="32" r="5" fill="#FFFFFF"/>
-                <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
-                <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5" transform="rotate(60 32 32)"/>
-                <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5" transform="rotate(-60 32 32)"/>
-            </svg>
+            <img class="kapak-okul-logo" src="logo_okul.png" alt="Şehit Ziya İlhan Dağdaş MTAL logosu">
             <h1 class="baslik-buyuk" style="background: linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 40%, #D4A574 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">ELEMENTRA</h1>
             <p class="alt-baslik koyu" style="font-size: 3vw; margin-top: 2vh;">Kimyayı Keşfet</p>
             <div class="pill">TÜBİTAK 4006 · BİLİM FUARI 2025–2026</div>
-            <p class="govde-metin koyu" style="margin-top: 5vh; font-size: 1.4vw; max-width: 60vw;">
-                Lise 9. sınıf kimya için <strong>3 modüllü dijital öğretici oyun</strong> ·
-                Oyun temelli öğrenme ile kalıcı bilgi
+            <p class="govde-metin koyu" style="margin-top: 3vh; font-size: 1.3vw; max-width: 60vw;">
+                <strong>Şehit Ziya İlhan Dağdaş Mesleki ve Teknik Anadolu Lisesi</strong> · Muğla<br>
+                Lise 9. sınıf kimya için 3 modüllü dijital öğretici oyun
             </p>
         </section>
 
@@ -1105,25 +1168,32 @@
         <!--  SLAYT 13 — CTA / QR                    -->
         <!-- ════════════════════════════════════════ -->
         <section class="slayt slayt-koyu" data-slayt="13">
-            <div class="ust-etiket koyu">Hemen Dene</div>
-            <h2 class="baslik-orta koyu" style="font-size: 5vw;">Sergi Sonrası<br>Evde de Devam Et</h2>
+            <div class="ust-etiket koyu">Şimdi Keşfet</div>
+            <h2 class="baslik-orta koyu" style="font-size: 5vw;">Şimdi Telefonunda Aç</h2>
+            <p class="alt-baslik koyu" style="font-size: 1.6vw; margin-top: 1vh; opacity: 0.9;">Sergi sırasında ve sonrasında</p>
             <div class="qr-blok">
                 <div class="qr-img">
                     <img src="qr.png" alt="QR kodu — Elementra'yı telefonda oyna">
                 </div>
                 <div class="qr-icerik">
-                    <h3>Telefonunda Oyna</h3>
+                    <h3>QR'ı Tara, Aç</h3>
                     <div class="qr-url-text">abosyaz.github.io/elementra</div>
                     <p>
-                        Tarayıcıda anında çalışır<br>
-                        İndirme gerekmez · Klavye + dokunmatik<br>
-                        <strong>Tüm modern tarayıcılar</strong>
+                        Kurulum gerekmez<br>
+                        Klavye + dokunmatik<br>
+                        <strong>PC · Telefon · Tablet</strong>
                     </p>
                 </div>
             </div>
         </section>
 
     </main>
+
+    <!-- Okul Marka — Tüm slaytlarda görünür (kapak hariç) -->
+    <aside class="okul-marka" aria-label="Proje okulu">
+        <img src="logo_okul.png" alt="Şehit Ziya İlhan Dağdaş MTAL">
+        <span>Şehit Ziya İlhan Dağdaş<br>MTAL · Muğla</span>
+    </aside>
 
     <!-- Progress Bar -->
     <div class="progress-bar">
