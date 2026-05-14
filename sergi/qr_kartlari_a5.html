@@ -71,7 +71,7 @@
             }
         }
 
-        /* Kesme çizgisi (orta) */
+        /* Kesme çizgisi (orta) — sadece dashed çizgi, makas yok */
         .kesme-cizgi {
             position: absolute;
             top: 148.5mm;
@@ -81,20 +81,6 @@
             border-top: 0.4mm dashed rgba(124, 58, 237, 0.45);
             z-index: 10;
         }
-
-        .kesme-cizgi::before,
-        .kesme-cizgi::after {
-            content: '✂';
-            position: absolute;
-            top: -3mm;
-            font-size: 6mm;
-            color: rgba(124, 58, 237, 0.6);
-            background: #FFFFFF;
-            padding: 0 2mm;
-        }
-
-        .kesme-cizgi::before { left: 8mm; }
-        .kesme-cizgi::after { right: 8mm; }
 
         /* ═══════════════════════════════════════════════════
            A5 Kartı — 2 panel (Atom Marka | QR Telefonda Oyna)
