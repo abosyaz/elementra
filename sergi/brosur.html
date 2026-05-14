@@ -37,6 +37,8 @@
             --surface-1:       #FFFFFF;
             --surface-2:       #F3F4F6;
             --grad-brand:      linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+            --accent-gold:     #D4A574;
+            --accent-gold-soft: rgba(212, 165, 116, 0.45);
             --font-display:    'Oxanium', sans-serif;
             --font-body:       'Inter', system-ui, sans-serif;
         }
@@ -122,8 +124,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 1mm;
-            background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary));
+            height: 3mm;
+            background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary), var(--accent-gold));
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
@@ -188,6 +190,19 @@
             line-height: 1;
             color: #FFFFFF;
             margin-bottom: 4mm;
+            position: relative;
+        }
+
+        .panel-onkapak .br-baslik::after {
+            content: '';
+            display: block;
+            width: 22mm;
+            height: 0.6mm;
+            margin: 4mm auto 0;
+            background: linear-gradient(90deg, transparent, var(--accent-gold) 30%, var(--accent-gold) 70%, transparent);
+            border-radius: 1mm;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .panel-onkapak .br-slogan {
@@ -246,6 +261,10 @@
             border-radius: 4mm;
             padding: 5mm 6mm;
             margin-top: auto;
+            border-top: 0.8mm solid var(--accent-gold);
+            box-shadow: 0 2mm 8mm rgba(245, 158, 11, 0.18);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .panel-iki .pr-vurgu ul {
@@ -276,6 +295,7 @@
            ═════════════════════════════════════════════════ */
         .panel-modul {
             background: var(--surface-0);
+            counter-reset: modul-counter;
         }
 
         .panel-modul h2 {
@@ -283,11 +303,29 @@
         }
 
         .modul-blok {
+            position: relative;
+            counter-increment: modul-counter;
             background: var(--surface-1);
             border-radius: 4mm;
             padding: 5mm 6mm;
             margin-bottom: 4mm;
             border-left: 2mm solid var(--brand-primary);
+            overflow: hidden;
+        }
+
+        .modul-blok::after {
+            content: '0' counter(modul-counter);
+            position: absolute;
+            top: 1mm;
+            right: 4mm;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 28pt;
+            color: rgba(124, 58, 237, 0.10);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .modul-blok.mod-1 { border-left-color: #93C5FD; }
@@ -357,6 +395,10 @@
             border-radius: 3mm;
             padding: 3mm 4mm;
             text-align: center;
+            border-top: 0.8mm solid var(--accent-gold);
+            box-shadow: 0 1.5mm 4mm rgba(245, 158, 11, 0.15);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .stat-kart .stat-deger {
