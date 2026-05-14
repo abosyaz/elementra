@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>ELEMENTRA — Sergi Sunumu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oxanium:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --brand-primary:   #7C3AED;
+            --brand-secondary: #EC4899;
+            --brand-tertiary:  #A855F7;
+            --accent-gold:     #D4A574;
+            --accent-gold-soft: #E5BC8F;
+            --color-success:   #10B981;
+            --color-warning:   #F59E0B;
+            --color-info:      #06B6D4;
+            --color-error:     #EF4444;
+            --text-primary:    #1E1B4B;
+            --text-secondary:  #4B5563;
+            --text-inverse:    #FFFFFF;
+            --surface-0:       #FAF5FF;
+            --surface-1:       #FFFFFF;
+            --grad-brand:      linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+            --grad-night:      linear-gradient(135deg, #1E1B4B 0%, #4C1D95 50%, #7C3AED 100%);
+            --grad-gold:       linear-gradient(135deg, #D4A574 0%, #EC4899 50%, #7C3AED 100%);
+            --font-display:    'Oxanium', sans-serif;
+            --font-body:       'Inter', system-ui, sans-serif;
+        }
+
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+            font-family: var(--font-body);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            cursor: none;
+        }
+
+        /* ═══ Slide Container ═══ */
+        .sunum {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slayt {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 6vh 8vw;
+            opacity: 0;
+            transform: scale(1.02);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            pointer-events: none;
+        }
+
+        .slayt.aktif {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        /* ═══ Progress Bar ═══ */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            z-index: 100;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #7C3AED, #EC4899, #D4A574);
+            width: 0%;
+            transition: width 100ms linear;
+        }
+
+        /* ═══ Slayt Numarası ═══ */
+        .slayt-no {
+            position: fixed;
+            bottom: 24px;
+            right: 32px;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.18em;
+            color: rgba(255, 255, 255, 0.55);
+            z-index: 90;
+            text-transform: uppercase;
+        }
+
+        .slayt:not(.slayt-koyu) ~ .slayt-no,
+        body:has(.aktif:not(.slayt-koyu)) .slayt-no {
+            color: rgba(30, 27, 75, 0.55);
+        }
+
+        /* ═══ Ortak Tipografi ═══ */
+        h1, h2, h3 {
+            font-family: var(--font-display);
+        }
+
+        .baslik-buyuk {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 9.5vw;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            background: var(--grad-brand);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .baslik-orta {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 6vw;
+            line-height: 1;
+            letter-spacing: -0.025em;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .baslik-orta.koyu {
+            color: #FFFFFF;
+        }
+
+        .alt-baslik {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 2.5vw;
+            line-height: 1.2;
+            color: var(--text-secondary);
+            margin-top: 1.5vh;
+            text-align: center;
+        }
+
+        .alt-baslik.koyu {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .ust-etiket {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1.3vw;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--brand-primary);
+            margin-bottom: 3vh;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ust-etiket.koyu {
+            color: var(--accent-gold);
+        }
+
+        .ust-etiket::before,
+        .ust-etiket::after {
+            content: '';
+            display: block;
+            width: 28px;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, currentColor);
+        }
+
+        .ust-etiket::after {
+            background: linear-gradient(90deg, currentColor, transparent);
+        }
+
+        .govde-metin {
+            font-size: 1.7vw;
+            line-height: 1.55;
+            color: var(--text-secondary);
+            max-width: 80vw;
+            text-align: center;
+            margin-top: 3vh;
+        }
+
+        .govde-metin.koyu {
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        strong {
+            color: var(--brand-primary);
+            font-weight: 700;
+        }
+
+        .koyu strong, .slayt-koyu strong {
+            color: var(--accent-gold);
+        }
+
+        /* ═══ KOYU SLAYT (Header/Title Slides) ═══ */
+        .slayt-koyu {
+            background: var(--grad-night);
+            color: #FFFFFF;
+        }
+
+        .slayt-koyu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #7C3AED, #EC4899, #D4A574);
+        }
+
+        /* ═══ AÇIK SLAYT (Content Slides) ═══ */
+        .slayt-acik {
+            background: var(--surface-0);
+        }
+
+        .slayt-acik::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #7C3AED, #EC4899, #D4A574);
+        }
+
+        /* ═══ Modül Kart Grid ═══ */
+        .modul-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2vw;
+            width: 88vw;
+            margin-top: 5vh;
+        }
+
+        .modul-kart {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 3.5vh 2.5vw;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modul-kart::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--modul-renk, var(--brand-primary));
+        }
+
+        .modul-kart-1 { --modul-renk: linear-gradient(90deg, #6366F1, #93C5FD); }
+        .modul-kart-2 { --modul-renk: linear-gradient(90deg, #D97706, #FCD34D); }
+        .modul-kart-3 { --modul-renk: linear-gradient(90deg, #10B981, #6EE7B7); }
+
+        .modul-kart-no {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 5vw;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.12);
+            margin-bottom: 1vh;
+        }
+
+        .modul-kart-baslik {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 2.2vw;
+            color: #FFFFFF;
+            margin-bottom: 2vh;
+            letter-spacing: -0.01em;
+        }
+
+        .modul-kart-aciklama {
+            font-size: 1.3vw;
+            color: rgba(255, 255, 255, 0.88);
+            line-height: 1.5;
+        }
+
+        /* ═══ Stat Kartları ═══ */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4vw;
+            margin-top: 5vh;
+            width: 70vw;
+        }
+
+        .stat-kart {
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 165, 116, 0.4);
+            border-radius: 20px;
+            padding: 5vh 3vw;
+            text-align: center;
+            border-top: 4px solid var(--accent-gold);
+        }
+
+        .stat-deger {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 7vw;
+            line-height: 1;
+            background: linear-gradient(135deg, #D4A574, #EC4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-feature-settings: 'tnum';
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5vh;
+        }
+
+        .stat-etiket {
+            font-size: 1.3vw;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+
+        /* ═══ Zorluk Pillars ═══ */
+        .zorluk-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2vw;
+            margin-top: 5vh;
+            width: 84vw;
+        }
+
+        .zorluk-pill {
+            background: var(--surface-1);
+            border: 2px solid;
+            border-radius: 20px;
+            padding: 4vh 2vw;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.08);
+        }
+
+        .zorluk-pill-1 { border-color: #10B981; }
+        .zorluk-pill-2 { border-color: #06B6D4; }
+        .zorluk-pill-3 { border-color: #F59E0B; }
+        .zorluk-pill-4 { border-color: #EF4444; }
+
+        .zorluk-no {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 2vw;
+            line-height: 1;
+            margin-bottom: 1.5vh;
+        }
+        .zorluk-pill-1 .zorluk-no { color: #047857; }
+        .zorluk-pill-2 .zorluk-no { color: #0891B2; }
+        .zorluk-pill-3 .zorluk-no { color: #B45309; }
+        .zorluk-pill-4 .zorluk-no { color: #B91C1C; }
+
+        .zorluk-ad {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 2.4vw;
+            color: var(--text-primary);
+            margin-bottom: 1vh;
+        }
+
+        .zorluk-detay {
+            font-size: 1.1vw;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* ═══ Özellik Liste ═══ */
+        .ozellik-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3vh 5vw;
+            margin-top: 5vh;
+            width: 80vw;
+        }
+
+        .ozellik-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5vw;
+        }
+
+        .ozellik-ikon {
+            font-size: 3vw;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .ozellik-icerik h4 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.8vw;
+            color: var(--text-primary);
+            margin-bottom: 0.5vh;
+        }
+
+        .ozellik-icerik p {
+            font-size: 1.2vw;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* ═══ MEB Kazanım Tablosu ═══ */
+        .kazanim-tablo {
+            margin-top: 5vh;
+            width: 70vw;
+            border-collapse: collapse;
+        }
+
+        .kazanim-tablo tr {
+            border-bottom: 1px solid rgba(124, 58, 237, 0.18);
+        }
+
+        .kazanim-tablo tr:last-child { border-bottom: none; }
+
+        .kazanim-tablo td {
+            padding: 2vh 2vw;
+            font-size: 1.5vw;
+            color: var(--text-primary);
+        }
+
+        .kazanim-tablo td:first-child {
+            font-family: var(--font-display);
+            font-weight: 800;
+            color: var(--brand-primary);
+            width: 22%;
+            font-feature-settings: 'tnum';
+        }
+
+        /* ═══ Ekip Kartları ═══ */
+        .ekip-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3vw;
+            margin-top: 5vh;
+            width: 80vw;
+        }
+
+        .ekip-kart {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 24px;
+            padding: 5vh 2.5vw;
+            text-align: center;
+            position: relative;
+        }
+
+        .ekip-kart::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .ekip-rol {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1.1vw;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 1.5vh;
+        }
+
+        .ekip-ad {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 2.3vw;
+            color: #FFFFFF;
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+        }
+
+        /* ═══ Logo Görsel ═══ */
+        .kapak-logo {
+            width: 14vw;
+            height: 14vw;
+            object-fit: contain;
+            margin-bottom: 3vh;
+            filter: drop-shadow(0 8px 24px rgba(212, 165, 116, 0.3));
+        }
+
+        /* ═══ Atom SVG ═══ */
+        .atom-svg {
+            width: 12vw;
+            height: 12vw;
+            margin-bottom: 3vh;
+            filter: drop-shadow(0 8px 32px rgba(124, 58, 237, 0.4));
+        }
+
+        /* ═══ Pill Chip ═══ */
+        .pill {
+            display: inline-block;
+            padding: 1.2vh 2.5vw;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(212, 165, 116, 0.5);
+            border-radius: 999px;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.3vw;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            margin-top: 3vh;
+            backdrop-filter: blur(8px);
+        }
+
+        .pill.acik {
+            background: rgba(124, 58, 237, 0.06);
+            border-color: rgba(124, 58, 237, 0.25);
+            color: var(--brand-primary);
+        }
+
+        /* ═══ QR Slayt ═══ */
+        .qr-blok {
+            display: flex;
+            align-items: center;
+            gap: 5vw;
+            margin-top: 4vh;
+        }
+
+        .qr-img {
+            width: 28vh;
+            height: 28vh;
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 2vh;
+            box-shadow: 0 16px 48px rgba(212, 165, 116, 0.35);
+        }
+
+        .qr-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .qr-icerik {
+            text-align: left;
+        }
+
+        .qr-icerik h3 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 3.5vw;
+            color: #FFFFFF;
+            margin-bottom: 2vh;
+            line-height: 1;
+        }
+
+        .qr-icerik .qr-url-text {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(212, 165, 116, 0.4);
+            padding: 1.5vh 2vw;
+            border-radius: 999px;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.6vw;
+            color: #FFFFFF;
+            margin-bottom: 2vh;
+            letter-spacing: 0.04em;
+        }
+
+        .qr-icerik p {
+            font-size: 1.4vw;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.5;
+        }
+
+        /* ═══ Cursor visible on hover ═══ */
+        body:hover { cursor: default; }
+
+        /* ═══ Subtle dekoratif noktalar ═══ */
+        .slayt-koyu::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(124, 58, 237, 0.18), transparent 25%),
+                radial-gradient(circle at 85% 75%, rgba(236, 72, 153, 0.15), transparent 30%),
+                radial-gradient(circle at 50% 50%, rgba(212, 165, 116, 0.05), transparent 50%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="sunum">
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 1 — KAPAK                        -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-koyu aktif" data-slayt="1">
+            <svg class="atom-svg" viewBox="0 0 64 64">
+                <circle cx="32" cy="32" r="5" fill="#FFFFFF"/>
+                <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+                <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5" transform="rotate(60 32 32)"/>
+                <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5" transform="rotate(-60 32 32)"/>
+            </svg>
+            <h1 class="baslik-buyuk" style="background: linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 40%, #D4A574 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">ELEMENTRA</h1>
+            <p class="alt-baslik koyu" style="font-size: 3vw; margin-top: 2vh;">Kimyayı Keşfet</p>
+            <div class="pill">TÜBİTAK 4006 · BİLİM FUARI 2025–2026</div>
+            <p class="govde-metin koyu" style="margin-top: 5vh; font-size: 1.4vw; max-width: 60vw;">
+                Lise 9. sınıf kimya için <strong>3 modüllü dijital öğretici oyun</strong> ·
+                Oyun temelli öğrenme ile kalıcı bilgi
+            </p>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 2 — PROBLEM                      -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-acik" data-slayt="2">
+            <div class="ust-etiket">Problem</div>
+            <h2 class="baslik-orta">Kimya<br><span style="background: var(--grad-brand); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Ezberle Öğrenilmiyor.</span></h2>
+            <p class="govde-metin">
+                Periyodik tablo, atom sembolleri, kimyasal formüller — geleneksel yöntemlerle
+                ezberlenince <strong>kısa sürede unutuluyor</strong>. Öğrenciler motivasyonunu
+                kaybediyor, ders soyut kalıyor.
+            </p>
+            <div class="stat-grid" style="margin-top: 6vh; width: 70vw;">
+                <div class="zorluk-pill zorluk-pill-4">
+                    <div class="zorluk-ad" style="color: #B91C1C;">%62</div>
+                    <div class="zorluk-detay">Lise öğrencisi kimyayı "zor" buluyor</div>
+                </div>
+                <div class="zorluk-pill zorluk-pill-3">
+                    <div class="zorluk-ad" style="color: #B45309;">2 hafta</div>
+                    <div class="zorluk-detay">Ezbere bilgi unutma süresi</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 3 — ÇÖZÜM (Tanıtım)              -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-koyu" data-slayt="3">
+            <div class="ust-etiket koyu">Çözüm</div>
+            <h2 class="baslik-orta koyu" style="font-size: 7.5vw;">ELEMENTRA</h2>
+            <p class="alt-baslik koyu" style="font-size: 2.2vw; margin-top: 1vh;">Oyun Temelli Öğrenme</p>
+            <p class="govde-metin koyu" style="margin-top: 5vh; max-width: 70vw;">
+                3 modül × 4 zorluk = <strong>12 farklı oyun deneyimi</strong>.
+                <strong>36 element + 24 bileşik</strong>. Tarayıcıda anında çalışır —
+                indirme gerekmez. Klavye + dokunmatik + her cihaz.
+            </p>
+            <div class="pill" style="margin-top: 5vh;">VANİLLA HTML · CSS · JAVASCRIPT</div>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 4 — 3 MODÜL OVERVIEW             -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-koyu" data-slayt="4">
+            <div class="ust-etiket koyu">3 Modül · 3 Yaklaşım</div>
+            <h2 class="baslik-orta koyu">Üç Farklı Pedagojik Yöntem</h2>
+            <div class="modul-grid">
+                <div class="modul-kart modul-kart-1">
+                    <div class="modul-kart-no">01</div>
+                    <h3 class="modul-kart-baslik">Element Avı</h3>
+                    <p class="modul-kart-aciklama">Periyodik tabloda 36 elementi tıkla-bul. 4 farklı soru tipi.</p>
+                </div>
+                <div class="modul-kart modul-kart-2">
+                    <div class="modul-kart-no">02</div>
+                    <h3 class="modul-kart-baslik">Sembol Eşleştirme</h3>
+                    <p class="modul-kart-aciklama">Memory mekaniğiyle ad ↔ sembol. Latince köken bonusu.</p>
+                </div>
+                <div class="modul-kart modul-kart-3">
+                    <div class="modul-kart-no">03</div>
+                    <h3 class="modul-kart-baslik">Formül Yapboz</h3>
+                    <p class="modul-kart-aciklama">Atomları birleştir, 24 bileşik kur. Pedagojik geri bildirim.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 5 — MODÜL 1: ELEMENT AVI         -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-acik" data-slayt="5">
+            <div class="ust-etiket">01 · Modül 1</div>
+            <h2 class="baslik-orta" style="background: linear-gradient(135deg, #6366F1, #93C5FD); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Element Avı</h2>
+            <p class="alt-baslik">Periyodik Tabloda Element Bul</p>
+            <div class="ozellik-grid" style="margin-top: 7vh;">
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">🔍</div>
+                    <div class="ozellik-icerik">
+                        <h4>36 Element Veritabanı</h4>
+                        <p>Hidrojen'den Kurşun'a kadar tam liste</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">🎯</div>
+                    <div class="ozellik-icerik">
+                        <h4>4 Soru Tipi</h4>
+                        <p>Ad · Atom numarası · Yaygın ad · Kategori</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">⏱️</div>
+                    <div class="ozellik-icerik">
+                        <h4>4 Zorluk Seviyesi</h4>
+                        <p>Kolay (60sn) → Uzman (10sn / soru)</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">🏆</div>
+                    <div class="ozellik-icerik">
+                        <h4>Rozet Sistemi</h4>
+                        <p>İlk Adım · Mükemmellik · Periyot Ustası</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 6 — MODÜL 2: SEMBOL EŞLEŞTİRME   -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-acik" data-slayt="6">
+            <div class="ust-etiket" style="color: #B45309;">02 · Modül 2</div>
+            <h2 class="baslik-orta" style="background: linear-gradient(135deg, #D97706, #FCD34D); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Sembol Eşleştirme</h2>
+            <p class="alt-baslik">Memory + Latince Köken</p>
+            <div class="ozellik-grid" style="margin-top: 7vh;">
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">🃏</div>
+                    <div class="ozellik-icerik">
+                        <h4>Memory Mekaniği</h4>
+                        <p>Klasik kart çevirme oyunuyla eşle</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">🏛️</div>
+                    <div class="ozellik-icerik">
+                        <h4>Latince Köken Bonusu</h4>
+                        <p>Na = Natrium · K = Kalium · Fe = Ferrum</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">🎴</div>
+                    <div class="ozellik-icerik">
+                        <h4>6'dan 24 Çifte</h4>
+                        <p>Kolay: 6 çift · Uzman: 24 çift</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">⚡</div>
+                    <div class="ozellik-icerik">
+                        <h4>Combo Sistemi</h4>
+                        <p>Üst üste doğru eşleşmelerde bonus puan</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 7 — MODÜL 3: FORMÜL YAPBOZ       -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-acik" data-slayt="7">
+            <div class="ust-etiket" style="color: #047857;">03 · Modül 3</div>
+            <h2 class="baslik-orta" style="background: linear-gradient(135deg, #10B981, #6EE7B7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Formül Yapboz</h2>
+            <p class="alt-baslik">Atomları Birleştir, Bileşik Kur</p>
+            <div class="ozellik-grid" style="margin-top: 7vh;">
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">🧪</div>
+                    <div class="ozellik-icerik">
+                        <h4>24 Bileşik</h4>
+                        <p>H₂O · CO₂ · NaCl · H₂SO₄ · NaOH...</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">⚛️</div>
+                    <div class="ozellik-icerik">
+                        <h4>Atom Paletinden Sürükle</h4>
+                        <p>Doğru element + doğru oran</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">💡</div>
+                    <div class="ozellik-icerik">
+                        <h4>Pedagojik Geri Bildirim</h4>
+                        <p>"Eksik 2 H atomu var" / "Fazla O"</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">📖</div>
+                    <div class="ozellik-icerik">
+                        <h4>Bağlam Kartı</h4>
+                        <p>Her bileşik için kullanım alanı + örnek</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 8 — ZORLUK SEVİYELERİ            -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-acik" data-slayt="8">
+            <div class="ust-etiket">Zorluk Sistemi</div>
+            <h2 class="baslik-orta">4 Seviye · Kademeli<br><span style="background: var(--grad-brand); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Yetkinlik Gelişimi</span></h2>
+            <div class="zorluk-grid">
+                <div class="zorluk-pill zorluk-pill-1">
+                    <div class="zorluk-no">01</div>
+                    <div class="zorluk-ad">Kolay</div>
+                    <div class="zorluk-detay">İpucu açık<br>Süre yok</div>
+                </div>
+                <div class="zorluk-pill zorluk-pill-2">
+                    <div class="zorluk-no">02</div>
+                    <div class="zorluk-ad">Orta</div>
+                    <div class="zorluk-detay">Az ipucu<br>Soft süre</div>
+                </div>
+                <div class="zorluk-pill zorluk-pill-3">
+                    <div class="zorluk-no">03</div>
+                    <div class="zorluk-ad">Zor</div>
+                    <div class="zorluk-detay">İpucu kısıt<br>Süre baskısı</div>
+                </div>
+                <div class="zorluk-pill zorluk-pill-4">
+                    <div class="zorluk-no">04</div>
+                    <div class="zorluk-ad">Uzman</div>
+                    <div class="zorluk-detay">İpucu yok<br>Yanıltıcı tuzak</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 9 — KANIT (+38% / 2.4×)          -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-koyu" data-slayt="9">
+            <div class="ust-etiket koyu">Kanıt-Temelli Pedagoji</div>
+            <h2 class="baslik-orta koyu">Oyun Temelli Öğrenme<br>Klasik Ezberden <span style="color: var(--accent-gold);">Çok Üstün</span></h2>
+            <div class="stat-grid">
+                <div class="stat-kart">
+                    <div class="stat-deger">+38%</div>
+                    <div class="stat-etiket">Motivasyon Artışı<br>(Hu, 2022)</div>
+                </div>
+                <div class="stat-kart">
+                    <div class="stat-deger">2.4×</div>
+                    <div class="stat-etiket">Bilgi Kalıcılığı<br>(Snakeleev Project)</div>
+                </div>
+            </div>
+            <p class="govde-metin koyu" style="margin-top: 5vh; font-size: 1.5vw; max-width: 70vw;">
+                <strong>Spaced repetition</strong> + <strong>anında geri bildirim</strong> +
+                <strong>yetkinlik-tabanlı ilerleme</strong> ilkeleri üzerine kurulu.
+            </p>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 10 — YANSITMA + 20 BAŞARIM       -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-acik" data-slayt="10">
+            <div class="ust-etiket">Öz Değerlendirme</div>
+            <h2 class="baslik-orta">Yansıtma Anı &<br><span style="background: var(--grad-brand); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">20 Başarım Sistemi</span></h2>
+            <div class="ozellik-grid" style="margin-top: 6vh;">
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">🪞</div>
+                    <div class="ozellik-icerik">
+                        <h4>Yansıtma Kartı</h4>
+                        <p>Oyun sonu en sık karıştırılan elementler</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">⭐</div>
+                    <div class="ozellik-icerik">
+                        <h4>Yıldız Matrisi</h4>
+                        <p>3 modül × 4 zorluk = 12 hücreli profil</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">🏅</div>
+                    <div class="ozellik-icerik">
+                        <h4>20 Rozet</h4>
+                        <p>İlk Adım, Hızlı Kimyacı, Doğa Dostu...</p>
+                    </div>
+                </div>
+                <div class="ozellik-item">
+                    <div class="ozellik-ikon">📊</div>
+                    <div class="ozellik-icerik">
+                        <h4>Mini Ansiklopedi</h4>
+                        <p>36 element + 24 bileşik referans kartları</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 11 — MEB UYUM + TEKNOLOJİ        -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-acik" data-slayt="11">
+            <div class="ust-etiket">MEB Kazanımları</div>
+            <h2 class="baslik-orta">9. Sınıf Kimya<br><span style="background: var(--grad-brand); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Müfredat Uyumlu</span></h2>
+            <table class="kazanim-tablo">
+                <tr>
+                    <td>9.2.3.3</td>
+                    <td>Periyodik tablonun yapısı</td>
+                </tr>
+                <tr>
+                    <td>9.2.3.4</td>
+                    <td>Element kategorileri</td>
+                </tr>
+                <tr>
+                    <td>9.3.2.1</td>
+                    <td>Bileşik adlandırma</td>
+                </tr>
+                <tr>
+                    <td>9.3.2.2</td>
+                    <td>Kimyasal formül yazımı</td>
+                </tr>
+            </table>
+            <div class="pill acik" style="margin-top: 4vh;">MEB Kimya 9. Sınıf · 2018 Reformu</div>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 12 — EKİP                        -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-koyu" data-slayt="12">
+            <div class="ust-etiket koyu">Proje Ekibi</div>
+            <h2 class="baslik-orta koyu">Bilişim Teknolojileri Alanı</h2>
+            <p class="alt-baslik koyu" style="font-size: 1.6vw; margin-top: 1vh;">Şehit Ziya İlhan Dağdaş MTAL · Muğla</p>
+            <div class="ekip-grid">
+                <div class="ekip-kart">
+                    <div class="ekip-rol">Öğrenci</div>
+                    <div class="ekip-ad">Mert Ege<br>KAHRAMAN</div>
+                </div>
+                <div class="ekip-kart">
+                    <div class="ekip-rol">Öğrenci</div>
+                    <div class="ekip-ad">Hüseyin Efe<br>BALCI</div>
+                </div>
+                <div class="ekip-kart">
+                    <div class="ekip-rol">Danışman</div>
+                    <div class="ekip-ad">Abdullah<br>ÖSELMİŞ</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 13 — CTA / QR                    -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-koyu" data-slayt="13">
+            <div class="ust-etiket koyu">Hemen Dene</div>
+            <h2 class="baslik-orta koyu" style="font-size: 5vw;">Sergi Sonrası<br>Evde de Devam Et</h2>
+            <div class="qr-blok">
+                <div class="qr-img">
+                    <img src="qr.png" alt="QR kodu — Elementra'yı telefonda oyna">
+                </div>
+                <div class="qr-icerik">
+                    <h3>Telefonunda Oyna</h3>
+                    <div class="qr-url-text">abosyaz.github.io/elementra</div>
+                    <p>
+                        Tarayıcıda anında çalışır<br>
+                        İndirme gerekmez · Klavye + dokunmatik<br>
+                        <strong>Tüm modern tarayıcılar</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress"></div>
+    </div>
+
+    <!-- Slayt Numarası -->
+    <div class="slayt-no"><span id="aktifNo">01</span> / <span id="toplamNo">13</span></div>
+
+    <script>
+        (function() {
+            const slaytlar = document.querySelectorAll('.slayt');
+            const progress = document.getElementById('progress');
+            const aktifNoEl = document.getElementById('aktifNo');
+            const toplamNoEl = document.getElementById('toplamNo');
+            const SLAYT_SURESI = 9000; // 9 saniye per slayt
+            let aktifIndex = 0;
+            let zamanlayici;
+            let baslangic;
+
+            toplamNoEl.textContent = String(slaytlar.length).padStart(2, '0');
+
+            function slaytGoster(index) {
+                slaytlar.forEach((s, i) => s.classList.toggle('aktif', i === index));
+                aktifNoEl.textContent = String(index + 1).padStart(2, '0');
+                aktifIndex = index;
+                baslangic = Date.now();
+                progress.style.width = '0%';
+            }
+
+            function progressGuncelle() {
+                if (!baslangic) return;
+                const gecen = Date.now() - baslangic;
+                const oran = Math.min(100, (gecen / SLAYT_SURESI) * 100);
+                progress.style.width = oran + '%';
+                if (oran < 100) requestAnimationFrame(progressGuncelle);
+            }
+
+            function ileri() {
+                slaytGoster((aktifIndex + 1) % slaytlar.length);
+                requestAnimationFrame(progressGuncelle);
+            }
+
+            function geri() {
+                slaytGoster((aktifIndex - 1 + slaytlar.length) % slaytlar.length);
+                requestAnimationFrame(progressGuncelle);
+            }
+
+            function otomatik() {
+                clearInterval(zamanlayici);
+                zamanlayici = setInterval(ileri, SLAYT_SURESI);
+            }
+
+            // Başlat
+            slaytGoster(0);
+            requestAnimationFrame(progressGuncelle);
+            otomatik();
+
+            // Klavye
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ') { ileri(); otomatik(); }
+                else if (e.key === 'ArrowLeft') { geri(); otomatik(); }
+                else if (e.key === 'r' || e.key === 'R') { slaytGoster(0); otomatik(); }
+                else if (e.key === 'f' || e.key === 'F') {
+                    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+                    else document.exitFullscreen();
+                }
+            });
+
+            // Tıklama: ileri
+            document.addEventListener('click', () => { ileri(); otomatik(); });
+        })();
+    </script>
+</body>
+</html>
