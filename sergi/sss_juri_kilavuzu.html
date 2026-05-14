@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>ELEMENTRA — Sergi SSS & Jüri Kılavuzu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oxanium:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: 210mm 297mm;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --brand-primary:   #7C3AED;
+            --brand-secondary: #EC4899;
+            --accent-gold:     #D4A574;
+            --color-success:   #10B981;
+            --color-error:     #EF4444;
+            --color-warning:   #F59E0B;
+            --color-info:      #06B6D4;
+            --text-primary:    #1E1B4B;
+            --text-secondary:  #4B5563;
+            --text-muted:      #6B7280;
+            --surface-0:       #FAF5FF;
+            --surface-1:       #FFFFFF;
+            --surface-2:       #F3F4F6;
+            --grad-brand:      linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+            --font-display:    'Oxanium', sans-serif;
+            --font-body:       'Inter', system-ui, sans-serif;
+        }
+
+        html, body {
+            background: var(--surface-0);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media screen {
+            body {
+                padding: 20px;
+                background: #ddd;
+            }
+        }
+
+        /* ═════════════════════════════════════════════════
+           SAYFA — A4 portrait
+           ═════════════════════════════════════════════════ */
+        .sayfa {
+            width: 210mm;
+            min-height: 297mm;
+            background: var(--surface-0);
+            padding: 18mm 16mm;
+            position: relative;
+            page-break-after: always;
+        }
+
+        .sayfa:last-child {
+            page-break-after: auto;
+        }
+
+        @media screen {
+            .sayfa {
+                box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+                margin-bottom: 20px;
+            }
+        }
+
+        /* ═════════════════════════════════════════════════
+           KAPAK SAYFASI
+           ═════════════════════════════════════════════════ */
+        .sayfa-kapak {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--grad-brand);
+            color: #FFFFFF;
+            padding: 30mm 20mm;
+        }
+
+        .sayfa-kapak::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4mm;
+            background: linear-gradient(90deg, #7C3AED, #EC4899, #D4A574);
+        }
+
+        .kapak-baslik {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 48pt;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 6mm;
+        }
+
+        .kapak-baslik::after {
+            content: '';
+            display: block;
+            width: 30mm;
+            height: 0.8mm;
+            margin: 6mm auto 0;
+            background: linear-gradient(90deg, transparent, #D4A574, transparent);
+            border-radius: 1mm;
+        }
+
+        .kapak-slogan {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 18pt;
+            margin-bottom: 16mm;
+            opacity: 0.95;
+        }
+
+        .kapak-baslik2 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 22pt;
+            letter-spacing: 0.04em;
+            margin-bottom: 4mm;
+        }
+
+        .kapak-alt-baslik {
+            font-size: 13pt;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0.85;
+            padding: 4mm 12mm;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+            margin-bottom: 30mm;
+            border: 0.5mm solid rgba(255, 255, 255, 0.3);
+        }
+
+        .kapak-aciklama {
+            font-size: 12pt;
+            line-height: 1.6;
+            max-width: 130mm;
+            opacity: 0.92;
+            margin-bottom: 18mm;
+        }
+
+        .kapak-meta {
+            font-size: 10pt;
+            opacity: 0.85;
+            line-height: 1.7;
+        }
+
+        .kapak-meta strong { color: #FFFFFF; }
+
+        /* ═════════════════════════════════════════════════
+           İÇERİK SAYFALARI
+           ═════════════════════════════════════════════════ */
+        .sayfa-icerik {
+            padding-top: 14mm;
+            padding-bottom: 14mm;
+        }
+
+        /* Header (üst aksan + sayfa başlığı) */
+        .icerik-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8mm;
+            padding-bottom: 4mm;
+            border-bottom: 1.5pt solid var(--surface-2);
+        }
+
+        .icerik-header h1 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 14pt;
+            color: var(--brand-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .icerik-header .sayfa-no {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 9pt;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* Bölüm başlığı (kategori) */
+        .bolum {
+            margin-bottom: 7mm;
+        }
+
+        .bolum-baslik {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 15pt;
+            margin-bottom: 4mm;
+            padding-left: 4mm;
+            border-left: 1.5mm solid;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 2.5mm;
+        }
+
+        .bolum-baslik .bolum-emoji {
+            font-size: 16pt;
+        }
+
+        .bolum-A .bolum-baslik { color: #6D28D9; border-left-color: #6D28D9; }
+        .bolum-B .bolum-baslik { color: #2563EB; border-left-color: #2563EB; }
+        .bolum-C .bolum-baslik { color: #047857; border-left-color: #047857; }
+        .bolum-D .bolum-baslik { color: #B45309; border-left-color: #B45309; }
+        .bolum-E .bolum-baslik { color: #0F766E; border-left-color: #0F766E; }
+        .bolum-F .bolum-baslik { color: #BE185D; border-left-color: #BE185D; }
+        .bolum-G .bolum-baslik { color: #4338CA; border-left-color: #4338CA; }
+        .bolum-H .bolum-baslik { color: #C2410C; border-left-color: #C2410C; }
+
+        /* Soru-Cevap kartları */
+        .sss {
+            background: var(--surface-1);
+            border-radius: 3mm;
+            padding: 4mm 5mm;
+            margin-bottom: 3mm;
+            border-left: 0.8mm solid var(--brand-primary);
+            page-break-inside: avoid;
+        }
+
+        .bolum-A .sss { border-left-color: #6D28D9; }
+        .bolum-B .sss { border-left-color: #2563EB; }
+        .bolum-C .sss { border-left-color: #047857; }
+        .bolum-D .sss { border-left-color: #B45309; }
+        .bolum-E .sss { border-left-color: #0F766E; }
+        .bolum-F .sss { border-left-color: #BE185D; }
+        .bolum-G .sss { border-left-color: #4338CA; }
+        .bolum-H .sss { border-left-color: #C2410C; }
+
+        .sss-soru {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 10.5pt;
+            color: var(--text-primary);
+            margin-bottom: 1.5mm;
+            line-height: 1.35;
+            letter-spacing: -0.005em;
+        }
+
+        .sss-soru::before {
+            content: 'S: ';
+            color: var(--brand-primary);
+            font-weight: 800;
+        }
+
+        .sss-cevap {
+            font-size: 9.5pt;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .sss-cevap::before {
+            content: 'C: ';
+            color: var(--color-success);
+            font-weight: 700;
+        }
+
+        .sss-cevap strong {
+            color: var(--brand-primary);
+            font-weight: 700;
+        }
+
+        .sss-ipucu {
+            font-size: 8.5pt;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 2mm;
+            padding-top: 2mm;
+            border-top: 0.3mm dashed var(--surface-2);
+        }
+
+        .sss-ipucu::before {
+            content: '💡 İpucu: ';
+            color: var(--color-warning);
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        /* Print yardımcı buton */
+        .no-print { }
+        @media screen {
+            .print-btn {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                z-index: 1000;
+                background: var(--grad-brand);
+                color: #FFFFFF;
+                border: none;
+                padding: 10px 18px;
+                border-radius: 8px;
+                font-family: var(--font-display);
+                font-weight: 700;
+                font-size: 12px;
+                cursor: pointer;
+                box-shadow: 0 6px 18px rgba(124, 58, 237, 0.3);
+            }
+        }
+        @media print {
+            .print-btn { display: none; }
+        }
+
+        /* Footer sayfa altı (her sayfada) */
+        .icerik-footer {
+            position: absolute;
+            bottom: 8mm;
+            left: 16mm;
+            right: 16mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 3mm;
+            border-top: 0.3mm solid var(--surface-2);
+            font-size: 8pt;
+            color: var(--text-muted);
+        }
+
+        .icerik-footer strong {
+            color: var(--brand-primary);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn no-print" onclick="window.print()">📄 PDF olarak kaydet</button>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  KAPAK SAYFASI                            -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="sayfa sayfa-kapak">
+        <h1 class="kapak-baslik">ELEMENTRA</h1>
+        <div class="kapak-slogan">Kimyayı Keşfet</div>
+        <div class="kapak-baslik2">Sergi SSS & Jüri Kılavuzu</div>
+        <div class="kapak-alt-baslik">Sıkça Sorulan Sorular · 40 Soru–Cevap</div>
+        <p class="kapak-aciklama">
+            Sergi süresince ziyaretçilerin ve jürinin sorabileceği tüm soruların
+            kanıt-temelli, ezberlenebilir cevapları. Öğrenciler bu kılavuzu cebinde
+            bulundurarak her senaryoya hazır olur.
+        </p>
+        <div class="kapak-meta">
+            <strong>Ekip:</strong> Mert Ege KAHRAMAN · Hüseyin Efe BALCI<br>
+            <strong>Danışman:</strong> Abdullah ÖSELMİŞ<br>
+            <strong>Okul:</strong> Şehit Ziya İlhan Dağdaş MTAL · Muğla<br>
+            <strong>Sergi Tarihi:</strong> 21.05.2026 · TÜBİTAK 4006
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SAYFA 2 — Bölüm A + B                    -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="sayfa sayfa-icerik">
+        <div class="icerik-header">
+            <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
+            <span class="sayfa-no">Sayfa 2 / 6</span>
+        </div>
+
+        <!-- BÖLÜM A: GENEL & TANITIM -->
+        <section class="bolum bolum-A">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">🎯</span>
+                A. Genel & Tanıtım
+            </h2>
+
+            <div class="sss">
+                <div class="sss-soru">ELEMENTRA nedir?</div>
+                <div class="sss-cevap">
+                    Lise 9. sınıf kimya müfredatına uyumlu, <strong>3 modüllü dijital öğretici oyun</strong>.
+                    Periyodik tablo, atom sembolleri ve kimyasal formülleri oyun temelli öğrenmeyle
+                    kalıcı hale getirir.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Bu projeyi neden geliştirdiniz?</div>
+                <div class="sss-cevap">
+                    Lise kimyası, öğrencilere <strong>soyut ve ezbere dayalı</strong> geliyor. Periyodik
+                    tabloyu ezberlemekten sıkılan öğrenciler için, <strong>oyunlaştırma ile motivasyon
+                    ve kalıcı öğrenme</strong> sağlayan bir alternatif oluşturmak istedik.
+                </div>
+                <div class="sss-ipucu">Bu cevap proje motivasyonunu özetler — jüri için kritik.</div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Hangi yaş grubuna yönelik?</div>
+                <div class="sss-cevap">
+                    <strong>15-16 yaş, lise 9. sınıf</strong> kimya öğrencileri. MEB programının
+                    9.2 (Periyodik Tablo) ve 9.3 (Bileşikler) ünitelerine uyumlu.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Oyun ne kadar sürüyor?</div>
+                <div class="sss-cevap">
+                    Bir oturum <strong>3-5 dakika</strong> sürer. Modül seç → zorluk belirle →
+                    10-15 soru cevapla. Sergi standımızda ortalama oynama süresi 4 dakika.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Nasıl oynayabilirim?</div>
+                <div class="sss-cevap">
+                    Sergi PC'sinden direkt, veya <strong>QR kodu telefonunuza okutarak</strong>
+                    abosyaz.github.io/elementra adresinden. İndirme/kurulum gerekmez —
+                    tarayıcıda anında çalışır.
+                </div>
+            </div>
+        </section>
+
+        <!-- BÖLÜM B: MODÜLLER -->
+        <section class="bolum bolum-B">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">🎮</span>
+                B. Modüller & İçerik
+            </h2>
+
+            <div class="sss">
+                <div class="sss-soru">Kaç modül var, hangileri?</div>
+                <div class="sss-cevap">
+                    <strong>3 farklı pedagojik yaklaşım:</strong> (1) Element Avı — periyodik
+                    tabloda element bulma, (2) Sembol Eşleştirme — memory mekaniği,
+                    (3) Formül Yapboz — atomları birleştirip bileşik kurma.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Element Avı modülünde ne yapıyorum?</div>
+                <div class="sss-cevap">
+                    Periyodik tabloda istenen elementi tıkla-bul. <strong>4 farklı soru tipi:</strong>
+                    element adı, atom numarası, yaygın adı, kategorisi. 4 zorluk seviyesi ile
+                    Kolay → Uzman'a kadar derinleşir.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Sembol Eşleştirme'de Latince ne işe yarıyor?</div>
+                <div class="sss-cevap">
+                    Memory oyunu mantığıyla element adı ↔ sembol eşleştirilir. Latince kökenli
+                    semboller (Na = Natrium, K = Kalium, Fe = Ferrum) için <strong>köken bonusu</strong>
+                    gösterilir — neden bu sembolün kullanıldığını öğretir.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Formül Yapboz'da kaç bileşik var?</div>
+                <div class="sss-cevap">
+                    <strong>24 farklı bileşik</strong> (H₂O, CO₂, NaCl, NaOH, H₂SO₄ vb.).
+                    Atomları sürükleyerek birleştirir, doğru oranı kurarsın. Eksik/fazla atom
+                    için <strong>pedagojik geri bildirim</strong> verilir.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Zorluk seviyeleri arasında ne fark var?</div>
+                <div class="sss-cevap">
+                    <strong>Kolay:</strong> ipucu açık, geri sayım yok. <strong>Orta:</strong> daha az
+                    ipucu. <strong>Zor:</strong> ipucu kısıtlı + süre baskısı. <strong>Uzman:</strong>
+                    ipucu yok, süre dar, yanıltıcı seçenekler.
+                </div>
+                <div class="sss-ipucu">3 modül × 4 zorluk = 12 farklı oyun deneyimi.</div>
+            </div>
+        </section>
+
+        <div class="icerik-footer">
+            <span><strong>ELEMENTRA</strong> · Sergi SSS Kılavuzu</span>
+            <span>TÜBİTAK 4006 · Bilim Fuarı 2025–2026</span>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SAYFA 3 — Bölüm C + D                    -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="sayfa sayfa-icerik">
+        <div class="icerik-header">
+            <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
+            <span class="sayfa-no">Sayfa 3 / 6</span>
+        </div>
+
+        <!-- BÖLÜM C: PEDAGOJİK & AKADEMİK -->
+        <section class="bolum bolum-C">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">🧠</span>
+                C. Pedagojik & Akademik Dayanak
+            </h2>
+
+            <div class="sss">
+                <div class="sss-soru">Bu oyun gerçekten öğretebilir mi? Kanıt var mı?</div>
+                <div class="sss-cevap">
+                    Evet — <strong>kanıt-temelli pedagoji</strong> üzerine kurulu. Hu (2022)
+                    meta-analizine göre oyun temelli öğrenme klasik ezbere kıyasla
+                    <strong>%38 motivasyon artışı</strong> ve <strong>2.4× kalıcılık</strong> sağlar.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Hu (2022) kaynağı nedir?</div>
+                <div class="sss-cevap">
+                    Hu, J. (2022). <em>Educational Research Review, 35</em>. Oyun temelli öğrenmenin
+                    K-12 düzeyinde etkilerini inceleyen meta-analiz çalışması.
+                    35 farklı araştırmayı birleştirerek istatistiksel kanıt sundu.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">"Spaced repetition" (aralıklı tekrar) nedir?</div>
+                <div class="sss-cevap">
+                    Hermann Ebbinghaus'un unutma eğrisine dayalı bir teknik:
+                    <strong>bilgiyi belirli aralıklarla tekrarlayarak uzun süreli hafızaya</strong>
+                    yerleştirme. ELEMENTRA modüllerinde önceki yanlışlar daha sık tekrar gelir.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Yansıtma anı (reflection) ne işe yarıyor?</div>
+                <div class="sss-cevap">
+                    Her oyun sonrası "<strong>en sık karıştırdığın elementler</strong>" gösterilir.
+                    Öğrenci kendi zayıf alanını fark eder ve hedef öğrenme yapar —
+                    metacognitive learning ilkesi.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">MEB kazanımlarına nasıl uyuyor?</div>
+                <div class="sss-cevap">
+                    <strong>4 kazanım</strong> tam karşılanır: 9.2.3.3 (Periyodik tablo yapısı),
+                    9.2.3.4 (Element kategorileri), 9.3.2.1 (Bileşik adlandırma),
+                    9.3.2.2 (Kimyasal formül yazımı). MEB Kimya 9. Sınıf 2018 reformuna uyumlu.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Yıldız matrisi profili nedir?</div>
+                <div class="sss-cevap">
+                    3 modül × 4 zorluk = <strong>12 hücreli yıldız tablosu</strong>. Her oynanan
+                    seviyede yıldız kazanırsın. Profilinde tüm gelişimini görsel olarak takip
+                    edebilirsin — gamification motivasyonunu artırır.
+                </div>
+            </div>
+        </section>
+
+        <!-- BÖLÜM D: TEKNOLOJİ -->
+        <section class="bolum bolum-D">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">⚙️</span>
+                D. Teknoloji & Geliştirme
+            </h2>
+
+            <div class="sss">
+                <div class="sss-soru">Hangi teknolojilerle yapıldı?</div>
+                <div class="sss-cevap">
+                    Saf <strong>HTML5 + CSS3 + JavaScript ES2022</strong>. Framework yok,
+                    build tool yok, npm paketi yok. <strong>Tek HTML dosyası açılıp çalıştırılır</strong>
+                    — modern tarayıcılarda anında.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Neden React/Vue gibi framework kullanmadınız?</div>
+                <div class="sss-cevap">
+                    Çünkü <strong>basitlik + offline çalışabilirlik + USB taşınabilirlik</strong>
+                    önceliğimizdi. Sergi PC'sine internet bağımlılığı olmadan, sıfır kurulumla
+                    çalışan bir çözüm istedik. Saf vanilla JS yeterli güçlü.
+                </div>
+                <div class="sss-ipucu">Tek dosya = sergi yedek planı (USB ile offline çalışır).</div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Veriler nerede saklanıyor? Sunucu var mı?</div>
+                <div class="sss-cevap">
+                    <strong>localStorage</strong> — tarayıcının kendi depo alanında. Sunucu yok,
+                    veri toplama yok, başka kullanıcı verisine erişim yok.
+                    <strong>KVKK uyumlu</strong> — kişisel veri toplanmıyor.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">İnternet olmadan çalışıyor mu?</div>
+                <div class="sss-cevap">
+                    Evet — USB'deki dosyalar tarayıcıda direkt açılır. Tek dış bağımlılık
+                    Google Fonts (Inter + Oxanium) — fontlar yüklenmese bile sistem fontu
+                    fallback olarak kullanılır.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Hangi tarayıcılarda çalışır?</div>
+                <div class="sss-cevap">
+                    <strong>Modern tüm tarayıcılar</strong>: Chrome, Edge, Firefox, Safari
+                    (2024+ sürümleri). Internet Explorer / eski Edge desteklenmez —
+                    ES2022 + container queries gerekiyor.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Ne kadar zamanda hazırlandı?</div>
+                <div class="sss-cevap">
+                    <strong>~3 hafta</strong> aktif geliştirme. 9 faz: tasarım kararları,
+                    altyapı, 3 modül, profil, ansiklopedi, yansıtma, başarımlar, yönetici,
+                    cila + sergi materyalleri. <strong>40,000+ satır kod</strong>.
+                </div>
+            </div>
+        </section>
+
+        <div class="icerik-footer">
+            <span><strong>ELEMENTRA</strong> · Sergi SSS Kılavuzu</span>
+            <span>TÜBİTAK 4006 · Bilim Fuarı 2025–2026</span>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SAYFA 4 — Bölüm E + F                    -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="sayfa sayfa-icerik">
+        <div class="icerik-header">
+            <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
+            <span class="sayfa-no">Sayfa 4 / 6</span>
+        </div>
+
+        <!-- BÖLÜM E: SERGİ & KULLANIM -->
+        <section class="bolum bolum-E">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">🖥️</span>
+                E. Sergi & Kullanım
+            </h2>
+
+            <div class="sss">
+                <div class="sss-soru">Sergi sonrası evde nasıl oynayabilirim?</div>
+                <div class="sss-cevap">
+                    QR'ı telefonla okut veya <strong>abosyaz.github.io/elementra</strong>
+                    adresine git. Tarayıcıda anında açılır. Skorların telefonunda
+                    (localStorage) saklanır — sergiden sonra da gelişimini takip edersin.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Klavye ile oynayabilir miyim? Hangi tuşlar?</div>
+                <div class="sss-cevap">
+                    Evet — <strong>tam klavye desteği</strong>. Tab + Enter ile gezin,
+                    <strong>1-4 sayı tuşları</strong> ile zorluk seçim, <strong>Esc</strong> ile geri,
+                    <strong>M</strong> ile ses aç/kapa, <strong>F1 / ?</strong> ile yardım modalı açılır.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Mobil cihazda dokunmatik çalışır mı?</div>
+                <div class="sss-cevap">
+                    Evet, <strong>touch event tam destekli</strong>. iPhone Safari ve
+                    Android Chrome'da test edildi. 44px+ touch hedefleri (Apple HIG +
+                    Material Design guidelines uyumlu).
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Yönetici ekranı ne işe yarıyor?</div>
+                <div class="sss-cevap">
+                    Öğretmenin kullanımı için: <strong>Ctrl+Shift+A</strong> + şifre <strong>4006</strong>
+                    ile açılır. Skor sıfırlama, istatistik silme, başarım reset gibi seçenekler
+                    var. Bir sonraki öğrenci için temiz başlangıç sağlar.
+                </div>
+                <div class="sss-ipucu">Şifre TÜBİTAK 4006 programının kodu — öğretmen hatırlamak kolay.</div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Skor nasıl hesaplanıyor?</div>
+                <div class="sss-cevap">
+                    <strong>Doğru cevap +10</strong>, <strong>combo bonus +5</strong>
+                    (üst üste doğrular için), <strong>süre bonusu</strong> (uzman modda),
+                    <strong>ipucu cezası -15</strong>. Yanlış cevap puan kaybetmez —
+                    motivasyon korunsun diye.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Mini ansiklopedi nedir?</div>
+                <div class="sss-cevap">
+                    <strong>36 element + 24 bileşik</strong> için detay kartları. Element
+                    adı, sembol, atom numarası, kategori, bağlam bilgisi.
+                    Filtreleme ve arama özellikleri ile referans rehberi olarak da kullanılır.
+                </div>
+            </div>
+        </section>
+
+        <!-- BÖLÜM F: EKİP & SÜREÇ -->
+        <section class="bolum bolum-F">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">👥</span>
+                F. Ekip & Geliştirme Süreci
+            </h2>
+
+            <div class="sss">
+                <div class="sss-soru">Bu projeyi kim yaptı?</div>
+                <div class="sss-cevap">
+                    Şehit Ziya İlhan Dağdaş MTAL <strong>Bilişim Teknolojileri Alanı</strong>
+                    öğrencileri: <strong>Mert Ege KAHRAMAN</strong> ve <strong>Hüseyin Efe BALCI</strong>.
+                    Danışman: <strong>Abdullah ÖSELMİŞ</strong>.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Hangi aşamalardan geçti?</div>
+                <div class="sss-cevap">
+                    <strong>9 faz:</strong> 0) Tasarım kararları → 1) Altyapı → 2) Ana menü →
+                    3) Modül 2 (Sembol) → 4) Modül 1 (Element Avı) → 5) Modül 3 (Formül) →
+                    6) Genişleme (profil/ansiklopedi/yansıtma/başarımlar) → 7) Cila →
+                    8) Sergi materyalleri → 9) Test & yayın.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Hangi araçları kullandınız?</div>
+                <div class="sss-cevap">
+                    <strong>VSCode</strong> kod editörü, <strong>Git + GitHub</strong> versiyon kontrolü,
+                    <strong>Chrome DevTools</strong> debug, <strong>GitHub Pages</strong> yayın.
+                    Tasarım: Figma yerine doğrudan CSS ile prototipleme.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">En çok zorlandığınız kısım hangisiydi?</div>
+                <div class="sss-cevap">
+                    <strong>Formül Yapboz</strong> modülü — kullanıcının atom seçimini
+                    bileşiğin doğru oranına çevirmek ve <strong>yanlış cevapta pedagojik
+                    geri bildirim</strong> üretmek (eksik atom mu, fazla mı, hangi element vb.)
+                    detaylı algoritma istedi.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Yapay zeka kullandınız mı?</div>
+                <div class="sss-cevap">
+                    <strong>Geliştirme sırasında</strong> kod yardımcısı olarak Claude AI'dan
+                    yararlandık (önerilerle, debug ile). Ama tüm <strong>tasarım kararları,
+                    pedagojik içerik ve son uygulama bizim</strong>. AI bir araç —
+                    karar veren öğrenciler.
+                </div>
+                <div class="sss-ipucu">Bu cevap dürüst + güçlü. Saklamak yerine açıkça anlatın.</div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Toplam ne kadar süre çalıştınız?</div>
+                <div class="sss-cevap">
+                    Aktif geliştirme <strong>~80 saat</strong> (3 hafta, günde 3-4 saat).
+                    Araştırma + tasarım + test dahil ~120 saat.
+                    Sergi hazırlığı (poster, broşür, QR) ek 10 saat.
+                </div>
+            </div>
+        </section>
+
+        <div class="icerik-footer">
+            <span><strong>ELEMENTRA</strong> · Sergi SSS Kılavuzu</span>
+            <span>TÜBİTAK 4006 · Bilim Fuarı 2025–2026</span>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SAYFA 5 — Bölüm G + H                    -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="sayfa sayfa-icerik">
+        <div class="icerik-header">
+            <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
+            <span class="sayfa-no">Sayfa 5 / 6</span>
+        </div>
+
+        <!-- BÖLÜM G: GELECEK & GELİŞTİRME -->
+        <section class="bolum bolum-G">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">🚀</span>
+                G. Gelecek Planları
+            </h2>
+
+            <div class="sss">
+                <div class="sss-soru">Yeni özellikler eklenecek mi?</div>
+                <div class="sss-cevap">
+                    Evet — planlananlar: <strong>çok dilli destek</strong> (TR + EN),
+                    <strong>çevrimiçi puan tablosu</strong> (opsiyonel), <strong>öğretmen paneli</strong>
+                    (sınıf bazlı istatistik). Sergi geri bildirimlerine göre öncelik
+                    sıralanacak.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Başka okullar kullanabilir mi?</div>
+                <div class="sss-cevap">
+                    Tabi ki — <strong>açık kaynak</strong> proje, MIT lisansı.
+                    Github'dan indirip kendi okul ortamında kullanılabilir. Hatta
+                    içeriği değiştirip (örn: 11. sınıf konuları için) genişletmek de
+                    mümkün.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Mobil uygulama versiyonu olacak mı?</div>
+                <div class="sss-cevap">
+                    Şu an için <strong>"PWA" (Progressive Web App)</strong> olarak
+                    geliştirilebilir — telefonun ana ekranına ikon olarak eklenir,
+                    uygulama gibi açılır. Native iOS/Android sürüm hedefli değil
+                    (gereksiz karmaşıklık).
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Kaynak kodu nerede?</div>
+                <div class="sss-cevap">
+                    <strong>github.com/abosyaz/elementra</strong> — public repository.
+                    GitHub hesabı olmadan da kodları görüntüleyebilir, indirebilirsin.
+                    Pull request veya issue açabilirsin.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Diğer derslere de uyarlanabilir mi?</div>
+                <div class="sss-cevap">
+                    <strong>Mimari uyumlu</strong> — modül sistemi başka konular için
+                    de açılabilir: matematik fonksiyonları, biyoloji canlılar, tarih
+                    olayları. Veritabanı + soru tipi sistemini genişletmek yeterli.
+                </div>
+            </div>
+        </section>
+
+        <!-- BÖLÜM H: SKEPTİK / ZOR SORULAR -->
+        <section class="bolum bolum-H">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">🎯</span>
+                H. Zor & Skeptik Sorular
+            </h2>
+
+            <div class="sss">
+                <div class="sss-soru">"Sadece oyun, gerçek öğretmez" diyenler için ne dersiniz?</div>
+                <div class="sss-cevap">
+                    Bu önyargı için kanıt veriyoruz: <strong>Hu (2022) meta-analizi</strong>
+                    +%38 motivasyon, 2.4× kalıcılık gösterdi. ELEMENTRA <strong>oyun temelli
+                    öğrenme</strong> (game-based learning) ilkelerine uyar — gamification
+                    farkı: her aksiyon pedagojik amaca bağlı, "puan için oyna" değil.
+                </div>
+                <div class="sss-ipucu">Bu cevap güvenle veriyor — akademik kanıt sunar.</div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Telifli içerik kullandınız mı?</div>
+                <div class="sss-cevap">
+                    Hayır — <strong>tüm asset'ler özgün veya açık lisanslı</strong>.
+                    Fontlar Google Fonts (Open Font License), ikonlar custom SVG,
+                    ses efektleri Web Audio API ile programatik üretim (dosya yok).
+                    <strong>Kimya verileri</strong> kamuya açık (MEB programı + IUPAC).
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Veri güvenliği / KVKK uyumu nasıl?</div>
+                <div class="sss-cevap">
+                    <strong>Hiç kişisel veri toplanmıyor</strong>. Skorlar/istatistikler
+                    sadece tarayıcının kendi alanında (localStorage). Sunucu yok,
+                    çerez yok, üyelik yok. Kullanıcı tarayıcı verisini sildiğinde
+                    her şey sıfırlanır.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Erişilebilirlik (engelli erişimi) nasıl?</div>
+                <div class="sss-cevap">
+                    <strong>WCAG 2.1 AA standardı</strong> hedeflendi: tam klavye erişimi,
+                    yüksek renk kontrastı (4.5:1+), büyük touch hedefleri (44px+),
+                    semantic HTML5. Ek özellikler (renk körü uyumu, ekran okuyucu)
+                    sonraki sürüme bırakıldı.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Gerçek bir okul programında kullanıldı mı?</div>
+                <div class="sss-cevap">
+                    Sergi öncesi <strong>Şehit Ziya İlhan Dağdaş MTAL 9. sınıf
+                    öğrencileri</strong> ile pilot test yaptık. Geri bildirimler:
+                    "Periyodik tabloyu ezberlemek artık eğlenceli" / "Sembol Eşleştirme
+                    en sevdiğim". Resmi MEB değerlendirmesi sergi sonrası planlı.
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Bu proje ile sergiden başka ne istiyorsunuz?</div>
+                <div class="sss-cevap">
+                    <strong>Daha çok öğrencinin kullanması</strong> + öğretmen geri bildirimi.
+                    Eğer öğretmenler sınıflarda denerse ve <strong>"kazanım kalıcılığı
+                    arttı"</strong> derse, bilim fuarı amacımız gerçekleşmiş olur.
+                    Sergi sadece başlangıç.
+                </div>
+                <div class="sss-ipucu">Bu cevap projenin vizyonunu özetler — kapanış cümlesi.</div>
+            </div>
+        </section>
+
+        <div class="icerik-footer">
+            <span><strong>ELEMENTRA</strong> · Sergi SSS Kılavuzu</span>
+            <span>TÜBİTAK 4006 · Bilim Fuarı 2025–2026</span>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  SAYFA 6 — Kapanış + Hatırlatma            -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="sayfa sayfa-icerik">
+        <div class="icerik-header">
+            <h1>📋 ELEMENTRA — Sergi SSS Kılavuzu</h1>
+            <span class="sayfa-no">Sayfa 6 / 6</span>
+        </div>
+
+        <section class="bolum bolum-A">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">🎤</span>
+                Sergi Anı İçin Hızlı Hatırlatmalar
+            </h2>
+
+            <div class="sss">
+                <div class="sss-soru">30 saniyelik pitch ezberi</div>
+                <div class="sss-cevap">
+                    "<strong>ELEMENTRA</strong>, lise 9. sınıf kimya için <strong>3 modüllü
+                    dijital öğretici oyun</strong>. Periyodik tablo, sembol eşleştirme ve
+                    formül kurma. Hu (2022) araştırmasına göre oyun temelli öğrenme
+                    <strong>%38 daha motive edici, 2.4 kat daha kalıcı</strong>. Tarayıcıda
+                    anında çalışır — kurulum yok. QR'ı tarayın, evden de oynayın."
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Jüriye gösterilecek en güçlü 3 nokta</div>
+                <div class="sss-cevap">
+                    <strong>(1) Akademik dayanak:</strong> Hu 2022 + Snakeleev + MEB uyum<br>
+                    <strong>(2) Teknik şıklık:</strong> Sıfır framework, USB ile offline,
+                    her cihazda<br>
+                    <strong>(3) Pedagoji:</strong> Yansıtma + yıldız matrisi + 20 başarım =
+                    metacognitive learning
+                </div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Eğer bir soruyu bilmezseniz?</div>
+                <div class="sss-cevap">
+                    "<strong>İyi soru, not alıyorum.</strong> Hemen kontrol edip size dönerim."
+                    Sonra danışmana sor veya kaynak koddan kontrol et. <strong>Asla uydurma</strong>
+                    — dürüstlük güven kazandırır, uydurmak prestij kaybettirir.
+                </div>
+                <div class="sss-ipucu">Bu kuralı uygulayın: jüri bilmediğinizi sevecek, sahteden hoşlanmaz.</div>
+            </div>
+
+            <div class="sss">
+                <div class="sss-soru">Sergi sonrası iletişim</div>
+                <div class="sss-cevap">
+                    <strong>Github:</strong> github.com/abosyaz/elementra<br>
+                    <strong>Canlı oyun:</strong> abosyaz.github.io/elementra<br>
+                    <strong>Okul:</strong> Şehit Ziya İlhan Dağdaş MTAL · Bilişim Teknolojileri Alanı<br>
+                    <strong>Danışman:</strong> Abdullah ÖSELMİŞ
+                </div>
+            </div>
+        </section>
+
+        <section class="bolum bolum-D">
+            <h2 class="bolum-baslik">
+                <span class="bolum-emoji">💪</span>
+                Başarı İçin 5 Altın Kural
+            </h2>
+
+            <div class="sss">
+                <div class="sss-cevap">
+                    <strong>1. Göz teması kur.</strong> Her ziyaretçiye 1 saniye bakış,
+                    samimi gülümseme.<br>
+                    <strong>2. Önce dinle, sonra cevap ver.</strong> Soruyu tam anla,
+                    kişiselleştir.<br>
+                    <strong>3. Kanıt göster.</strong> Sayı + kaynak + somut örnek.<br>
+                    <strong>4. Demoyu kapat etme.</strong> Jüri ELEMENTRA'yı denerken
+                    konuşma — keşfetmeye bırak.<br>
+                    <strong>5. Tutkulu ama mütevazi ol.</strong> "Biz yaptık + işe yarıyor"
+                    yeter, abartma.
+                </div>
+            </div>
+        </section>
+
+        <div class="icerik-footer">
+            <span><strong>ELEMENTRA</strong> · Sergi SSS Kılavuzu — Hazırlayan: Asistan AI · Mayıs 2026</span>
+            <span>TÜBİTAK 4006 · Bilim Fuarı 2025–2026</span>
+        </div>
+    </div>
+
+</body>
+</html>
