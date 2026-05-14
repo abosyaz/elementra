@@ -674,6 +674,70 @@
                 radial-gradient(circle at 50% 50%, rgba(212, 165, 116, 0.05), transparent 50%);
             pointer-events: none;
         }
+
+        /* ═══════════════════════════════════════════════════
+           @media print — PDF export (16:9, her slayt ayrı sayfa)
+           ═══════════════════════════════════════════════════ */
+        @media print {
+            @page {
+                size: 297mm 167mm;
+                margin: 0;
+            }
+
+            html, body {
+                width: 297mm;
+                height: 167mm;
+                overflow: visible;
+                background: #FFFFFF;
+            }
+
+            body { cursor: default; }
+
+            .sunum {
+                width: 297mm !important;
+                height: auto !important;
+                position: static !important;
+                overflow: visible !important;
+                display: block !important;
+            }
+
+            .slayt {
+                position: relative !important;
+                inset: auto !important;
+                width: 297mm;
+                height: 167mm;
+                opacity: 1 !important;
+                transform: none !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                display: flex !important;
+                overflow: hidden;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .slayt:last-child {
+                page-break-after: auto;
+            }
+
+            .progress-bar,
+            .slayt-no {
+                display: none !important;
+            }
+
+            /* Tüm gradient ve bg renkleri print'te koru */
+            .slayt-koyu,
+            .slayt-acik,
+            .modul-kart,
+            .stat-kart,
+            .zorluk-pill,
+            .ekip-kart,
+            .pill,
+            .qr-img {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1113,10 +1177,17 @@
                 zamanlayici = setInterval(ileri, SLAYT_SURESI);
             }
 
-            // Başlat
-            slaytGoster(0);
+            // Başlat — URL ?slayt=N parametresi varsa o slayta git ve auto durdur
+            const params = new URLSearchParams(window.location.search);
+            const initSlayt = parseInt(params.get('slayt') || '0', 10);
+            const validInit = (initSlayt >= 0 && initSlayt < slaytlar.length) ? initSlayt : 0;
+            slaytGoster(validInit);
             requestAnimationFrame(progressGuncelle);
-            otomatik();
+            if (params.has('slayt')) {
+                // Statik mod (screenshot için): auto-advance kapalı
+            } else {
+                otomatik();
+            }
 
             // Klavye
             document.addEventListener('keydown', (e) => {
