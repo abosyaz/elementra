@@ -387,7 +387,73 @@
             line-height: 1.4;
         }
 
-        /* ═══ Özellik Liste ═══ */
+        /* ═══ Modül Slayt 2-Sütun (gerçek screenshot + özellik) ═══ */
+        .modul-2-sutun {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 3.5vw;
+            width: 92vw;
+            margin-top: 4vh;
+            align-items: center;
+        }
+
+        .modul-ss {
+            width: 100%;
+            height: auto;
+            max-height: 62vh;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 16px 40px rgba(124, 58, 237, 0.22);
+            border: 1px solid rgba(124, 58, 237, 0.12);
+            background: #FAF5FF;
+        }
+
+        .modul-ozellik-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5vh;
+        }
+
+        .modul-ozellik-list .ozellik-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2vw;
+        }
+
+        .modul-ozellik-list .ozellik-ikon {
+            font-size: 2.3vw;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .modul-ozellik-list h4 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.5vw;
+            color: var(--text-primary);
+            margin-bottom: 0.4vh;
+        }
+
+        .modul-ozellik-list p {
+            font-size: 1.05vw;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* ═══ Ana Ekran Önizleme Slaytı ═══ */
+        .anaekran-ss {
+            width: 78vw;
+            height: auto;
+            max-height: 65vh;
+            object-fit: contain;
+            border-radius: 18px;
+            box-shadow: 0 20px 56px rgba(124, 58, 237, 0.28);
+            border: 1px solid rgba(124, 58, 237, 0.15);
+            margin-top: 2vh;
+            background: #FAF5FF;
+        }
+
+        /* ═══ Özellik Liste (orijinal — diğer slaytlar) ═══ */
         .ozellik-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -672,9 +738,21 @@
         </section>
 
         <!-- ════════════════════════════════════════ -->
-        <!--  SLAYT 4 — 3 MODÜL OVERVIEW             -->
+        <!--  SLAYT 4 — OYUN ANA EKRAN (gerçek önizleme) -->
         <!-- ════════════════════════════════════════ -->
-        <section class="slayt slayt-koyu" data-slayt="4">
+        <section class="slayt slayt-acik" data-slayt="4">
+            <div class="ust-etiket">Canlı Önizleme</div>
+            <h2 class="baslik-orta">Oyun Ana Ekran</h2>
+            <img class="anaekran-ss" src="screenshots/01_anaekran.png" alt="ELEMENTRA ana ekran — 3 modül kartı">
+            <p class="alt-baslik" style="font-size: 1.3vw; margin-top: 2vh; opacity: 0.8;">
+                Tarayıcıda anında çalışır · 3 modül kartı seç → oyna
+            </p>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 5 — 3 MODÜL OVERVIEW             -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-koyu" data-slayt="5">
             <div class="ust-etiket koyu">3 Modül · 3 Yaklaşım</div>
             <h2 class="baslik-orta koyu">Üç Farklı Pedagojik Yöntem</h2>
             <div class="modul-grid">
@@ -697,117 +775,123 @@
         </section>
 
         <!-- ════════════════════════════════════════ -->
-        <!--  SLAYT 5 — MODÜL 1: ELEMENT AVI         -->
-        <!-- ════════════════════════════════════════ -->
-        <section class="slayt slayt-acik" data-slayt="5">
-            <div class="ust-etiket">01 · Modül 1</div>
-            <h2 class="baslik-orta" style="background: linear-gradient(135deg, #6366F1, #93C5FD); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Element Avı</h2>
-            <p class="alt-baslik">Periyodik Tabloda Element Bul</p>
-            <div class="ozellik-grid" style="margin-top: 7vh;">
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">🔍</div>
-                    <div class="ozellik-icerik">
-                        <h4>36 Element Veritabanı</h4>
-                        <p>Hidrojen'den Kurşun'a kadar tam liste</p>
-                    </div>
-                </div>
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">🎯</div>
-                    <div class="ozellik-icerik">
-                        <h4>4 Soru Tipi</h4>
-                        <p>Ad · Atom numarası · Yaygın ad · Kategori</p>
-                    </div>
-                </div>
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">⏱️</div>
-                    <div class="ozellik-icerik">
-                        <h4>4 Zorluk Seviyesi</h4>
-                        <p>Kolay (60sn) → Uzman (10sn / soru)</p>
-                    </div>
-                </div>
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">🏆</div>
-                    <div class="ozellik-icerik">
-                        <h4>Rozet Sistemi</h4>
-                        <p>İlk Adım · Mükemmellik · Periyot Ustası</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ════════════════════════════════════════ -->
-        <!--  SLAYT 6 — MODÜL 2: SEMBOL EŞLEŞTİRME   -->
+        <!--  SLAYT 6 — MODÜL 1: ELEMENT AVI (gerçek SS) -->
         <!-- ════════════════════════════════════════ -->
         <section class="slayt slayt-acik" data-slayt="6">
-            <div class="ust-etiket" style="color: #B45309;">02 · Modül 2</div>
-            <h2 class="baslik-orta" style="background: linear-gradient(135deg, #D97706, #FCD34D); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Sembol Eşleştirme</h2>
-            <p class="alt-baslik">Memory + Latince Köken</p>
-            <div class="ozellik-grid" style="margin-top: 7vh;">
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">🃏</div>
-                    <div class="ozellik-icerik">
-                        <h4>Memory Mekaniği</h4>
-                        <p>Klasik kart çevirme oyunuyla eşle</p>
+            <div class="ust-etiket">01 · Modül 1</div>
+            <h2 class="baslik-orta" style="background: linear-gradient(135deg, #6366F1, #93C5FD); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Element Avı</h2>
+            <div class="modul-2-sutun">
+                <img class="modul-ss" src="screenshots/02_element_avi.png" alt="Element Avı gerçek oyun ekranı">
+                <div class="modul-ozellik-list">
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">🔍</div>
+                        <div class="ozellik-icerik">
+                            <h4>36 Element Veritabanı</h4>
+                            <p>Hidrojen'den Kurşun'a tam liste</p>
+                        </div>
                     </div>
-                </div>
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">🏛️</div>
-                    <div class="ozellik-icerik">
-                        <h4>Latince Köken Bonusu</h4>
-                        <p>Na = Natrium · K = Kalium · Fe = Ferrum</p>
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">🎯</div>
+                        <div class="ozellik-icerik">
+                            <h4>4 Soru Tipi</h4>
+                            <p>Ad · Atom no · Yaygın ad · Kategori</p>
+                        </div>
                     </div>
-                </div>
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">🎴</div>
-                    <div class="ozellik-icerik">
-                        <h4>6'dan 24 Çifte</h4>
-                        <p>Kolay: 6 çift · Uzman: 24 çift</p>
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">⏱️</div>
+                        <div class="ozellik-icerik">
+                            <h4>4 Zorluk Seviyesi</h4>
+                            <p>Kolay (60sn) → Uzman (10sn/soru)</p>
+                        </div>
                     </div>
-                </div>
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">⚡</div>
-                    <div class="ozellik-icerik">
-                        <h4>Combo Sistemi</h4>
-                        <p>Üst üste doğru eşleşmelerde bonus puan</p>
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">🏆</div>
+                        <div class="ozellik-icerik">
+                            <h4>Rozet Sistemi</h4>
+                            <p>İlk Adım · Periyot Ustası · Mükemmellik</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- ════════════════════════════════════════ -->
-        <!--  SLAYT 7 — MODÜL 3: FORMÜL YAPBOZ       -->
+        <!--  SLAYT 7 — MODÜL 2: SEMBOL (gerçek SS) -->
         <!-- ════════════════════════════════════════ -->
         <section class="slayt slayt-acik" data-slayt="7">
+            <div class="ust-etiket" style="color: #B45309;">02 · Modül 2</div>
+            <h2 class="baslik-orta" style="background: linear-gradient(135deg, #D97706, #FCD34D); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Sembol Eşleştirme</h2>
+            <div class="modul-2-sutun">
+                <img class="modul-ss" src="screenshots/03_sembol_eslestirme.png" alt="Sembol Eşleştirme gerçek oyun ekranı">
+                <div class="modul-ozellik-list">
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">🃏</div>
+                        <div class="ozellik-icerik">
+                            <h4>Memory Mekaniği</h4>
+                            <p>Klasik kart çevirme oyunuyla eşle</p>
+                        </div>
+                    </div>
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">🏛️</div>
+                        <div class="ozellik-icerik">
+                            <h4>Latince Köken Bonusu</h4>
+                            <p>Na = Natrium · K = Kalium · Fe = Ferrum</p>
+                        </div>
+                    </div>
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">🎴</div>
+                        <div class="ozellik-icerik">
+                            <h4>6'dan 24 Çifte</h4>
+                            <p>Kolay: 6 çift · Uzman: 24 çift</p>
+                        </div>
+                    </div>
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">⚡</div>
+                        <div class="ozellik-icerik">
+                            <h4>Combo Sistemi</h4>
+                            <p>Üst üste doğru eşleşmelerde bonus</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════ -->
+        <!--  SLAYT 8 — MODÜL 3: FORMÜL (gerçek SS) -->
+        <!-- ════════════════════════════════════════ -->
+        <section class="slayt slayt-acik" data-slayt="8">
             <div class="ust-etiket" style="color: #047857;">03 · Modül 3</div>
             <h2 class="baslik-orta" style="background: linear-gradient(135deg, #10B981, #6EE7B7); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Formül Yapboz</h2>
-            <p class="alt-baslik">Atomları Birleştir, Bileşik Kur</p>
-            <div class="ozellik-grid" style="margin-top: 7vh;">
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">🧪</div>
-                    <div class="ozellik-icerik">
-                        <h4>24 Bileşik</h4>
-                        <p>H₂O · CO₂ · NaCl · H₂SO₄ · NaOH...</p>
+            <div class="modul-2-sutun">
+                <img class="modul-ss" src="screenshots/04_formul_yapboz.png" alt="Formül Yapboz gerçek oyun ekranı">
+                <div class="modul-ozellik-list">
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">🧪</div>
+                        <div class="ozellik-icerik">
+                            <h4>24 Bileşik</h4>
+                            <p>H₂O · CO₂ · NaCl · H₂SO₄ · NaOH...</p>
+                        </div>
                     </div>
-                </div>
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">⚛️</div>
-                    <div class="ozellik-icerik">
-                        <h4>Atom Paletinden Sürükle</h4>
-                        <p>Doğru element + doğru oran</p>
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">⚛️</div>
+                        <div class="ozellik-icerik">
+                            <h4>Atom Paletinden Seç</h4>
+                            <p>Doğru element + doğru oran</p>
+                        </div>
                     </div>
-                </div>
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">💡</div>
-                    <div class="ozellik-icerik">
-                        <h4>Pedagojik Geri Bildirim</h4>
-                        <p>"Eksik 2 H atomu var" / "Fazla O"</p>
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">💡</div>
+                        <div class="ozellik-icerik">
+                            <h4>Pedagojik Geri Bildirim</h4>
+                            <p>"Eksik 2 H atomu var" / "Fazla O"</p>
+                        </div>
                     </div>
-                </div>
-                <div class="ozellik-item">
-                    <div class="ozellik-ikon">📖</div>
-                    <div class="ozellik-icerik">
-                        <h4>Bağlam Kartı</h4>
-                        <p>Her bileşik için kullanım alanı + örnek</p>
+                    <div class="ozellik-item">
+                        <div class="ozellik-ikon">📖</div>
+                        <div class="ozellik-icerik">
+                            <h4>Bağlam Kartı</h4>
+                            <p>Her bileşik için kullanım alanı + örnek</p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -781,6 +781,26 @@
 
     <script>
         // ═════════════════════════════════════════════════
+        //  SERGİ DEMO MODU — URL param ile auto-start (screenshot için)
+        //  Örnek: ?demo=elementAvi&zorluk=orta
+        // ═════════════════════════════════════════════════
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const demoModul = params.get('demo');
+            if (!demoModul) return;
+            const zorluk = params.get('zorluk') || 'orta';
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    if (typeof SahneManager !== 'undefined' && SahneManager.modulBaslat) {
+                        SahneManager.modulBaslat(demoModul, zorluk);
+                    }
+                }, 800);
+            });
+        })();
+    </script>
+
+    <script>
+        // ═════════════════════════════════════════════════
         //  ANA MENÜ — Yerel etkileşimler
         // ═════════════════════════════════════════════════
         document.addEventListener('DOMContentLoaded', () => {
