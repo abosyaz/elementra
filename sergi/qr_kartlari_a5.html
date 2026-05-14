@@ -21,10 +21,6 @@
             --brand-secondary: #EC4899;
             --accent-gold:     #D4A574;
             --text-primary:    #1E1B4B;
-            --text-secondary:  #4B5563;
-            --text-muted:      #6B7280;
-            --surface-0:       #FAF5FF;
-            --surface-1:       #FFFFFF;
             --grad-brand:      linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
             --font-display:    'Oxanium', sans-serif;
             --font-body:       'Inter', system-ui, sans-serif;
@@ -75,7 +71,7 @@
             }
         }
 
-        /* Kesme çizgisi (orta, screen + print) */
+        /* Kesme çizgisi (orta) */
         .kesme-cizgi {
             position: absolute;
             top: 148.5mm;
@@ -92,7 +88,7 @@
             position: absolute;
             top: -3mm;
             font-size: 6mm;
-            color: rgba(124, 58, 237, 0.55);
+            color: rgba(124, 58, 237, 0.6);
             background: #FFFFFF;
             padding: 0 2mm;
         }
@@ -101,19 +97,16 @@
         .kesme-cizgi::after { right: 8mm; }
 
         /* ═══════════════════════════════════════════════════
-           A5 Kartı (148mm yükseklik)
+           A5 Kartı — 2 panel (Atom Marka | QR Telefonda Oyna)
            ═══════════════════════════════════════════════════ */
         .a5-kart {
             width: 210mm;
             height: 148.5mm;
-            position: relative;
             background: var(--grad-brand);
             color: #FFFFFF;
-            padding: 10mm 14mm;
             display: grid;
-            grid-template-columns: 80mm 1fr;
-            align-items: center;
-            gap: 10mm;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
             overflow: hidden;
         }
 
@@ -126,65 +119,37 @@
             right: 0;
             height: 3mm;
             background: linear-gradient(90deg, #7C3AED, #EC4899, #D4A574);
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+            z-index: 5;
         }
 
-        /* Subtle dekoratif noktalar arkaplan */
+        /* Subtle dekoratif noktalar arka plan */
         .a5-kart::after {
             content: '';
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(circle at 18% 30%, rgba(255, 255, 255, 0.10), transparent 22%),
-                radial-gradient(circle at 82% 70%, rgba(212, 165, 116, 0.15), transparent 28%);
+                radial-gradient(circle at 18% 30%, rgba(255, 255, 255, 0.10), transparent 28%),
+                radial-gradient(circle at 82% 75%, rgba(212, 165, 116, 0.16), transparent 30%);
             pointer-events: none;
         }
 
-        /* ═══ Sol: QR kutusu ═══ */
-        .qr-kutu {
-            background: #FFFFFF;
-            border-radius: 6mm;
-            padding: 5mm;
+        /* ═══ SOL PANEL — Atom Marka ═══ */
+        .marka-panel {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10mm 24mm rgba(30, 27, 75, 0.20);
+            padding: 14mm 10mm;
+            text-align: center;
             position: relative;
             z-index: 2;
         }
 
-        .qr-kutu img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* ═══ Sağ: İçerik ═══ */
-        .icerik {
-            position: relative;
-            z-index: 2;
-        }
-
-        .ust-etiket {
-            font-family: var(--font-body);
-            font-weight: 700;
-            font-size: 9pt;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--accent-gold);
+        .atom-svg {
+            width: 38mm;
+            height: 38mm;
             margin-bottom: 4mm;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .ust-etiket::before {
-            content: '';
-            display: block;
-            width: 14mm;
-            height: 0.5mm;
-            background: linear-gradient(90deg, transparent, var(--accent-gold));
+            filter: drop-shadow(0 4mm 14mm rgba(255, 255, 255, 0.25));
         }
 
         .marka {
@@ -193,76 +158,104 @@
             font-size: 32pt;
             letter-spacing: -0.025em;
             line-height: 0.95;
-            color: #FFFFFF;
-            margin-bottom: 3mm;
-            background: linear-gradient(135deg, #FFFFFF, #D4A574);
+            margin-bottom: 4mm;
+            background: linear-gradient(135deg, #FFFFFF 30%, #D4A574 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            color: transparent;
         }
 
         .slogan {
             font-family: var(--font-display);
             font-weight: 700;
-            font-size: 13pt;
-            color: rgba(255, 255, 255, 0.95);
-            margin-bottom: 7mm;
+            font-size: 14pt;
+            color: #FFFFFF;
+            opacity: 0.95;
+            margin-bottom: 5mm;
         }
 
-        .url-pill {
-            display: inline-block;
+        .tag {
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 7.5pt;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.92);
+            padding: 2mm 5mm;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+            border: 0.3mm solid rgba(212, 165, 116, 0.55);
+        }
+
+        /* ═══ SAĞ PANEL — Telefonunda Oyna + QR ═══ */
+        .qr-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 14mm 10mm;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .qr-baslik {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 18pt;
+            line-height: 1.05;
+            color: #FFFFFF;
+            margin-bottom: 5mm;
+            text-shadow: 0 1mm 3mm rgba(30, 27, 75, 0.18);
+        }
+
+        .qr-kutu {
+            width: 58mm;
+            height: 58mm;
+            background: #FFFFFF;
+            border-radius: 5mm;
+            padding: 3mm;
+            box-shadow: 0 6mm 16mm rgba(30, 27, 75, 0.22);
+            margin-bottom: 5mm;
+        }
+
+        .qr-kutu img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .qr-url {
             font-family: var(--font-display);
             font-weight: 700;
-            font-size: 11pt;
+            font-size: 9pt;
             color: #FFFFFF;
-            padding: 3mm 7mm;
+            padding: 2mm 5mm;
             background: rgba(255, 255, 255, 0.20);
-            border: 0.4mm solid rgba(212, 165, 116, 0.55);
+            border: 0.3mm solid rgba(212, 165, 116, 0.5);
             border-radius: 999px;
+            letter-spacing: 0.03em;
+            text-shadow: 0 1mm 2mm rgba(30, 27, 75, 0.18);
+        }
+
+        /* Alt meta (her A5'in altında — okul + TÜBİTAK) */
+        .a5-meta {
+            position: absolute;
+            bottom: 5mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 7pt;
+            color: rgba(255, 255, 255, 0.78);
             letter-spacing: 0.04em;
-            margin-bottom: 6mm;
+            z-index: 3;
         }
 
-        .aciklama {
-            font-size: 10pt;
-            line-height: 1.5;
-            color: rgba(255, 255, 255, 0.92);
-            margin-bottom: 5mm;
-            max-width: 80mm;
-        }
-
-        .aciklama strong {
-            color: var(--accent-gold);
-            font-weight: 700;
-        }
-
-        .meta {
-            font-size: 8.5pt;
-            line-height: 1.5;
-            color: rgba(255, 255, 255, 0.75);
-            padding-top: 4mm;
-            border-top: 0.3mm solid rgba(255, 255, 255, 0.22);
-            max-width: 80mm;
-        }
-
-        .meta strong {
+        .a5-meta strong {
             color: #FFFFFF;
             font-weight: 700;
-        }
-
-        /* Okul logosu (sol-alt köşede ince) */
-        .okul-logo-mini {
-            position: absolute;
-            bottom: 8mm;
-            left: 14mm;
-            width: 14mm;
-            height: 14mm;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1.5mm;
-            object-fit: contain;
-            box-shadow: 0 3mm 8mm rgba(0, 0, 0, 0.15);
-            z-index: 3;
         }
 
         /* Print yardımcı buton */
@@ -300,24 +293,29 @@
 
         <!-- ÜST A5 KART -->
         <div class="a5-kart">
-            <div class="qr-kutu">
-                <img src="qr.png" alt="ELEMENTRA QR kodu">
-            </div>
-            <div class="icerik">
-                <div class="ust-etiket">Şimdi Keşfet</div>
+            <div class="marka-panel">
+                <svg class="atom-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="5" fill="#FFFFFF"/>
+                    <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+                    <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5" transform="rotate(60 32 32)"/>
+                    <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5" transform="rotate(-60 32 32)"/>
+                </svg>
                 <h1 class="marka">ELEMENTRA</h1>
                 <div class="slogan">Kimyayı Keşfet</div>
-                <div class="url-pill">abosyaz.github.io/elementra</div>
-                <p class="aciklama">
-                    Lise 9. sınıf kimya için <strong>3 modüllü dijital öğretici oyun</strong>.
-                    Periyodik tablo, atom sembolleri ve kimyasal formülleri oyunla öğren.
-                </p>
-                <p class="meta">
-                    <strong>TÜBİTAK 4006</strong> · Bilim Fuarı 2025–2026<br>
-                    Şehit Ziya İlhan Dağdaş MTAL · Muğla · Bilişim Teknolojileri Alanı
-                </p>
+                <div class="tag">Periyodik · Bileşik · Atom</div>
             </div>
-            <img class="okul-logo-mini" src="logo_okul.png" alt="Şehit Ziya İlhan Dağdaş MTAL">
+
+            <div class="qr-panel">
+                <h2 class="qr-baslik">Telefonunda<br>Oyna</h2>
+                <div class="qr-kutu">
+                    <img src="qr.png" alt="ELEMENTRA QR kodu">
+                </div>
+                <div class="qr-url">abosyaz.github.io/elementra</div>
+            </div>
+
+            <p class="a5-meta">
+                <strong>TÜBİTAK 4006</strong> · Bilim Fuarı 2025–2026 · Şehit Ziya İlhan Dağdaş MTAL · Muğla · Bilişim Teknolojileri Alanı
+            </p>
         </div>
 
         <!-- Kesme çizgisi -->
@@ -325,24 +323,29 @@
 
         <!-- ALT A5 KART (üstle aynı) -->
         <div class="a5-kart">
-            <div class="qr-kutu">
-                <img src="qr.png" alt="ELEMENTRA QR kodu">
-            </div>
-            <div class="icerik">
-                <div class="ust-etiket">Şimdi Keşfet</div>
+            <div class="marka-panel">
+                <svg class="atom-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="5" fill="#FFFFFF"/>
+                    <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+                    <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5" transform="rotate(60 32 32)"/>
+                    <ellipse cx="32" cy="32" rx="26" ry="10" fill="none" stroke="#FFFFFF" stroke-width="2.5" transform="rotate(-60 32 32)"/>
+                </svg>
                 <h1 class="marka">ELEMENTRA</h1>
                 <div class="slogan">Kimyayı Keşfet</div>
-                <div class="url-pill">abosyaz.github.io/elementra</div>
-                <p class="aciklama">
-                    Lise 9. sınıf kimya için <strong>3 modüllü dijital öğretici oyun</strong>.
-                    Periyodik tablo, atom sembolleri ve kimyasal formülleri oyunla öğren.
-                </p>
-                <p class="meta">
-                    <strong>TÜBİTAK 4006</strong> · Bilim Fuarı 2025–2026<br>
-                    Şehit Ziya İlhan Dağdaş MTAL · Muğla · Bilişim Teknolojileri Alanı
-                </p>
+                <div class="tag">Periyodik · Bileşik · Atom</div>
             </div>
-            <img class="okul-logo-mini" src="logo_okul.png" alt="Şehit Ziya İlhan Dağdaş MTAL">
+
+            <div class="qr-panel">
+                <h2 class="qr-baslik">Telefonunda<br>Oyna</h2>
+                <div class="qr-kutu">
+                    <img src="qr.png" alt="ELEMENTRA QR kodu">
+                </div>
+                <div class="qr-url">abosyaz.github.io/elementra</div>
+            </div>
+
+            <p class="a5-meta">
+                <strong>TÜBİTAK 4006</strong> · Bilim Fuarı 2025–2026 · Şehit Ziya İlhan Dağdaş MTAL · Muğla · Bilişim Teknolojileri Alanı
+            </p>
         </div>
 
     </div>
