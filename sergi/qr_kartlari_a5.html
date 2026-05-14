@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>ELEMENTRA — QR Kartları A5 (A4'te 2 adet)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oxanium:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: 210mm 297mm;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --brand-primary:   #7C3AED;
+            --brand-secondary: #EC4899;
+            --accent-gold:     #D4A574;
+            --text-primary:    #1E1B4B;
+            --text-secondary:  #4B5563;
+            --text-muted:      #6B7280;
+            --surface-0:       #FAF5FF;
+            --surface-1:       #FFFFFF;
+            --grad-brand:      linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+            --font-display:    'Oxanium', sans-serif;
+            --font-body:       'Inter', system-ui, sans-serif;
+        }
+
+        html, body {
+            background: #FFFFFF;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media screen {
+            body {
+                padding: 20px;
+                background: #ddd;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════
+           A4 Sayfa — 2 A5 Kartı (üst + alt)
+           ═══════════════════════════════════════════════════ */
+        .a4-sayfa {
+            width: 210mm;
+            height: 297mm;
+            display: flex;
+            flex-direction: column;
+            background: #FFFFFF;
+            position: relative;
+            page-break-after: always;
+        }
+
+        .a4-sayfa:last-child {
+            page-break-after: auto;
+        }
+
+        @media screen {
+            .a4-sayfa {
+                box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Kesme çizgisi (orta, screen + print) */
+        .kesme-cizgi {
+            position: absolute;
+            top: 148.5mm;
+            left: 0;
+            right: 0;
+            height: 0;
+            border-top: 0.4mm dashed rgba(124, 58, 237, 0.45);
+            z-index: 10;
+        }
+
+        .kesme-cizgi::before,
+        .kesme-cizgi::after {
+            content: '✂';
+            position: absolute;
+            top: -3mm;
+            font-size: 6mm;
+            color: rgba(124, 58, 237, 0.55);
+            background: #FFFFFF;
+            padding: 0 2mm;
+        }
+
+        .kesme-cizgi::before { left: 8mm; }
+        .kesme-cizgi::after { right: 8mm; }
+
+        /* ═══════════════════════════════════════════════════
+           A5 Kartı (148mm yükseklik)
+           ═══════════════════════════════════════════════════ */
+        .a5-kart {
+            width: 210mm;
+            height: 148.5mm;
+            position: relative;
+            background: var(--grad-brand);
+            color: #FFFFFF;
+            padding: 10mm 14mm;
+            display: grid;
+            grid-template-columns: 80mm 1fr;
+            align-items: center;
+            gap: 10mm;
+            overflow: hidden;
+        }
+
+        /* Premium üst gradient çizgi */
+        .a5-kart::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3mm;
+            background: linear-gradient(90deg, #7C3AED, #EC4899, #D4A574);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Subtle dekoratif noktalar arkaplan */
+        .a5-kart::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 30%, rgba(255, 255, 255, 0.10), transparent 22%),
+                radial-gradient(circle at 82% 70%, rgba(212, 165, 116, 0.15), transparent 28%);
+            pointer-events: none;
+        }
+
+        /* ═══ Sol: QR kutusu ═══ */
+        .qr-kutu {
+            background: #FFFFFF;
+            border-radius: 6mm;
+            padding: 5mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10mm 24mm rgba(30, 27, 75, 0.20);
+            position: relative;
+            z-index: 2;
+        }
+
+        .qr-kutu img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ═══ Sağ: İçerik ═══ */
+        .icerik {
+            position: relative;
+            z-index: 2;
+        }
+
+        .ust-etiket {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 9pt;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 4mm;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ust-etiket::before {
+            content: '';
+            display: block;
+            width: 14mm;
+            height: 0.5mm;
+            background: linear-gradient(90deg, transparent, var(--accent-gold));
+        }
+
+        .marka {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 32pt;
+            letter-spacing: -0.025em;
+            line-height: 0.95;
+            color: #FFFFFF;
+            margin-bottom: 3mm;
+            background: linear-gradient(135deg, #FFFFFF, #D4A574);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .slogan {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 13pt;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 7mm;
+        }
+
+        .url-pill {
+            display: inline-block;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 11pt;
+            color: #FFFFFF;
+            padding: 3mm 7mm;
+            background: rgba(255, 255, 255, 0.20);
+            border: 0.4mm solid rgba(212, 165, 116, 0.55);
+            border-radius: 999px;
+            letter-spacing: 0.04em;
+            margin-bottom: 6mm;
+        }
+
+        .aciklama {
+            font-size: 10pt;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.92);
+            margin-bottom: 5mm;
+            max-width: 80mm;
+        }
+
+        .aciklama strong {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .meta {
+            font-size: 8.5pt;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.75);
+            padding-top: 4mm;
+            border-top: 0.3mm solid rgba(255, 255, 255, 0.22);
+            max-width: 80mm;
+        }
+
+        .meta strong {
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+
+        /* Okul logosu (sol-alt köşede ince) */
+        .okul-logo-mini {
+            position: absolute;
+            bottom: 8mm;
+            left: 14mm;
+            width: 14mm;
+            height: 14mm;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5mm;
+            object-fit: contain;
+            box-shadow: 0 3mm 8mm rgba(0, 0, 0, 0.15);
+            z-index: 3;
+        }
+
+        /* Print yardımcı buton */
+        @media screen {
+            .print-btn {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                z-index: 1000;
+                background: var(--grad-brand);
+                color: #FFFFFF;
+                border: none;
+                padding: 10px 18px;
+                border-radius: 8px;
+                font-family: var(--font-display);
+                font-weight: 700;
+                font-size: 12px;
+                cursor: pointer;
+                box-shadow: 0 6px 18px rgba(124, 58, 237, 0.3);
+            }
+        }
+        @media print {
+            .print-btn { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn no-print" onclick="window.print()">📄 PDF olarak kaydet</button>
+
+    <!-- ════════════════════════════════════════ -->
+    <!--  A4 Sayfa — 2 A5 QR Kartı                -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="a4-sayfa">
+
+        <!-- ÜST A5 KART -->
+        <div class="a5-kart">
+            <div class="qr-kutu">
+                <img src="qr.png" alt="ELEMENTRA QR kodu">
+            </div>
+            <div class="icerik">
+                <div class="ust-etiket">Şimdi Keşfet</div>
+                <h1 class="marka">ELEMENTRA</h1>
+                <div class="slogan">Kimyayı Keşfet</div>
+                <div class="url-pill">abosyaz.github.io/elementra</div>
+                <p class="aciklama">
+                    Lise 9. sınıf kimya için <strong>3 modüllü dijital öğretici oyun</strong>.
+                    Periyodik tablo, atom sembolleri ve kimyasal formülleri oyunla öğren.
+                </p>
+                <p class="meta">
+                    <strong>TÜBİTAK 4006</strong> · Bilim Fuarı 2025–2026<br>
+                    Şehit Ziya İlhan Dağdaş MTAL · Muğla · Bilişim Teknolojileri Alanı
+                </p>
+            </div>
+            <img class="okul-logo-mini" src="logo_okul.png" alt="Şehit Ziya İlhan Dağdaş MTAL">
+        </div>
+
+        <!-- Kesme çizgisi -->
+        <div class="kesme-cizgi"></div>
+
+        <!-- ALT A5 KART (üstle aynı) -->
+        <div class="a5-kart">
+            <div class="qr-kutu">
+                <img src="qr.png" alt="ELEMENTRA QR kodu">
+            </div>
+            <div class="icerik">
+                <div class="ust-etiket">Şimdi Keşfet</div>
+                <h1 class="marka">ELEMENTRA</h1>
+                <div class="slogan">Kimyayı Keşfet</div>
+                <div class="url-pill">abosyaz.github.io/elementra</div>
+                <p class="aciklama">
+                    Lise 9. sınıf kimya için <strong>3 modüllü dijital öğretici oyun</strong>.
+                    Periyodik tablo, atom sembolleri ve kimyasal formülleri oyunla öğren.
+                </p>
+                <p class="meta">
+                    <strong>TÜBİTAK 4006</strong> · Bilim Fuarı 2025–2026<br>
+                    Şehit Ziya İlhan Dağdaş MTAL · Muğla · Bilişim Teknolojileri Alanı
+                </p>
+            </div>
+            <img class="okul-logo-mini" src="logo_okul.png" alt="Şehit Ziya İlhan Dağdaş MTAL">
+        </div>
+
+    </div>
+
+</body>
+</html>
