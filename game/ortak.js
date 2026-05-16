@@ -715,19 +715,30 @@ const AudioManager = {
         const a = new Audio(yol);
         a.loop = true;
         a.volume = (this._ayarlar.master / 100) * (this._ayarlar.music / 100);
-        a.play().catch(e => {
-            console.debug('muzikCal ignored:', e.message);
-        });
-
-        this._mevcutMuzik = a;
         this._muzikAdi = muzikAdi;
+        this._mevcutMuzik = a;
+
+        a.play().catch(e => {
+            // MP3 dosyası yok veya autoplay engellendi → Web Audio fallback
+            console.debug('muzikCal MP3 → Web Audio fallback:', e.message);
+            this._mevcutMuzik = null;
+            this._webAudioMuzikBaslat(muzikAdi);
+        });
     },
 
     /**
-     * Çalan müziği fade-out ile durdur.
+     * Çalan müziği fade-out ile durdur (MP3 + Web Audio).
      */
     muzikDurdur() {
-        if (!this._mevcutMuzik) return;
+        // Web Audio müziği durdur
+        if (this._webAudioMuzik) {
+            this._webAudioMuzikDurdur();
+        }
+
+        if (!this._mevcutMuzik) {
+            this._muzikAdi = null;
+            return;
+        }
 
         const a = this._mevcutMuzik;
         this._mevcutMuzik = null;
@@ -751,6 +762,198 @@ const AudioManager = {
                 a.currentTime = 0;
             }
         }, 20);
+    },
+
+    /**
+     * Web Audio API ile programatik müzik üretici.
+     * MP3 dosyası yoksa veya autoplay engellendiyse fallback olarak çalışır.
+     * 3 tip pattern: menu (ambient pad), oyun (arpeggiator), zafer (fanfare)
+     * @param {string} tip - 'menu' | 'oyun' | 'zafer'
+     */
+    _webAudioMuzikBaslat(tip) {
+        const ctx = this._getWebAudioCtx();
+        if (!ctx) return;
+
+        // Master gain (mute / fade için)
+        const masterGain = ctx.createGain();
+        masterGain.gain.value = (this._ayarlar.master / 100) * (this._ayarlar.music / 100) * 0.20;
+        masterGain.connect(ctx.destination);
+
+        this._webAudioMuzik = {
+            masterGain,
+            oscs: [],
+            timer: null,
+            playing: true,
+            tip,
+            ctx
+        };
+
+        if (tip === 'menu') {
+            this._webAudioPattern_menu(ctx, masterGain);
+        } else if (tip === 'oyun') {
+            this._webAudioPattern_oyun(ctx, masterGain);
+        } else if (tip === 'zafer') {
+            this._webAudioPattern_zafer(ctx, masterGain);
+        }
+    },
+
+    /**
+     * MENU müziği — A minor ambient pad (3 nota chord + slow LFO).
+     * Loop'lar süresiz (oscillator continuous).
+     */
+    _webAudioPattern_menu(ctx, gain) {
+        // A minor: A3 (220), C4 (261.63), E4 (329.63)
+        const notes = [220, 261.63, 329.63];
+        notes.forEach((freq, idx) => {
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+
+            const noteGain = ctx.createGain();
+            noteGain.gain.value = 0;
+            osc.connect(noteGain).connect(gain);
+
+            // Yumuşak attack
+            noteGain.gain.setValueAtTime(0, ctx.currentTime);
+            noteGain.gain.linearRampToValueAtTime(0.10, ctx.currentTime + 2 + idx * 0.4);
+
+            // Slow LFO — gentle modulation
+            const lfo = ctx.createOscillator();
+            lfo.type = 'sine';
+            lfo.frequency.value = 0.12 + idx * 0.05;
+            const lfoGain = ctx.createGain();
+            lfoGain.gain.value = 0.03;
+            lfo.connect(lfoGain).connect(noteGain.gain);
+
+            osc.start();
+            lfo.start();
+            this._webAudioMuzik.oscs.push(osc, lfo);
+        });
+    },
+
+    /**
+     * OYUN müziği — C major arpeggio (BPM 95, 8th notes) + soft bass.
+     */
+    _webAudioPattern_oyun(ctx, gain) {
+        const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63]; // C4 E4 G4 C5 G4 E4
+        const bassNotes = [130.81, 174.61, 196.00, 130.81]; // C3 F3 G3 C3
+        const BPM = 95;
+        const step = 60 / BPM / 2; // 8th note saniye
+        let pos = 0;
+
+        const playStep = () => {
+            const m = this._webAudioMuzik;
+            if (!m || !m.playing) return;
+
+            const now = ctx.currentTime;
+            const freq = notes[pos % notes.length];
+            const bassFreq = bassNotes[Math.floor(pos / 4) % bassNotes.length];
+
+            // Melodi (triangle pluck)
+            const osc = ctx.createOscillator();
+            osc.type = 'triangle';
+            osc.frequency.value = freq;
+            const noteGain = ctx.createGain();
+            noteGain.gain.value = 0;
+            osc.connect(noteGain).connect(gain);
+            noteGain.gain.setValueAtTime(0, now);
+            noteGain.gain.linearRampToValueAtTime(0.08, now + 0.02);
+            noteGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+            osc.start(now);
+            osc.stop(now + 0.4);
+
+            // Bass (her 4 step'te 1)
+            if (pos % 4 === 0) {
+                const bass = ctx.createOscillator();
+                bass.type = 'sine';
+                bass.frequency.value = bassFreq;
+                const bassGain = ctx.createGain();
+                bassGain.gain.value = 0;
+                bass.connect(bassGain).connect(gain);
+                bassGain.gain.setValueAtTime(0, now);
+                bassGain.gain.linearRampToValueAtTime(0.07, now + 0.03);
+                bassGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+                bass.start(now);
+                bass.stop(now + 1.3);
+            }
+
+            pos++;
+            m.timer = setTimeout(playStep, step * 1000);
+        };
+
+        playStep();
+    },
+
+    /**
+     * ZAFER müziği — C major ascending fanfare (6 nota) + final chord.
+     * Tek seferlik çalar (loop yok).
+     */
+    _webAudioPattern_zafer(ctx, gain) {
+        // C-E-G-C-E-G ascending
+        const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
+        const step = 0.13;
+
+        notes.forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            osc.type = 'sawtooth';
+            osc.frequency.value = freq;
+            const noteGain = ctx.createGain();
+            noteGain.gain.value = 0;
+            osc.connect(noteGain).connect(gain);
+
+            const start = ctx.currentTime + i * step;
+            noteGain.gain.setValueAtTime(0, start);
+            noteGain.gain.linearRampToValueAtTime(0.13, start + 0.04);
+            noteGain.gain.exponentialRampToValueAtTime(0.001, start + 0.4);
+            osc.start(start);
+            osc.stop(start + 0.45);
+        });
+
+        // Final C major chord (C5-E5-G5-C6) 1.8s sustain
+        const chordTime = ctx.currentTime + notes.length * step;
+        [523.25, 659.25, 783.99, 1046.50].forEach(freq => {
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            const noteGain = ctx.createGain();
+            noteGain.gain.value = 0;
+            osc.connect(noteGain).connect(gain);
+            noteGain.gain.setValueAtTime(0, chordTime);
+            noteGain.gain.linearRampToValueAtTime(0.10, chordTime + 0.1);
+            noteGain.gain.exponentialRampToValueAtTime(0.001, chordTime + 1.8);
+            osc.start(chordTime);
+            osc.stop(chordTime + 1.9);
+        });
+    },
+
+    /**
+     * Çalan Web Audio müziği fade-out + temizle.
+     */
+    _webAudioMuzikDurdur() {
+        const m = this._webAudioMuzik;
+        if (!m) return;
+
+        this._webAudioMuzik = null;
+        m.playing = false;
+        if (m.timer) clearTimeout(m.timer);
+
+        // Master gain fade-out
+        try {
+            const ctx = m.ctx;
+            const now = ctx.currentTime;
+            m.masterGain.gain.cancelScheduledValues(now);
+            m.masterGain.gain.setValueAtTime(m.masterGain.gain.value, now);
+            m.masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+        } catch (e) {}
+
+        // 300ms sonra oscillator'leri durdur
+        setTimeout(() => {
+            m.oscs.forEach(o => {
+                try { o.stop(); } catch (e) {}
+                try { o.disconnect(); } catch (e) {}
+            });
+            try { m.masterGain.disconnect(); } catch (e) {}
+        }, 300);
     },
 
     /**
