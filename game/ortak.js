@@ -677,8 +677,8 @@ const AudioManager = {
             const anaekranAktif = anaekran && !anaekran.classList.contains('hidden');
             const oyunAktif = oyunEkran && !oyunEkran.classList.contains('hidden');
             if (anaekranAktif && !oyunAktif) {
-                // 200ms gecikme — Web Audio context'in hazır olması için
-                setTimeout(() => this.muzikCal('menu'), 200);
+                // Direkt çağır (AudioContext gesture içinde zaten resume edildi)
+                this.muzikCal('menu');
             }
         }
     },
@@ -1238,9 +1238,29 @@ const EventDispatcher = {
         document.addEventListener('keydown', (e) => this._klavyeHandler(e));
 
         // İlk kullanıcı etkileşimi — browser autoplay engelini geçer
+        // KRİTİK: AudioContext.resume() user gesture context'inin İÇİNDE çağrılmalı.
+        // Aksi takdirde "AudioContext was not allowed to start" hatası alınır.
         const firstInteraction = () => {
             if (this._firstInteractionDone) return;
             this._firstInteractionDone = true;
+            console.log('[Audio] İlk kullanıcı etkileşimi yakalandı — AudioContext unlock yapılıyor');
+
+            // ⚡ Web Audio context'i gesture İÇİNDE resume et
+            try {
+                const ctx = AudioManager._getWebAudioCtx();
+                if (ctx && ctx.state === 'suspended') {
+                    ctx.resume().then(() => {
+                        console.log('[Audio] ✅ AudioContext resume başarılı — state:', ctx.state);
+                    }).catch(e => {
+                        console.warn('[Audio] AudioContext resume başarısız:', e.message);
+                    });
+                } else if (ctx) {
+                    console.log('[Audio] AudioContext zaten aktif — state:', ctx.state);
+                }
+            } catch (e) {
+                console.warn('[Audio] AudioContext erişim hatası:', e.message);
+            }
+
             AudioManager.kullaniciEtkilesimi();
             document.removeEventListener('click', firstInteraction);
             document.removeEventListener('keydown', firstInteraction);
