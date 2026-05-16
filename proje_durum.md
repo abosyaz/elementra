@@ -7,11 +7,24 @@
 
 ## 📊 Mevcut Durum
 
-**Son oturum tarihi:** 2026-05-13 (Oturum 3 — Sergi deploy + mobile cila)
-**Tamamlanma:** **77/84 adım = %92** (asistan tarafında — FAZ 9 manuel testler kullanıcıya kaldı)
-**Aktif faz:** **FAZ 9 — Final Test ve Yayın** + ek sergi cilaları yapıldı
+**Son oturum tarihi:** 2026-05-16 (Oturum 5 — Tema sistemi + Web Audio müzik)
+**Tamamlanma:** **77/84 adım = %92** ana sayım (sergi materyalleri + 2 büyük feature ek olarak tamamlandı)
+**Aktif faz:** Tüm asistan tarafı işler tamamlandı, kullanıcı tarafı: matbaa baskı + USB yedek + sergi günü kurulum
+**Sergi tarihi:** **21.05.2026** · Şehit Ziya İlhan Dağdaş MTAL · Muğla
 **🌐 CANLI URL:** **`https://abosyaz.github.io/elementra/`** (GitHub Pages)
-**Bir sonraki adım:** Kullanıcı sergi öncesi `sergi/sergi_hazirlik_kontrol.md`'yi takip eder; cila/bug çıkarsa asistan `git push` ile otomatik yansıtır.
+**Son commit:** `fbdad08` — AudioContext gesture context fix (test bekliyor)
+
+### ⚠️ AÇIK SORUN — Müzik Çalmıyor (Oturum 6'da devam)
+
+- Tüm tetikleyiciler eklendi (modulBaslat/sonucEkrani/anaMenuyeDon)
+- Web Audio fallback yazıldı (menu/oyun/zafer pattern'leri)
+- AudioContext.resume() gesture context'inde çağrılıyor (commit fbdad08)
+- **AMA** kullanıcı testinde hala "AudioContext was not allowed to start" hatası geliyor (Safari + Chrome)
+- Son cache yayılımı sonrası test bekleniyor — eğer hala çalmıyorsa farklı yaklaşım gerek
+- **Olası çözümler:**
+  - `_getWebAudioCtx()`'i lazy yap — sadece muzikCal/sesCal anında oluştur (firstInteraction içinde)
+  - Mute butonu UI'a yerleştir — kullanıcının explicit tıklamasıyla müzik unlock
+  - Pixabay/Mixkit'ten gerçek MP3 indirilebilirse fetch HEAD ile yüklenir, Web Audio fallback'e gerek kalmaz
 
 ---
 
@@ -246,6 +259,197 @@ Yeni özellik isteği geldiğinde 84-adım listesi dışı kapsam değerlendiril
 ---
 
 ## 📝 Oturum Geçmişi
+
+### 2026-05-14 → 2026-05-16 — Oturum 4 + 5 (Sergi Materyalleri + Tema + Müzik)
+
+Bu mega oturum 2 gün sürdü, **40+ commit**, **5000+ satır** kod/içerik eklendi.
+
+#### 🎨 Sergi Materyalleri Tam Set
+
+| Doküman | Format | Boyut | Yapım |
+|---------|--------|-------|-------|
+| **Poster A1** | 594×841 mm portrait | 1.9 MB | poster.html → Chrome `--print-to-pdf` |
+| **Broşür A4** | 297×210 mm landscape trifold | ~750 KB | brosur.html (premium F1-F7 upgrade) |
+| **SSS Kılavuzu A4** | 210×297 mm × 8 sayfa | 833 KB | sss_juri_kilavuzu.html — 40 SSS + Z bölümü |
+| **Sunum 16:9** | 1920×1080 × 14 sayfa | 1.2 MB | sunum_sergi.html → 14 PNG → Pillow PDF |
+| **QR Kartları A5×2** | 210×297 mm | 437 KB | qr_kartlari_a5.html (brosur ön kapak stili) |
+
+**SİLİNDİ:** jüri_karti.html + elementra_juri_A6.pdf (SSS Kılavuzu ile yer tuttu)
+
+#### 📄 Sergi Materyalleri Detay
+
+**1. Broşür Premium Upgrade (F1-F7)** — `commit 5dfba6f`
+- Araştırma: WebSearch + WebFetch (Pitchworx 2026, signagetube)
+- ELEMENTRA başlığı 32→40pt, h2 16→18pt, body 9→9.5pt
+- Letter-spacing audit, tabular numerals, üst gradient çizgi (mor→pembe→altın)
+- Panel sırası swap: ELEMENTRA marka sol panele taşındı (klasik C-fold)
+- 4 yeni içerik bloğu (Hedef Kitle/Yöntem/Zorluk/Başarım/Teknoloji)
+- Ekip tablosu (Panel 6 arka kapak): 3 satırlı, danışman dahil
+
+**2. Poster A1 Boşluk Doldurma** — `commit 6c75f0f`
+- Orta ~%40 beyaz boşluk vardı → 3 yeni sıra (~210 satır CSS+HTML)
+- SIRA 3.5a: 4 adım akış diagramı (Modül Seç → Zorluk → Oyna → Yansıt)
+- SIRA 3.5b: Pedagojik Yaklaşım + 20 Başarım kartları
+- SIRA 3.5c: Sergi Notu (sonra "Erişim & Demo") + Öğrenci Hedefleri
+- Footer'dan "Şehir: MUĞLA" kaldırıldı, "Nebula paleti + Oxanium" satırı silindi
+
+**3. SSS Kılavuzu A4 (8 Sayfa)** — `commit 0d900a5`
+- 8 bölüm × ~5 SSS = 40 soru-cevap
+- **Yeni Z bölümü** (Sayfa 2-3): Ziyaretçi Konuşma Senaryosu
+  - 10 adımlık sahne kılavuzu (Karşılama → Pitch → Demo → Kapanış)
+  - 30 saniye pitch (altın vurgu kartı — ezberlenmek üzere)
+- Renk kodlu bölümler (8 farklı aksent)
+
+**4. Sunum 14 Slayt** — `commit ec66a89` + `commit b18d5d9`
+- 1920×1080 native, 16:9, 9 sn/slayt × 14 = ~2:06 dakika döngü
+- Otomatik döngü + Klavye (F/Space/←/→/R)
+- URL ?slayt=N param ile statik mod (PDF/screenshot için)
+- Gerçek oyun screenshot'ları (Slayt 4 + 6/7/8) — Chrome headless ile 1366×768 viewport, Pillow auto-crop
+- index.html'e `?demo=elementAvi&zorluk=orta` URL param desteği (sergi sonrası kaldırılabilir)
+- PDF üretim: 14 PNG → Pillow → tek PDF (Chrome `--print-to-pdf` page-break sorunu nedeniyle bypass)
+
+**5. QR A5×2 PDF** — `commit 7d397f1`
+- A4 portrait, ortadan kesilebilir 2 A5 kartı
+- Brosur ön kapak stili: sol panel atom+ELEMENTRA, sağ panel Telefonunda Oyna+QR
+- Üst kenar gradient çizgi (mor→pembe→altın), alt meta (TÜBİTAK 4006 · okul · alan)
+
+#### 🎨 Ana Ekran Premium Cilalar
+
+- **Bilişim Teknolojileri Alanı pill** — sol altta glassmorphism (Hero ile modüller arası)
+- **Okul logosu integration** — atom SVG kaldırıldı, `logo_okul.png` ana ekran hero'da
+- **Pill chip büyütme** — 56px logo + 17px font + tam okul adı + tire + "Bilişim Teknolojileri Alanı" tek satır
+- **Sığma fix** — okul logosu 80→56px, gap kompakt (modül kartları yer kazandı)
+
+#### 🌗 3 TEMA SİSTEMİ — `commit 863411e`
+
+Öğrencilerin elementra-main fork'unda gördüğüm tema sistemini referans alarak **daha temiz, FOUC-free, smooth transition** versiyonu hazırlandı.
+
+**3 Tema:**
+- 🌞 **Aydınlık** (varsayılan) — `#FAF5FF` zemin, mor-pembe brand
+- 🌙 **Karanlık** — `#0F0E1A` zemin, açık metin, swap'lanmış periyodik tablo renkleri
+- ⭐ **Birlik** — `#000000` zemin, sarı-altın brand (`#FFD700`), yüksek kontrast
+
+**Teknik:**
+- `:root, [data-tema="aydinlik"]` (varsayılan)
+- `[data-tema="karanlik"]` + `[data-tema="birlik"]` override
+- **FOUC önleme:** index.html head'de inline `<script>` ile CSS yüklenmeden önce tema set
+- **Smooth transition:** `html.tema-hazir` class sonrası 250ms ease
+- **localStorage:** `elementra_v2_tema` (geçerli: aydinlik/karanlik/birlik)
+- **Ayarlar modali:** 3 buton grid (önizleme noktası + ad + açıklama + ✓ aktif)
+- **ARIA radiogroup**, mobile responsive (tek sütun row layout)
+
+**Dosyalar:**
+- `style.css`: §1.2 tema sistemi (≈ 200 satır) + §18 tema seçici buton stilleri (≈ 140 satır)
+- `index.html`: head'de inline FOUC önleme script + ayarlar modalinde tema seçici section + DOMContentLoaded içinde tema handler
+
+#### 🎵 WEB AUDIO MÜZİK SİSTEMİ — `commit f90ef54` + `a57a61e` + `fbdad08`
+
+**Sorun:** Öğrenciler "oyunlarda müzik yok" tespit etti. Kontrol: `AudioManager.muzikCal()` fonksiyonu vardı ama HİÇBİR YERDEN ÇAĞRILMIYORDU + MP3 dosyaları yoktu.
+
+**Çözümler:**
+
+1. **Web Audio API programatik müzik** (game/ortak.js, ≈ 220 satır):
+   - `_webAudioMuzikBaslat(tip)`: ctx oluşturma + master gain + pattern dispatch
+   - `_webAudioPattern_menu()`: A minor ambient pad (3 nota chord + LFO modulation, süresiz loop)
+   - `_webAudioPattern_oyun()`: C major arpeggio (BPM 95, 8th note rhythm, 6 nota döngü + bass)
+   - `_webAudioPattern_zafer()`: 6 nota ascending fanfare + final C major chord (1.8s sustain)
+   - `_webAudioMuzikDurdur()`: 250ms fade-out + 300ms sonra oscillator disconnect
+
+2. **muzikCal tetikleyicileri** (3 yer):
+   - `SahneManager.modulBaslat()` → muzikCal('oyun')
+   - `SahneManager.sonucEkrani()` → muzikCal('zafer')
+   - `SahneManager.anaMenuyeDon()` → muzikCal('menu')
+
+3. **İlk kullanıcı etkileşimi** (kullaniciEtkilesimi):
+   - Eskiden `setTimeout 200ms ile muzikCal('menu')` çağrılıyordu — gesture context kayboluyordu
+   - Düzeltme: `firstInteraction` click handler İÇİNDE `ctx.resume()` çağrısı (commit `fbdad08`)
+   - setTimeout kaldırıldı, direkt muzikCal('menu')
+
+4. **fetch HEAD ile MP3 varlık kontrolü** + yoğun console.log debug:
+   - MP3 yoksa direkt Web Audio fallback
+   - Her adım için `[Müzik]` ve `[Audio]` log'ları (console'dan debug için)
+
+**Açık sorun:** Kullanıcı testinde hala "AudioContext was not allowed to start" hatası geliyor (Safari + Chrome). Cache yayılımı sonrası test bekleniyor. Eğer hala çalmıyorsa farklı yaklaşım gerek (mute butonu manuel unlock + lazy ctx creation).
+
+#### 📁 Yeni Dosyalar Bu Oturum
+
+```
+sergi/
+├── sss_juri_kilavuzu.html       (yeni — 40 SSS + Z bölümü)
+├── qr_kartlari_a5.html          (yeni — A4'te 2 A5 kart)
+├── sunum_sergi.html             (yeni — 14 slayt otomatik döngü)
+├── screenshots/                  (yeni klasör)
+│   ├── 01_anaekran.png          (gerçek ana ekran, 1366×768)
+│   ├── 02_element_avi.png       (modül 1)
+│   ├── 03_sembol_eslestirme.png (modül 2)
+│   └── 04_formul_yapboz.png     (modül 3)
+└── logo_okul.png                 (okul amblemi, 76 KB)
+
+dokumanlar/
+├── elementra_poster_A1.pdf       (1.9 MB)
+├── elementra_brosur_A4.pdf       (~750 KB, F1-F7 luxury)
+├── elementra_sunum.pdf           (1.2 MB, 14 sayfa 16:9)
+├── elementra_sss_juri.pdf        (833 KB, 8 sayfa A4)
+└── elementra_qr_a5_x2.pdf        (437 KB, 2 A5 kart)
+
+assets/
+├── sesler/                       (boş — Web Audio fallback aktif)
+└── muzikler/                     (boş — Web Audio fallback aktif)
+```
+
+#### 🔧 Edinilen Teknik Tuzaklar (bu oturum)
+
+18. **Chrome `--print-to-pdf` @page bug**: A1 portrait + 16:9 custom boyut bazı durumlarda page-break-after'ı yutuyor → 8 sayfa beklenirken 14 olmuyor. Çözüm: her slayt için ayrı PNG çek, Pillow ile birleştir.
+19. **CSS `background-clip: text` artifact**: gradient text + drop-shadow combo bazı tarayıcılarda outline glow gibi görünür. Pragmatik: solid renk + text-shadow alternatif.
+20. **Pixabay/Mixkit scrape 403**: Direkt CDN URL'leri erişilemez (bot koruması). Pratik: Web Audio API programatik müzik veya kullanıcı manuel indirsin.
+21. **AudioContext autoplay policy**: `ctx.resume()` SADECE user gesture event handler'ı İÇİNDE çağrılırsa kabul ediliyor. setTimeout/async chain → gesture context kaybı → "user didn't interact" hatası.
+22. **Auto-crop with Pillow**: `ImageChops.difference()` + threshold tolerance + getbbox() ile boşluk tespiti. BG color tam beyaz değilse (örn surface-0 = #FAF5FF) tolerance ayarı kritik.
+23. **URL ?demo=xxx auto-start trick**: Sergi screenshot'ları için index.html'e küçük query parametre handler — SahneManager.modulBaslat() otomatik çağrılır. Sergi sonrası kaldırılabilir.
+24. **C-fold trifold panel sırası**: SOL = ÖN KAPAK (dışta görünür), ORTA = ARKA KAPAK (sırt + ters çevrilince), SAĞ = İÇ FLY. Marka ön kapakta olmalı (klasik beklenti).
+25. **A4 print PDF page-break-after**: position:absolute + overflow:hidden CSS print için override etmeli (overflow:visible !important, position:relative !important).
+
+#### 🌐 Tüm Güncel Canlı URL'ler
+
+- Oyun: `https://abosyaz.github.io/elementra/`
+- Poster: `https://abosyaz.github.io/elementra/sergi/poster.html`
+- Broşür: `https://abosyaz.github.io/elementra/sergi/brosur.html`
+- Sunum: `https://abosyaz.github.io/elementra/sergi/sunum_sergi.html` (otomatik döngü)
+- SSS Kılavuzu: `https://abosyaz.github.io/elementra/sergi/sss_juri_kilavuzu.html`
+- QR Kartları: `https://abosyaz.github.io/elementra/sergi/qr_kartlari_a5.html`
+- QR demo: `?demo=elementAvi&zorluk=orta` (test için)
+
+#### 📋 Kullanıcı Tarafı Kalan İşler (Manuel)
+
+1. **Müzik açık sorun**: Cache yayılımı sonrası test → konsol log'larını paylaş
+2. **Matbaa baskı** — Poster A1 + Broşür A4 (50+ kopya, C-fold) + QR kartları (50+ kopya, ortadan kes) + SSS (öğrenci başına 1-2)
+3. **USB yedek** — `cp -R /Users/abos/projects/tubitak_elementra/ /Volumes/USB/elementra/`
+4. **Telefon scanner test** — canlı QR tara, oyun açılıyor mu
+5. **Öğrenci pratik** — SSS sayfa 2-3 (Z bölümü 10 adım) üzerinde 2-3 deneme
+6. **Sergi günü kurulumu** (21.05.2026) — Stand kurulumu, fullscreen sunum, USB yedek
+
+#### 💼 Commit Listesi (Bu Oturum, Yeniye doğru)
+
+```
+fbdad08  AudioContext resume gesture context fix
+a31b266  muzikCal fetch HEAD + agresif debug log
+1f69d5e  Safari müzik fix — AudioContext.resume() eklendi
+a57a61e  muzikCal tetikleyicileri eklendi (modulBaslat/sonucEkrani/anaMenuyeDon)
+f90ef54  Web Audio API programatik müzik fallback (220 satır)
+863411e  3 tema sistemi (Aydınlık/Karanlık/Birlik) + smooth transition
+6cb909c  + 7d397f1  QR A5×2 + makas simgeleri kaldırıldı
+40d71f7  + 7f985dd  QR kartları A5×2 PDF (brosur ön kapak stili)
+0d900a5  SSS Z bölümü (Ziyaretçi Konuşma Senaryosu, 2 yeni sayfa)
+b18d5d9  + ec66a89  Sunum PDF 14 sayfa + gerçek oyun screenshot'ları
+0c69ffc  Sunum 13 slayt (digital signage premium)
+84dff74  Poster 4 içerik temizleme + QR text fix
+6c75f0f  Poster A1 hibrit içerik (3 yeni sıra ~210 satır)
+5dfba6f  Brosur premium upgrade (F1-F7)
+4fc5888  Jüri kartı A6 kaldırıldı (SSS ile yer tuttu)
+7ab949a  SSS Kılavuzu A4 (40 soru-cevap, 8 sayfa)
+... ve daha fazlası (~40 commit toplam bu oturum)
+```
+
+
 
 ### 2026-05-12 — Oturum 1 (Önceki, ~16 saat)
 - FAZ 0-3 TAM + FAZ 4 (10/11)
