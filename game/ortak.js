@@ -715,30 +715,46 @@ const AudioManager = {
      */
     muzikCal(muzikAdi) {
         if (!this._initialized) this.init();
-        if (this._ayarlar.muted) return;
-        if (!this._baslatildi) return;
-        if (this._muzikAdi === muzikAdi) return; // Zaten çalıyor
+        console.log('[Müzik] muzikCal:', muzikAdi, '· muted:', this._ayarlar.muted, '· baslatildi:', this._baslatildi);
+
+        if (this._ayarlar.muted) { console.log('[Müzik] Sessize alınmış, çalmıyor.'); return; }
+        if (!this._baslatildi) { console.log('[Müzik] Kullanıcı henüz etkileşim yapmadı.'); return; }
+        if (this._muzikAdi === muzikAdi) { console.log('[Müzik] Zaten çalıyor.'); return; }
 
         this.muzikDurdur();
+        this._muzikAdi = muzikAdi;
 
         const yol = MUZIK_DOSYALARI[muzikAdi];
-        if (!yol) {
-            console.warn('Müzik bulunamadı:', muzikAdi);
-            return;
-        }
 
-        const a = new Audio(yol);
-        a.loop = true;
-        a.volume = (this._ayarlar.master / 100) * (this._ayarlar.music / 100);
-        this._muzikAdi = muzikAdi;
-        this._mevcutMuzik = a;
-
-        a.play().catch(e => {
-            // MP3 dosyası yok veya autoplay engellendi → Web Audio fallback
-            console.debug('muzikCal MP3 → Web Audio fallback:', e.message);
-            this._mevcutMuzik = null;
+        // MP3 dosya kontrol — fetch HEAD ile var mı bak (daha güvenilir)
+        // Dosya varsa Audio element ile çal, yoksa direkt Web Audio fallback.
+        if (yol) {
+            fetch(yol, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('[Müzik] MP3 bulundu, Audio element ile çalınıyor:', yol);
+                        const a = new Audio(yol);
+                        a.loop = true;
+                        a.volume = (this._ayarlar.master / 100) * (this._ayarlar.music / 100);
+                        this._mevcutMuzik = a;
+                        a.play().catch(e => {
+                            console.warn('[Müzik] Audio play başarısız → Web Audio:', e.message);
+                            this._mevcutMuzik = null;
+                            this._webAudioMuzikBaslat(muzikAdi);
+                        });
+                    } else {
+                        console.log('[Müzik] MP3 yok (' + response.status + ') → Web Audio fallback:', muzikAdi);
+                        this._webAudioMuzikBaslat(muzikAdi);
+                    }
+                })
+                .catch(e => {
+                    console.log('[Müzik] Fetch hatası → Web Audio fallback:', e.message);
+                    this._webAudioMuzikBaslat(muzikAdi);
+                });
+        } else {
+            console.log('[Müzik] Yol yok → Web Audio direkt:', muzikAdi);
             this._webAudioMuzikBaslat(muzikAdi);
-        });
+        }
     },
 
     /**
@@ -788,9 +804,10 @@ const AudioManager = {
     _webAudioMuzikBaslat(tip) {
         const ctx = this._getWebAudioCtx();
         if (!ctx) {
-            console.warn('Web Audio context yok — müzik çalınamıyor');
+            console.warn('[Müzik] Web Audio context oluşturulamadı!');
             return;
         }
+        console.log('[Müzik] Web Audio başlatılıyor:', tip, '· ctx.state:', ctx.state, '· master:', this._ayarlar.master, '· music:', this._ayarlar.music);
 
         // KRİTİK: Safari + bazı tarayıcılar AudioContext suspended başlar.
         // Resume çağrılmazsa hiç ses çalmaz.
@@ -798,6 +815,7 @@ const AudioManager = {
             const masterGain = ctx.createGain();
             masterGain.gain.value = (this._ayarlar.master / 100) * (this._ayarlar.music / 100) * 0.20;
             masterGain.connect(ctx.destination);
+            console.log('[Müzik] Master gain:', masterGain.gain.value, '· tip:', tip);
 
             this._webAudioMuzik = {
                 masterGain,
@@ -815,11 +833,16 @@ const AudioManager = {
             } else if (tip === 'zafer') {
                 this._webAudioPattern_zafer(ctx, masterGain);
             }
+            console.log('[Müzik] ✅ Pattern başlatıldı:', tip);
         };
 
         if (ctx.state === 'suspended') {
-            ctx.resume().then(startContext).catch(e => {
-                console.warn('AudioContext resume başarısız:', e.message);
+            console.log('[Müzik] AudioContext suspended → resume çağrılıyor...');
+            ctx.resume().then(() => {
+                console.log('[Müzik] AudioContext resume başarılı');
+                startContext();
+            }).catch(e => {
+                console.warn('[Müzik] AudioContext resume başarısız:', e.message);
             });
         } else {
             startContext();
