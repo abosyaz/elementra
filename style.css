@@ -6,8 +6,11 @@
 
 /* ============================================================
    1. GLOBAL TASARIM SİSTEMİ — Custom Properties
+   AYDINLIK tema değerleri (:root = varsayılan).
+   Karanlık + Birlik temaları için bkz. § 1.2.
    ============================================================ */
-:root {
+:root,
+[data-tema="aydinlik"] {
     /* ───── MARKA RENKLERİ ───── */
     --brand-primary:         #7C3AED;  /* Nebula moru — ana eylem */
     --brand-primary-hover:   #6D28D9;
@@ -146,6 +149,143 @@
     --z-tooltip:      300;
     --z-notification: 400;
     --z-max:          9999;
+}
+
+/* ============================================================
+   1.2. TEMA SİSTEMİ — 3 Tema (Aydınlık · Karanlık · Birlik)
+   Aydınlık = :root varsayılanı (yukarıda).
+   data-tema attribute <html>'a uygulanır, localStorage'da saklanır.
+   ============================================================ */
+
+/* ───── KARANLIK TEMA (Dark Mode) ───── */
+[data-tema="karanlik"] {
+    /* Yüzey renkleri — derin gece tonları */
+    --surface-0: #0F0E1A;       /* Sayfa zemini */
+    --surface-1: #1A1929;       /* Kart zemini */
+    --surface-2: #252338;       /* Yükseltilmiş kart */
+    --surface-3: #2D2B47;       /* Modal/popover */
+
+    /* Metin — yüksek kontrast (16.3:1 AAA) */
+    --text-primary:   #F1F0F7;
+    --text-secondary: #B8B5D1;
+    --text-muted:     #8A87A8;
+    --text-inverse:   #0F0E1A;
+
+    /* Marka — koyu zeminde parlak vurgu */
+    --brand-primary-light: rgba(196, 181, 253, 0.18);
+    --brand-secondary-light: rgba(244, 114, 182, 0.18);
+
+    /* Semantik — koyu zeminde okunabilir */
+    --color-success-light: rgba(16, 185, 129, 0.18);
+    --color-error-light:   rgba(239, 68, 68, 0.18);
+    --color-warning-light: rgba(245, 158, 11, 0.18);
+    --color-info-light:    rgba(6, 182, 212, 0.18);
+
+    /* Periyodik tablo — koyu zemine uyumlu (renk swap) */
+    --cat-alkali:              #7F1D1D;
+    --cat-alkali-text:         #FCA5A5;
+    --cat-alkaline-earth:      #9A3412;
+    --cat-alkaline-earth-text: #FDBA74;
+    --cat-transition:          #92400E;
+    --cat-transition-text:     #FCD34D;
+    --cat-post-transition:     #3F6212;
+    --cat-post-transition-text:#A3E635;
+    --cat-metalloid:           #155E75;
+    --cat-metalloid-text:      #67E8F9;
+    --cat-nonmetal:            #1E40AF;
+    --cat-nonmetal-text:       #93C5FD;
+    --cat-halogen:             #5B21B6;
+    --cat-halogen-text:        #C4B5FD;
+    --cat-noble-gas:           #831843;
+    --cat-noble-gas-text:      #FBCFE8;
+
+    /* Gölgeler — daha derin */
+    --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.25);
+    --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.30), 0 1px 2px rgba(0, 0, 0, 0.20);
+    --shadow-md:  0 4px 6px rgba(0, 0, 0, 0.30), 0 2px 4px rgba(0, 0, 0, 0.20);
+    --shadow-lg:  0 10px 15px rgba(0, 0, 0, 0.35), 0 4px 6px rgba(0, 0, 0, 0.20);
+    --shadow-xl:  0 20px 25px rgba(0, 0, 0, 0.40), 0 10px 10px rgba(0, 0, 0, 0.20);
+    --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.55);
+
+    /* Gradient — koyu tonda canlılık */
+    --gradient-night: linear-gradient(135deg, #1A1929 0%, #4C1D95 100%);
+}
+
+/* ───── BİRLİK TEMA (Siyah-Sarı, Yüksek Kontrast) ───── */
+[data-tema="birlik"] {
+    /* Yüzey — saf siyah baskın */
+    --surface-0: #000000;
+    --surface-1: #111111;
+    --surface-2: #1A1A1A;
+    --surface-3: #222222;
+
+    /* Metin — açık sarı / beyaz */
+    --text-primary:   #FFFFFF;
+    --text-secondary: #FFE066;     /* Açık sarı */
+    --text-muted:     #999999;
+    --text-inverse:   #000000;
+
+    /* Marka — Birlik sarısı */
+    --brand-primary:         #FFD700;    /* Klasik altın sarısı */
+    --brand-primary-hover:   #FFC000;
+    --brand-primary-light:   rgba(255, 215, 0, 0.18);
+    --brand-secondary:       #FFA500;    /* Turuncu */
+    --brand-secondary-hover: #FF8C00;
+    --brand-secondary-light: rgba(255, 165, 0, 0.18);
+    --gradient-brand:        linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    --gradient-success:      linear-gradient(135deg, #FFD700 0%, #FFEB3B 100%);
+    --gradient-night:        linear-gradient(135deg, #000000 0%, #4D3800 100%);
+
+    /* Semantik — Birlik renkleri */
+    --color-success:         #FFD700;
+    --color-success-light:   rgba(255, 215, 0, 0.18);
+    --color-success-dark:    #CC9900;
+    --color-error:           #FF4136;
+    --color-error-light:     rgba(255, 65, 54, 0.18);
+    --color-warning:         #FF851B;
+    --color-warning-light:   rgba(255, 133, 27, 0.18);
+    --color-info:            #FFDC00;
+    --color-info-light:      rgba(255, 220, 0, 0.18);
+
+    /* Periyodik tablo — sarı tonları (kontrast tonlandırma) */
+    --cat-alkali:              #FFD700;
+    --cat-alkali-text:         #000000;
+    --cat-alkaline-earth:      #FFA500;
+    --cat-alkaline-earth-text: #000000;
+    --cat-transition:          #FFC107;
+    --cat-transition-text:     #000000;
+    --cat-post-transition:     #FFEB3B;
+    --cat-post-transition-text:#000000;
+    --cat-metalloid:           #FDD835;
+    --cat-metalloid-text:      #000000;
+    --cat-nonmetal:            #F9A825;
+    --cat-nonmetal-text:       #000000;
+    --cat-halogen:             #FFB300;
+    --cat-halogen-text:        #000000;
+    --cat-noble-gas:           #FFE082;
+    --cat-noble-gas-text:      #000000;
+
+    /* Gölgeler — sarı glow */
+    --shadow-glow-brand:    0 0 24px rgba(255, 215, 0, 0.45);
+    --shadow-glow-success:  0 0 24px rgba(255, 215, 0, 0.45);
+    --shadow-glow-warning:  0 0 24px rgba(255, 165, 0, 0.45);
+}
+
+/* ───── Smooth Tema Geçişi (FOUC sonrası) ───── */
+html.tema-hazir,
+html.tema-hazir body {
+    transition:
+        background-color 250ms var(--ease-smooth),
+        color 250ms var(--ease-smooth);
+}
+
+html.tema-hazir .kart,
+html.tema-hazir .modal,
+html.tema-hazir .modal-overlay {
+    transition:
+        background-color 250ms var(--ease-smooth),
+        color 250ms var(--ease-smooth),
+        border-color 250ms var(--ease-smooth);
 }
 
 /* ============================================================
@@ -4362,5 +4502,158 @@ kbd {
 
     #anaekran .ekip-rol {
         font-size: 8.5px;
+    }
+}
+
+/* ============================================================
+   18. TEMA SEÇİCİ — Ayarlar Modalı (3 buton grid)
+   ============================================================ */
+.tema-secici {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+}
+
+.tema-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-3);
+    background: var(--surface-1);
+    border: 2px solid var(--surface-2);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: transform 150ms var(--ease-out),
+                border-color 200ms ease,
+                box-shadow 200ms ease;
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    color: var(--text-primary);
+    position: relative;
+}
+
+.tema-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--brand-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.tema-btn:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 3px;
+}
+
+.tema-btn.aktif {
+    border-color: var(--brand-primary);
+    background: var(--brand-primary-light);
+    box-shadow: var(--shadow-glow-brand);
+}
+
+.tema-btn.aktif::after {
+    content: '✓';
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--brand-primary);
+    color: var(--text-inverse);
+    font-size: 12px;
+    font-weight: var(--fw-extrabold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tema-onizleme {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-1);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--card-border, rgba(0,0,0,0.06));
+    flex-shrink: 0;
+}
+
+/* Aydınlık — açık zemin + mor-pembe gradient noktası */
+.tema-onizleme.tema-onizleme-aydinlik {
+    background: #FAF5FF;
+}
+.tema-onizleme.tema-onizleme-aydinlik::before {
+    content: '';
+    position: absolute;
+    inset: 25% 30%;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+}
+
+/* Karanlık — koyu zemin + mor gradient noktası */
+.tema-onizleme.tema-onizleme-karanlik {
+    background: #0F0E1A;
+}
+.tema-onizleme.tema-onizleme-karanlik::before {
+    content: '';
+    position: absolute;
+    inset: 25% 30%;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #A855F7 0%, #EC4899 100%);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.5);
+}
+
+/* Birlik — siyah zemin + sarı gradient noktası */
+.tema-onizleme.tema-onizleme-birlik {
+    background: #000000;
+}
+.tema-onizleme.tema-onizleme-birlik::before {
+    content: '';
+    position: absolute;
+    inset: 25% 30%;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    box-shadow: 0 0 16px rgba(255, 215, 0, 0.55);
+}
+
+.tema-ad {
+    font-size: var(--fs-small);
+    line-height: 1;
+}
+
+.tema-aciklama {
+    font-size: 11px;
+    font-weight: var(--fw-medium);
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    line-height: 1.2;
+}
+
+/* Tema seçici mobile */
+@media (max-width: 640px) {
+    .tema-secici {
+        grid-template-columns: 1fr;
+        gap: var(--space-2);
+    }
+
+    .tema-btn {
+        flex-direction: row;
+        text-align: left;
+        padding: var(--space-3);
+    }
+
+    .tema-onizleme {
+        width: 60px;
+        aspect-ratio: 1;
+        flex-shrink: 0;
+        margin-bottom: 0;
+    }
+
+    .tema-btn-icerik {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
     }
 }

@@ -15,7 +15,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oxanium:wght@500;700;800&display=swap" rel="stylesheet">
 
     <!-- ELEMENTRA Tasarım Sistemi -->
-    <link rel="stylesheet" href="style.css?v=31">
+    <link rel="stylesheet" href="style.css?v=32">
+
+    <!-- Tema FOUC Önleme — CSS yüklenmeden önce kayıtlı temayı uygula -->
+    <script>
+        (function() {
+            try {
+                var kayitli = localStorage.getItem('elementra_v2_tema');
+                var gecerli = ['aydinlik', 'karanlik', 'birlik'];
+                var tema = gecerli.indexOf(kayitli) >= 0 ? kayitli : 'aydinlik';
+                document.documentElement.setAttribute('data-tema', tema);
+                // Geçiş animasyonu sayfa yüklendikten sonra aktif olur (FOUC önleme)
+                window.addEventListener('DOMContentLoaded', function() {
+                    requestAnimationFrame(function() {
+                        document.documentElement.classList.add('tema-hazir');
+                    });
+                });
+            } catch (e) {
+                document.documentElement.setAttribute('data-tema', 'aydinlik');
+            }
+        })();
+    </script>
 
     <!-- Favicon (atom logosu — inline SVG) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='4' fill='%237C3AED'/%3E%3Cellipse cx='32' cy='32' rx='24' ry='9' fill='none' stroke='%237C3AED' stroke-width='3'/%3E%3Cellipse cx='32' cy='32' rx='24' ry='9' fill='none' stroke='%237C3AED' stroke-width='3' transform='rotate(60 32 32)'/%3E%3Cellipse cx='32' cy='32' rx='24' ry='9' fill='none' stroke='%237C3AED' stroke-width='3' transform='rotate(-60 32 32)'/%3E%3C/svg%3E">
@@ -492,6 +512,42 @@
 
                 <hr class="ayar-ayrac">
 
+                <!-- Tema Seçici (3 Tema: Aydınlık · Karanlık · Birlik) -->
+                <section class="ayar-bolum">
+                    <h3 class="ayar-bolum-baslik">
+                        <svg class="ikon ikon-sm ikon-marka" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        Tema
+                    </h3>
+                    <div class="tema-secici" role="radiogroup" aria-label="Tema seçici">
+                        <button class="tema-btn" data-tema="aydinlik" type="button" role="radio" aria-checked="true" title="Aydınlık tema (varsayılan)">
+                            <div class="tema-onizleme tema-onizleme-aydinlik"></div>
+                            <div class="tema-btn-icerik">
+                                <span class="tema-ad">Aydınlık</span>
+                                <span class="tema-aciklama">Varsayılan</span>
+                            </div>
+                        </button>
+                        <button class="tema-btn" data-tema="karanlik" type="button" role="radio" aria-checked="false" title="Karanlık tema (gece modu)">
+                            <div class="tema-onizleme tema-onizleme-karanlik"></div>
+                            <div class="tema-btn-icerik">
+                                <span class="tema-ad">Karanlık</span>
+                                <span class="tema-aciklama">Gece modu</span>
+                            </div>
+                        </button>
+                        <button class="tema-btn" data-tema="birlik" type="button" role="radio" aria-checked="false" title="Birlik tema (yüksek kontrast)">
+                            <div class="tema-onizleme tema-onizleme-birlik"></div>
+                            <div class="tema-btn-icerik">
+                                <span class="tema-ad">Birlik</span>
+                                <span class="tema-aciklama">Siyah-sarı</span>
+                            </div>
+                        </button>
+                    </div>
+                </section>
+
+                <hr class="ayar-ayrac">
+
                 <!-- Klavye Kısayolları -->
                 <section class="ayar-bolum">
                     <h3 class="ayar-bolum-baslik">
@@ -870,6 +926,39 @@
             );
             ayarlarModal.addEventListener('click', (e) => {
                 if (e.target === ayarlarModal) ayarlarKapat();
+            });
+
+            // ═════════════════════════════════════════════════
+            //  TEMA SEÇİCİ — Aydınlık · Karanlık · Birlik
+            // ═════════════════════════════════════════════════
+            const TEMA_KEY = 'elementra_v2_tema';
+            const GECERLI_TEMALAR = ['aydinlik', 'karanlik', 'birlik'];
+            const temaButonlari = document.querySelectorAll('.tema-btn');
+
+            function temaUygula(tema, kaydet = true) {
+                if (!GECERLI_TEMALAR.includes(tema)) tema = 'aydinlik';
+                document.documentElement.setAttribute('data-tema', tema);
+                // Aktif buton + aria
+                temaButonlari.forEach(btn => {
+                    const aktif = btn.dataset.tema === tema;
+                    btn.classList.toggle('aktif', aktif);
+                    btn.setAttribute('aria-checked', aktif ? 'true' : 'false');
+                });
+                if (kaydet) {
+                    try { localStorage.setItem(TEMA_KEY, tema); } catch (e) {}
+                }
+            }
+
+            // Kayıtlı temayı sayfa açılışında butonlara yansıt
+            const baslangicTema = document.documentElement.getAttribute('data-tema') || 'aydinlik';
+            temaUygula(baslangicTema, false);
+
+            // Buton tıklamaları
+            temaButonlari.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    AudioManager.sesCal('butonTik');
+                    temaUygula(btn.dataset.tema);
+                });
             });
 
             // Slider değişiklikleri → AudioManager
