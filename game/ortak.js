@@ -787,28 +787,42 @@ const AudioManager = {
      */
     _webAudioMuzikBaslat(tip) {
         const ctx = this._getWebAudioCtx();
-        if (!ctx) return;
+        if (!ctx) {
+            console.warn('Web Audio context yok — müzik çalınamıyor');
+            return;
+        }
 
-        // Master gain (mute / fade için)
-        const masterGain = ctx.createGain();
-        masterGain.gain.value = (this._ayarlar.master / 100) * (this._ayarlar.music / 100) * 0.20;
-        masterGain.connect(ctx.destination);
+        // KRİTİK: Safari + bazı tarayıcılar AudioContext suspended başlar.
+        // Resume çağrılmazsa hiç ses çalmaz.
+        const startContext = () => {
+            const masterGain = ctx.createGain();
+            masterGain.gain.value = (this._ayarlar.master / 100) * (this._ayarlar.music / 100) * 0.20;
+            masterGain.connect(ctx.destination);
 
-        this._webAudioMuzik = {
-            masterGain,
-            oscs: [],
-            timer: null,
-            playing: true,
-            tip,
-            ctx
+            this._webAudioMuzik = {
+                masterGain,
+                oscs: [],
+                timer: null,
+                playing: true,
+                tip,
+                ctx
+            };
+
+            if (tip === 'menu') {
+                this._webAudioPattern_menu(ctx, masterGain);
+            } else if (tip === 'oyun') {
+                this._webAudioPattern_oyun(ctx, masterGain);
+            } else if (tip === 'zafer') {
+                this._webAudioPattern_zafer(ctx, masterGain);
+            }
         };
 
-        if (tip === 'menu') {
-            this._webAudioPattern_menu(ctx, masterGain);
-        } else if (tip === 'oyun') {
-            this._webAudioPattern_oyun(ctx, masterGain);
-        } else if (tip === 'zafer') {
-            this._webAudioPattern_zafer(ctx, masterGain);
+        if (ctx.state === 'suspended') {
+            ctx.resume().then(startContext).catch(e => {
+                console.warn('AudioContext resume başarısız:', e.message);
+            });
+        } else {
+            startContext();
         }
     },
 
