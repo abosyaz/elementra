@@ -665,7 +665,22 @@ const AudioManager = {
      * İlk kullanıcı tıklamasında çağrılmalı.
      */
     kullaniciEtkilesimi() {
+        const ilkEtkilesim = !this._baslatildi;
         this._baslatildi = true;
+
+        // İlk kullanıcı etkileşiminde ana menü müziği otomatik başlasın
+        // (browser autoplay engelini aştık, ses muted değilse menü müziği çal)
+        if (ilkEtkilesim && !this._ayarlar.muted && !this._muzikAdi) {
+            // Ana ekran aktifse 'menu' müziği başlat (oyun ekranında olunan yere müdahale etme)
+            const anaekran = document.getElementById('anaekran');
+            const oyunEkran = document.getElementById('oyun-ekran');
+            const anaekranAktif = anaekran && !anaekran.classList.contains('hidden');
+            const oyunAktif = oyunEkran && !oyunEkran.classList.contains('hidden');
+            if (anaekranAktif && !oyunAktif) {
+                // 200ms gecikme — Web Audio context'in hazır olması için
+                setTimeout(() => this.muzikCal('menu'), 200);
+            }
+        }
     },
 
     /**
@@ -1636,6 +1651,11 @@ const SahneManager = {
 
         this.go('oyun-ekran');
 
+        // 🎵 OYUN MÜZİĞİ — Web Audio API ile çal (MP3 yoksa fallback)
+        if (typeof AudioManager !== 'undefined') {
+            AudioManager.muzikCal('oyun');
+        }
+
         // Modül-spesifik başlatıcı var mı?
         if (window.modulleriBaslat?.[modulId]) {
             window.modulleriBaslat[modulId](zorluk);
@@ -1655,6 +1675,11 @@ const SahneManager = {
             ekran.dataset.sonSonuc = JSON.stringify(sonuc);
         }
         this.go('sonuc-ekran');
+
+        // 🎵 ZAFER MÜZİĞİ — oyun bitince fanfare çal
+        if (typeof AudioManager !== 'undefined') {
+            AudioManager.muzikCal('zafer');
+        }
     },
 
     /**
@@ -1677,6 +1702,11 @@ const SahneManager = {
                 window.modulKartGuncelle(kart);
             }
         });
+
+        // 🎵 MENÜ MÜZİĞİ — ana menüye dönünce ambient pad çal
+        if (typeof AudioManager !== 'undefined') {
+            AudioManager.muzikCal('menu');
+        }
     },
 
     /**
