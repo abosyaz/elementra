@@ -291,7 +291,7 @@
         }
 
         /* ═════════════════════════════════════════════════
-           PANEL 3 — 3 Modül
+           PANEL 3 — 3 Modül (PREMIUM v2)
            ═════════════════════════════════════════════════ */
         .panel-modul {
             background: var(--surface-0);
@@ -306,50 +306,101 @@
             position: relative;
             counter-increment: modul-counter;
             background: var(--surface-1);
-            border-radius: 4mm;
-            padding: 5mm 6mm;
-            margin-bottom: 4mm;
-            border-left: 2mm solid var(--brand-primary);
+            border-radius: 5mm;
+            padding: 5mm 6.5mm 4.5mm;
+            margin-bottom: 3.5mm;
+            border-left: 2.5mm solid var(--brand-primary);
+            box-shadow: 0 1.5mm 5mm rgba(30, 27, 75, 0.07);
             overflow: hidden;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .modul-blok::after {
             content: '0' counter(modul-counter);
             position: absolute;
-            top: 1mm;
-            right: 4mm;
+            top: 0.5mm;
+            right: 4.5mm;
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 28pt;
-            color: rgba(124, 58, 237, 0.10);
-            letter-spacing: -0.03em;
+            font-size: 36pt;
+            color: currentColor;
+            opacity: 0.14;
+            letter-spacing: -0.04em;
             line-height: 1;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
 
-        .modul-blok.mod-1 { border-left-color: #93C5FD; }
-        .modul-blok.mod-2 { border-left-color: #C4B5FD; }
-        .modul-blok.mod-3 { border-left-color: var(--color-success); }
+        /* Renk üçlüsü — uygulamadaki modül kartlarıyla birebir */
+        .modul-blok.mod-1 { border-left-color: #6366F1; color: #4F46E5; }
+        .modul-blok.mod-2 { border-left-color: #D97706; color: #B45309; }
+        .modul-blok.mod-3 { border-left-color: #10B981; color: #047857; }
 
         .modul-blok h3 {
-            font-size: 10pt;
+            font-size: 11pt;
             color: var(--brand-primary);
             margin-bottom: 1.5mm;
+            display: flex;
+            align-items: center;
+            gap: 2mm;
+            position: relative;
+            z-index: 1;
         }
 
-        .modul-blok.mod-1 h3 { color: #1E40AF; }
-        .modul-blok.mod-2 h3 { color: #5B21B6; }
+        .modul-blok.mod-1 h3 { color: #4F46E5; }
+        .modul-blok.mod-2 h3 { color: #B45309; }
         .modul-blok.mod-3 h3 { color: #047857; }
+
+        .modul-blok .modul-ikon {
+            width: 7.5mm;
+            height: 7.5mm;
+            border-radius: 50%;
+            background: var(--surface-1);
+            border: 0.5mm solid currentColor;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10pt;
+            line-height: 1;
+            flex-shrink: 0;
+            box-shadow: 0 0.8mm 2mm rgba(0, 0, 0, 0.06);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
 
         .modul-blok p {
             font-size: 8.5pt;
-            margin-bottom: 0;
+            margin-bottom: 2mm;
             line-height: 1.4;
+            position: relative;
+            z-index: 1;
+        }
+
+        .modul-blok .modul-meta {
+            display: flex;
+            gap: 1.5mm;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .modul-blok .modul-meta span {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 6.5pt;
+            padding: 0.9mm 2.5mm;
+            border-radius: 1.5mm;
+            background: currentColor;
+            color: #FFFFFF !important;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         /* ═════════════════════════════════════════════════
-           PANEL 4 — Kazanımlar + Neden Oyun?
+           PANEL 4 — Kazanımlar + Neden Oyun? (PREMIUM v2)
            ═════════════════════════════════════════════════ */
         .panel-kazanim {
             background: var(--surface-1);
@@ -359,68 +410,124 @@
             color: var(--color-info);
         }
 
-        .kazanim-tablo {
-            width: 100%;
-            margin-bottom: 5mm;
-            border-collapse: collapse;
+        /* MEB Kazanım Grid — tablo yerine kart grid */
+        .kazanim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2mm;
+            margin-bottom: 4mm;
         }
 
-        .kazanim-tablo td {
-            padding: 2mm 3mm;
-            font-size: 8.5pt;
-            border-bottom: 0.3pt solid var(--surface-2);
+        .kazanim-kart {
+            background: linear-gradient(135deg, #ECFEFF 0%, #CFFAFE 100%);
+            border-radius: 3mm;
+            padding: 2.8mm 3.5mm;
+            border-left: 1.5mm solid var(--color-info);
+            box-shadow: 0 0.8mm 2.5mm rgba(6, 182, 212, 0.10);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
-        .kazanim-tablo td:first-child {
+        .kazanim-kart .kazanim-kod {
             font-family: var(--font-display);
-            font-weight: 700;
-            color: var(--brand-primary);
-            white-space: nowrap;
+            font-weight: 800;
+            font-size: 10pt;
+            color: #0E7490;
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+            font-feature-settings: 'tnum';
+            margin-bottom: 0.5mm;
+        }
+
+        .kazanim-kart .kazanim-baslik {
+            font-size: 7.5pt;
+            color: var(--text-secondary);
+            line-height: 1.3;
         }
 
         .neden-blok h2 {
             color: var(--color-warning);
-            margin-top: 4mm;
+            margin-top: 3mm;
         }
 
         .stat-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3mm;
+            gap: 2.5mm;
             margin-top: 3mm;
         }
 
         .stat-kart {
             background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-            border-radius: 3mm;
-            padding: 3mm 4mm;
+            border-radius: 4mm;
+            padding: 4mm 4mm 3mm;
             text-align: center;
             border-top: 0.8mm solid var(--accent-gold);
-            box-shadow: 0 1.5mm 4mm rgba(245, 158, 11, 0.15);
+            box-shadow: 0 1.5mm 4mm rgba(245, 158, 11, 0.18);
+            position: relative;
+            overflow: hidden;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+        }
+
+        .stat-kart::before {
+            content: '';
+            position: absolute;
+            top: -10mm;
+            right: -10mm;
+            width: 24mm;
+            height: 24mm;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.22), transparent 70%);
+            border-radius: 50%;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .stat-kart > * {
+            position: relative;
+            z-index: 1;
         }
 
         .stat-kart .stat-deger {
             font-family: var(--font-display);
             font-weight: 800;
-            font-size: 22pt;
+            font-size: 26pt;
             font-feature-settings: 'tnum';
-            letter-spacing: -0.02em;
-            color: var(--color-warning);
+            letter-spacing: -0.025em;
+            background: linear-gradient(135deg, #D97706 0%, #92400E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             line-height: 1;
             display: block;
-            margin-bottom: 1mm;
+            margin-bottom: 0.8mm;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .stat-kart .stat-etiket {
             font-size: 7pt;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             line-height: 1.3;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 1mm;
+        }
+
+        .stat-kart .stat-kaynak {
+            font-family: var(--font-display);
+            font-size: 6pt;
+            color: var(--text-muted);
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            font-weight: 700;
+            display: block;
+            padding-top: 1mm;
+            border-top: 0.3mm dashed rgba(180, 83, 9, 0.30);
         }
 
         /* ═════════════════════════════════════════════════
-           PANEL 5 — Akademik Kaynak + İletişim
+           PANEL 5 — Akademik Kaynak + İletişim (PREMIUM v2)
            ═════════════════════════════════════════════════ */
         .panel-kaynak {
             background: var(--surface-0);
@@ -430,78 +537,150 @@
             color: var(--brand-primary);
         }
 
+        /* Akademik Kaynaklar — premium numaralı liste */
         .kaynak-liste {
             list-style: none;
             padding: 0;
-            margin-bottom: 5mm;
+            margin-bottom: 4mm;
+            counter-reset: kaynak;
         }
 
         .kaynak-liste li {
-            font-size: 8pt;
+            font-size: 7.8pt;
             color: var(--text-secondary);
-            line-height: 1.4;
-            padding: 1.5mm 0;
-            padding-left: 4mm;
+            line-height: 1.35;
+            padding: 2mm 0 2mm 8mm;
             position: relative;
+            border-bottom: 0.3pt dashed rgba(124, 58, 237, 0.20);
+            counter-increment: kaynak;
+        }
+
+        .kaynak-liste li:last-child {
+            border-bottom: none;
         }
 
         .kaynak-liste li::before {
-            content: '•';
+            content: counter(kaynak, decimal-leading-zero);
             position: absolute;
             left: 0;
-            color: var(--brand-primary);
-            font-weight: 700;
+            top: 1.6mm;
+            width: 5.5mm;
+            height: 5.5mm;
+            border-radius: 50%;
+            background: var(--grad-brand);
+            color: #FFFFFF;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 6.5pt;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.02em;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
+        .kaynak-liste li em {
+            font-style: italic;
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+
+        /* Özellikler — 2 sütun premium grid */
         .ozellik-liste {
-            background: var(--surface-1);
-            border-radius: 3mm;
+            background: linear-gradient(135deg, #FAF5FF, #F5F3FF);
+            border-radius: 4mm;
             padding: 4mm 5mm;
-            margin-bottom: 5mm;
+            margin-bottom: 4mm;
+            border-left: 1.5mm solid var(--brand-primary);
+            box-shadow: 0 1mm 3mm rgba(124, 58, 237, 0.07);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .ozellik-liste h3 {
             font-size: 10pt;
-            margin-bottom: 2mm;
+            margin-bottom: 2.5mm;
             color: var(--brand-primary);
         }
 
         .ozellik-liste ul {
             list-style: none;
             padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1mm 4mm;
         }
 
         .ozellik-liste li {
-            font-size: 8pt;
-            color: var(--text-secondary);
-            padding: 1mm 0;
+            font-size: 7.5pt;
+            color: var(--text-primary);
+            padding: 0.6mm 0;
             display: flex;
-            gap: 2mm;
+            align-items: center;
+            gap: 1.8mm;
+            font-weight: 500;
         }
 
         .ozellik-liste li::before {
-            content: '★';
-            color: var(--color-warning);
+            content: '◆';
+            color: var(--brand-secondary);
+            font-size: 6pt;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
+        /* İletişim Kartı — brand gradient (ön kapakla uyum) */
         .iletisim-kart {
-            background: var(--surface-1);
-            border-radius: 3mm;
-            padding: 4mm 5mm;
-            border-top: 1.5mm solid var(--brand-secondary);
+            background: var(--grad-brand);
+            border-radius: 4mm;
+            padding: 4.5mm 5.5mm;
             margin-top: auto;
+            color: #FFFFFF;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2mm 6mm rgba(124, 58, 237, 0.22);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .iletisim-kart::before {
+            content: '';
+            position: absolute;
+            top: -12mm;
+            right: -12mm;
+            width: 32mm;
+            height: 32mm;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.22), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         .iletisim-kart h3 {
-            font-size: 9pt;
-            color: var(--brand-secondary);
+            font-size: 10pt;
+            color: rgba(255, 255, 255, 0.96);
             margin-bottom: 2mm;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 1.5mm;
         }
 
         .iletisim-kart p {
             font-size: 8pt;
+            color: rgba(255, 255, 255, 0.94);
             margin-bottom: 1mm;
             line-height: 1.4;
+            position: relative;
+            z-index: 1;
+        }
+
+        .iletisim-kart strong {
+            color: #FFFFFF;
+            font-weight: 700;
         }
 
         /* ═════════════════════════════════════════════════
@@ -512,17 +691,21 @@
         .panel-iki .pr-bolum.hedef h2  { color: var(--brand-primary); }
         .panel-iki .pr-bolum.yontem h2 { color: var(--color-info); }
 
+        /* Zorluk Bloğu — premium pembe gradient + pill chips */
         .panel-modul .zorluk-blok {
-            background: var(--surface-1);
-            border-radius: 4mm;
-            padding: 5mm 6mm;
-            margin-top: 3mm;
-            border-left: 2mm solid var(--brand-secondary);
+            background: linear-gradient(135deg, #FDF2F8, #FCE7F3);
+            border-radius: 5mm;
+            padding: 4.5mm 6mm;
+            margin-top: 2mm;
+            border-left: 2.5mm solid var(--brand-secondary);
+            box-shadow: 0 1.5mm 4mm rgba(236, 72, 153, 0.10);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
         .panel-modul .zorluk-blok h3 {
             font-size: 10pt;
             color: var(--brand-secondary);
-            margin-bottom: 2mm;
+            margin-bottom: 2.5mm;
         }
         .panel-modul .zorluk-grid {
             display: grid;
@@ -531,25 +714,54 @@
             margin-bottom: 2.5mm;
         }
         .panel-modul .zorluk-grid span {
-            background: linear-gradient(135deg, #FCE7F3, #FBCFE8);
-            color: #831843;
+            background: #FFFFFF;
+            color: #9D174D;
+            border: 0.4mm solid rgba(190, 24, 93, 0.32);
             font-family: var(--font-display);
             font-weight: 700;
             font-size: 8pt;
-            padding: 1.5mm;
+            padding: 1.6mm 1mm;
             border-radius: 2mm;
             text-align: center;
+            letter-spacing: 0.02em;
+            box-shadow: 0 0.5mm 1.5mm rgba(190, 24, 93, 0.10);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
         .panel-modul .zorluk-blok p {
             font-size: 8pt;
             margin-bottom: 0;
+            line-height: 1.4;
         }
 
+        /* Başarım Bloğu — premium showcase + rozet pattern */
         .panel-kazanim .basarim-blok {
             background: linear-gradient(135deg, #EDE9FE, #DDD6FE);
-            border-radius: 3mm;
+            border-radius: 4mm;
             padding: 4mm 5mm;
-            margin-top: 4mm;
+            margin-top: 3.5mm;
+            border-top: 0.8mm solid var(--brand-primary);
+            box-shadow: 0 1.5mm 4mm rgba(124, 58, 237, 0.13);
+            position: relative;
+            overflow: hidden;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .panel-kazanim .basarim-blok::before {
+            content: '';
+            position: absolute;
+            top: -10mm;
+            right: -10mm;
+            width: 26mm;
+            height: 26mm;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.20), transparent 70%);
+            border-radius: 50%;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .panel-kazanim .basarim-blok > * {
+            position: relative;
+            z-index: 1;
         }
         .panel-kazanim .basarim-blok h3 {
             font-size: 10pt;
@@ -562,22 +774,46 @@
             line-height: 1.45;
         }
 
+        /* Teknoloji Bloğu — premium badge stack */
         .panel-kaynak .teknoloji-blok {
-            background: var(--surface-1);
-            border-radius: 3mm;
+            background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+            border-radius: 4mm;
             padding: 4mm 5mm;
             margin-bottom: 4mm;
-            border-left: 2mm solid var(--color-success);
+            border-left: 1.5mm solid var(--color-success);
+            box-shadow: 0 1mm 3mm rgba(16, 185, 129, 0.10);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
         .panel-kaynak .teknoloji-blok h3 {
             font-size: 10pt;
-            color: var(--color-success);
+            color: #047857;
             margin-bottom: 1.5mm;
         }
         .panel-kaynak .teknoloji-blok p {
-            font-size: 8pt;
-            margin-bottom: 0;
-            line-height: 1.45;
+            font-size: 7.8pt;
+            margin-bottom: 2.5mm;
+            line-height: 1.4;
+        }
+        .panel-kaynak .tek-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5mm;
+        }
+        .panel-kaynak .tek-badge {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 6.5pt;
+            padding: 0.8mm 2.5mm;
+            background: #FFFFFF;
+            border: 0.4mm solid var(--color-success);
+            color: #047857;
+            border-radius: 2mm;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            box-shadow: 0 0.5mm 1.5mm rgba(16, 185, 129, 0.10);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
         /* ═════════════════════════════════════════════════
@@ -829,28 +1065,42 @@
             <h2>🎮 Üç Modül,<br>Üç Yaklaşım</h2>
 
             <div class="modul-blok mod-1">
-                <h3>1. Element Avı</h3>
+                <h3><span class="modul-ikon">🎯</span>Element Avı</h3>
                 <p>
-                    Periyodik tabloda <strong>36 elementi</strong> tıkla-bul.
-                    4 zorluk + 4 soru tipi: ad, atom numarası, yaygın ad,
-                    kategori.
+                    Periyodik tabloda elementi <strong>tıkla-bul</strong>.
+                    4 farklı soru tipi ile derinleşen mekanik.
                 </p>
+                <div class="modul-meta">
+                    <span>36 element</span>
+                    <span>4 zorluk</span>
+                    <span>4 soru tipi</span>
+                </div>
             </div>
 
             <div class="modul-blok mod-2">
-                <h3>2. Sembol Eşleştirme</h3>
+                <h3><span class="modul-ikon">🃏</span>Sembol Eşleştirme</h3>
                 <p>
-                    Klasik memory mekaniği. Element <strong>ad ↔ sembol</strong>
-                    eşle. Latince köken bonusu (Na = Natrium).
+                    Klasik memory mekaniği. <strong>Ad ↔ sembol</strong> eşle.
+                    Latince köken bonusu (Na = Natrium).
                 </p>
+                <div class="modul-meta">
+                    <span>36 element</span>
+                    <span>4 zorluk</span>
+                    <span>Memory</span>
+                </div>
             </div>
 
             <div class="modul-blok mod-3">
-                <h3>3. Formül Yapboz</h3>
+                <h3><span class="modul-ikon">⚗️</span>Formül Yapboz</h3>
                 <p>
-                    Atomları birleştirip <strong>24 bileşik</strong> kur.
+                    Atomları birleştirip <strong>bileşik kur</strong>.
                     Eksik/fazla atom analizi ile pedagojik geri bildirim.
                 </p>
+                <div class="modul-meta">
+                    <span>24 bileşik</span>
+                    <span>4 zorluk</span>
+                    <span>Atom analizi</span>
+                </div>
             </div>
 
             <div class="zorluk-blok">
@@ -863,7 +1113,7 @@
                 </div>
                 <p>
                     Her modül × 4 zorluk = <strong>12 farklı oyun deneyimi</strong>.
-                    Yıldız matrisi profil ile ilerleme takibi.
+                    Yıldız matrisi ile ilerleme takibi.
                 </p>
             </div>
         </div>
@@ -871,12 +1121,24 @@
         <!-- PANEL 4 — Kazanımlar + Neden Oyun? -->
         <div class="panel panel-kazanim">
             <h2>📚 MEB Kazanımları</h2>
-            <table class="kazanim-tablo">
-                <tr><td>9.2.3.3</td><td>Periyodik tablonun yapısı</td></tr>
-                <tr><td>9.2.3.4</td><td>Element kategorileri</td></tr>
-                <tr><td>9.3.2.1</td><td>Bileşik adlandırma</td></tr>
-                <tr><td>9.3.2.2</td><td>Kimyasal formül yazımı</td></tr>
-            </table>
+            <div class="kazanim-grid">
+                <div class="kazanim-kart">
+                    <div class="kazanim-kod">9.2.3.3</div>
+                    <div class="kazanim-baslik">Periyodik tablonun yapısı</div>
+                </div>
+                <div class="kazanim-kart">
+                    <div class="kazanim-kod">9.2.3.4</div>
+                    <div class="kazanim-baslik">Element kategorileri</div>
+                </div>
+                <div class="kazanim-kart">
+                    <div class="kazanim-kod">9.3.2.1</div>
+                    <div class="kazanim-baslik">Bileşik adlandırma</div>
+                </div>
+                <div class="kazanim-kart">
+                    <div class="kazanim-kod">9.3.2.2</div>
+                    <div class="kazanim-baslik">Kimyasal formül yazımı</div>
+                </div>
+            </div>
 
             <div class="neden-blok">
                 <h2>🔬 Neden Oyun?</h2>
@@ -885,11 +1147,13 @@
                 <div class="stat-grid">
                     <div class="stat-kart">
                         <span class="stat-deger">+38%</span>
-                        <span class="stat-etiket">Motivasyon (Hu, 2022)</span>
+                        <span class="stat-etiket">Motivasyon artışı</span>
+                        <span class="stat-kaynak">Hu, 2022</span>
                     </div>
                     <div class="stat-kart">
                         <span class="stat-deger">2.4×</span>
-                        <span class="stat-etiket">Kalıcılık (Snakeleev)</span>
+                        <span class="stat-etiket">Hatırlama kalıcılığı</span>
+                        <span class="stat-kaynak">Snakeleev</span>
                     </div>
                 </div>
             </div>
@@ -899,7 +1163,7 @@
                 <p>
                     Her modülün rozet seti. Oyun sonu
                     <strong>en sık karıştırılan elementler</strong> + kişiselleştirilmiş
-                    öneriler ile öğrenci öz değerlendirme yapıyor.
+                    öneriler ile öz değerlendirme.
                 </p>
             </div>
         </div>
@@ -907,37 +1171,43 @@
         <!-- PANEL 5 — Akademik Kaynak + İletişim -->
         <div class="panel panel-kaynak">
             <h2>📖 Akademik Kaynaklar</h2>
-            <ul class="kaynak-liste">
-                <li>Hu, J. (2022). Educational Research Review, 35.</li>
-                <li>Snakeleev Project (2019).</li>
-                <li>MEB Kimya 9. Sınıf (2018 reformu).</li>
+            <ol class="kaynak-liste">
+                <li>Hu, J. (2022). <em>Educational Research Review, 35.</em> Oyun-temelli öğrenmenin etkisi.</li>
+                <li>Snakeleev Project (2019). Periyodik tablo oyunlaştırma vakası.</li>
+                <li>MEB Kimya 9. Sınıf (2018 reformu). Müfredat referansı.</li>
                 <li>WCAG 2.1 AA erişilebilirlik standardı.</li>
-            </ul>
+            </ol>
 
             <div class="ozellik-liste">
                 <h3>🏆 Özellikler</h3>
                 <ul>
                     <li>20 başarım sistemi</li>
-                    <li>Mini ansiklopedi (36+24)</li>
-                    <li>Yansıtma anı (öneriler)</li>
+                    <li>Mini ansiklopedi</li>
+                    <li>Yansıtma anı</li>
                     <li>Yıldız matrisi profil</li>
                     <li>Yönetici paneli</li>
+                    <li>3 tema sistemi</li>
+                    <li>Web Audio müzik</li>
+                    <li>Klavye + dokunmatik</li>
                 </ul>
             </div>
 
             <div class="teknoloji-blok">
                 <h3>🌐 Teknoloji</h3>
-                <p>
-                    Vanilla <strong>HTML5 + CSS3 + JavaScript ES2022</strong>.
-                    Framework yok, build yok. USB'den veya çevrimiçi —
-                    tüm modern tarayıcılarda anında.
-                </p>
+                <p>Vanilla web stack. Framework yok, build yok. Tüm modern tarayıcılarda offline-ready.</p>
+                <div class="tek-badges">
+                    <span class="tek-badge">HTML5</span>
+                    <span class="tek-badge">CSS3</span>
+                    <span class="tek-badge">ES2022</span>
+                    <span class="tek-badge">Web Audio</span>
+                    <span class="tek-badge">SVG</span>
+                </div>
             </div>
 
             <div class="iletisim-kart">
-                <h3>📧 İletişim</h3>
-                <p><strong>Danışman:</strong><br>Abdullah ÖSELMİŞ</p>
-                <p><strong>Okul:</strong> ŞEHİT ZİYA İLHAN DAĞDAŞ MESLEKİ VE TEKNİK ANADOLU LİSESİ</p>
+                <h3>📧 Proje Ekibi</h3>
+                <p><strong>Danışman:</strong> Abdullah ÖSELMİŞ</p>
+                <p><strong>Okul:</strong> ŞEHİT ZİYA İLHAN DAĞDAŞ MTAL</p>
             </div>
         </div>
     </div>
