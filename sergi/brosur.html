@@ -660,8 +660,8 @@
 
         .iletisim-kart h3 {
             font-size: 10pt;
-            color: rgba(255, 255, 255, 0.96);
-            margin-bottom: 2mm;
+            color: #FFFFFF;
+            margin-bottom: 3mm;
             position: relative;
             z-index: 1;
             display: flex;
@@ -669,18 +669,38 @@
             gap: 1.5mm;
         }
 
-        .iletisim-kart p {
-            font-size: 8pt;
-            color: rgba(255, 255, 255, 0.94);
-            margin-bottom: 1mm;
-            line-height: 1.4;
+        /* Etiket-değer hiyerarşi: küçük UPPERCASE altın etiket + büyük beyaz değer */
+        .iletisim-kart .iletisim-satir {
             position: relative;
             z-index: 1;
+            margin-bottom: 2.5mm;
         }
 
-        .iletisim-kart strong {
+        .iletisim-kart .iletisim-satir:last-child {
+            margin-bottom: 0;
+        }
+
+        .iletisim-kart .iletisim-etiket {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 6.5pt;
+            font-weight: 800;
+            color: #FCD34D;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin-bottom: 0.5mm;
+            text-shadow: 0 1px 1px rgba(30, 27, 75, 0.2);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .iletisim-kart .iletisim-deger {
+            display: block;
+            font-size: 9pt;
             color: #FFFFFF;
-            font-weight: 700;
+            font-weight: 600;
+            line-height: 1.3;
+            letter-spacing: -0.005em;
         }
 
         /* ═════════════════════════════════════════════════
@@ -1206,8 +1226,14 @@
 
             <div class="iletisim-kart">
                 <h3>📧 Proje Ekibi</h3>
-                <p><strong>Danışman:</strong> Abdullah ÖSELMİŞ</p>
-                <p><strong>Okul:</strong> ŞEHİT ZİYA İLHAN DAĞDAŞ MTAL</p>
+                <div class="iletisim-satir">
+                    <span class="iletisim-etiket">Danışman</span>
+                    <span class="iletisim-deger">Abdullah ÖSELMİŞ</span>
+                </div>
+                <div class="iletisim-satir">
+                    <span class="iletisim-etiket">Okul</span>
+                    <span class="iletisim-deger">ŞEHİT ZİYA İLHAN DAĞDAŞ MTAL</span>
+                </div>
             </div>
         </div>
     </div>
